@@ -20,9 +20,9 @@ module.exports = {
     filename: 'bundle.js',
   },
   mode: process.env.NODE_ENV || "development",
-  plugins: [new webpack.HotModuleReplacementPlugin()],
-  devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
-    hot: true,
-  },
+  // plugins: [new webpack.HotModuleReplacementPlugin()],
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, './dist'),
+  //   hot: true,
+  // },
 };

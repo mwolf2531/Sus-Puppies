@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 
 
 ReactDOM.render(
-  <div>Hello World!</div>,
+  <div>Hello Shady Wolves!</div>,
   document.getElementById('app')
 );
 
 
-module.hot.accept();
+// module.hot.accept();

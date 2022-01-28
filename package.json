@@ -4,7 +4,7 @@
   "description": "Multiplayer online version of classic accusation game Werewolf!",
   "private": true,
   "scripts": {
-    "webpack": "webpack"
+    "webpack": "webpack --watch"
   },
   "repository": {
     "type": "git",

@@ -6,6 +6,3 @@ ReactDOM.render(
   <div>Hello Shady Wolves!</div>,
   document.getElementById('app')
 );
-
-
-// module.hot.accept();

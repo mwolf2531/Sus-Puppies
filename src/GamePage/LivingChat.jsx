@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Styled from 'styled-components';
+// import Styled from 'styled-components';
 
 const LivingChat = () => {
   return (

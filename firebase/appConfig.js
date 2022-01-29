@@ -156,6 +156,7 @@ const routes = {
   // send state
   wolfVoteSubmit: async (obj) => {
     // console.log('this is in wolfVote', obj);
+    getGameState(wolfVoteSubmit);
     const state = obj;
     console.log('this is state', state);
   },

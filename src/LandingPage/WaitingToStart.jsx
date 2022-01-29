@@ -5,8 +5,8 @@ const WaitingToStart = () => {
 
   return (
     <div>
-
-
+      <div>Game is waiting for players...</div>
+      <div>Players joined: 5</div>
     </div>
   )
 

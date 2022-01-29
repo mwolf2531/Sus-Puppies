@@ -5,11 +5,9 @@ const Playfield = () => {
 
   return (
     <div>
-
-
+      Playfield
     </div>
   )
-
 }
 
 export default Playfield;

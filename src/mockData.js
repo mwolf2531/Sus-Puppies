@@ -8,7 +8,7 @@ const data = {
     currentDay: 0,
     currentPhase: 0, // use an integer to represent current day. 0 === Day. 1 === Night.
     playerRoles: [['host', 0], ['megan',0], ['himmat', 0], ['Ryder123',2]],
-    voting: [['host', 'megan'], ['megan', 'megan'], ['himmat', 'megan'], ['Ryder123', 'megan']],
+    voting: [['host', 'megan'], ['megan', null], ['himmat', 'megan'], ['Ryder123', 'megan']],
     gameStatus: 'playing',
     phaseResults: [1, 'Dare died last night!'], //How and where.
     playerInfo: [{name: 'Dare', picture: 'todo/pic'}, {name: 'Himmat', picture: 'todo/pic'}, {name: 'Megan', picture: 'todo/pic'}, {name: 'Ryder', picture: 'todo/pic'}],

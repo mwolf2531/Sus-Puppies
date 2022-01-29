@@ -138,11 +138,8 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: () => {
-    var state;
-    onValue(ref(db), (snapshot) => {
-      state = snapshot.val();
-    });
+  wolfVoteSubmit: async () => {
+    const state = await getGameState();
     console.log(state);
   },
   // wolf votes => submit vote

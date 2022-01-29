@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Header from './Components/Header.jsx';
-// import CenterDisplay from './CenterDisplay.jsx';
-// import PlayerFrame from './PlayerFrame.jsx';
-// import LivingChat from './LivingChat.jsx';
-// import WolvesChat from './WolvesChat.jsx';
-// import ChatToggle from './ChatToggle.jsx';
-// import Voting from './Voting.jsx';
-// import Ruleset from './Ruleset.jsx';
-// import StartButton from './StartButton.jsx';
+import LivingChat from './Components/LivingChat.jsx';
+import Ruleset from './Components/Ruleset.jsx';
+import GameButton from './Components/GameButton.jsx';
+import Voting from './Components/Voting.jsx';
+import WolfChat from './Components/WolfChat.jsx';
+import GhostChat from './Components/GhostChat.jsx';
+import Timer from './Components/Timer.jsx';
+import PlayerFrame from './Components/PlayerFrame.jsx';
+
 
 
 const GamePage = () => {
@@ -46,15 +47,16 @@ const GamePage = () => {
     //TODO: Fill in components properly with handlers.
     <div>
       <Header props={phaseResult} />
-      <div>CenterDisplay</div>
-      <div>PlayerFrame</div>
-      <div>LivingChat</div>
-      <div>WolvesChat</div>
-      <div>ChatToggle</div>
-      <div>Voting</div>
-      <div>Ruleset</div>
-      <div>StartButton</div>
-    </div>)
+      <LivingChat />
+      <Ruleset />
+      <GameButton />
+      <Voting />
+      <WolfChat />
+      <GhostChat />
+      <Timer />
+      <PlayerFrame />
+    </div>
+  )
 }
 
 export default GamePage;

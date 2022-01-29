@@ -65,6 +65,15 @@ async function updateUserEmail(username, email, nickname) {
 
 // Routes:==========================================
 
+//Get Entire Gamestate Function
+const getGameState = () => {
+  const currentGame = ref(db);
+  onValue(currentGame, (snapshot) => {
+    console.log(snapshot.val());
+    return snapshot.val();
+  });
+};
+
 const phaseCycle = () => {};
 // phase cycle
 // if end of game
@@ -103,10 +112,20 @@ const routes = {
   resumeGame: () => {},
   // resume game
   // set game status to playing
-  ghostChatSubmit: () => {},
-  // ghostChat => submit message
-  // takes id, message
-  // store as name and message (based on playerInfo data)
+  ghostChatSubmit: (player_id, message) => {
+    // ghostChat => submit message
+    // takes id, message
+
+    const infoArray = gameState.playerInfo;
+    for (let i = 0; i < infoArray.length; i++) {
+      if (infoArray[i].player_id === player_id) {
+        let name = infoArray[i].name;
+        break;
+      }
+    }
+    // store as name and message (based on playerInfo data)
+    const submission = [name, message];
+  },
   villagerChatSubmit: () => {},
   // living chat => submit message
   wolfChatSubmit: () => {},

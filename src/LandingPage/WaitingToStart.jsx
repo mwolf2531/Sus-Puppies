@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CreateGameModal = () => {
+const WaitingToStart = () => {
 
 
   return (
@@ -12,4 +12,4 @@ const CreateGameModal = () => {
 
 }
 
-export default CreateGameModal;
+export default WaitingToStart;

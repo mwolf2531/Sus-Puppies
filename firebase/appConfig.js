@@ -65,7 +65,16 @@ updateUserEmail('user', 'newEmail@example.com', 'dogman');
 
 // Routes:==========================================
 
-const phaseCycle = () => {};
+//Get Entire Gamestate Function
+const getGameState = () => {
+  const currentGame = ref(db);
+  onValue(currentGame, (snapshot) => {
+    console.log(snapshot.val());
+    return (snapshot.val());
+  });
+}
+
+const phaseCycle = () => { };
 // phase cycle
 // if end of game
 // set game status = ended
@@ -80,12 +89,12 @@ const phaseCycle = () => {};
 // clear voting
 
 const routes = {
-  joinGame: () => {},
+  joinGame: () => { },
   // join game
   // create host if playerinfo array is empty
   // if playerinfo length greater than one
   // push player  into playerInfo array
-  startGame: () => {},
+  startGame: () => { },
   // start game
   // set game status from setup to playing
   // user submits 'x' number of wolves
@@ -96,22 +105,32 @@ const routes = {
   // clear previous results
   // clear all chats
   // reset phaseresults array
-  pauseGame: () => {},
+  pauseGame: () => { },
   // pause game
   // set game status to pause
   // if host changes state to pause or if player disconnected
-  resumeGame: () => {},
+  resumeGame: () => { },
   // resume game
   // set game status to playing
-  ghostChatSubmit: () => {},
-  // ghostChat => submit message
-  // takes id, message
-  // store as name and message (based on playerInfo data)
-  villagerChatSubmit: () => {},
+  ghostChatSubmit: (player_id, message) => {
+    // ghostChat => submit message
+    // takes id, message
+
+    const infoArray = gameState.playerInfo
+    for (let i = 0; i < infoArray.length; i++) {
+      if (infoArray[i].player_id === player_id) {
+        let name = infoArray[i].name;
+        break;
+      }
+    }
+    // store as name and message (based on playerInfo data)
+    const submission = [name, message];
+  },
+  villagerChatSubmit: () => { },
   // living chat => submit message
-  wolfChatSubmit: () => {},
+  wolfChatSubmit: () => { },
   // wolf chat => submit message
-  playerVoteSubmit: () => {},
+  playerVoteSubmit: () => { },
   // player votes => submit vote
   // check for all votes
   // if not all votes send game state
@@ -119,7 +138,7 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: () => {},
+  wolfVoteSubmit: () => { },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC
   // wolves have to vote

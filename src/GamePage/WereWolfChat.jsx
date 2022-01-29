@@ -4,7 +4,7 @@ import Styled from 'styled-components';
 const WereWolfChat = () => {
   return (
     <div>
-      <h3>Living Chat</h3>
+      <h3>Werewolf Chat</h3>
       <div><b>player5:</b> let's kill</div>
       <div><b>player3:</b> who?</div>
       <div><b>player12:</b> player8</div>

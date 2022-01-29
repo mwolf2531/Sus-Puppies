@@ -74,9 +74,6 @@ const getGameState = () => {
   });
 };
 
-<<<<<<< HEAD
-const phaseCycle = () => {};
-=======
 const updateGameState = async (gameState) => {
   const updates = {};
   updates['gameState'] = gameState;
@@ -86,7 +83,6 @@ const updateGameState = async (gameState) => {
 }
 
 const phaseCycle = () => { };
->>>>>>> main
 // phase cycle
 // if end of game
 // set game status = ended
@@ -127,13 +123,8 @@ const routes = {
   ghostChatSubmit: async (player_id, message) => {
     // ghostChat => submit message
     // takes id, message
-<<<<<<< HEAD
-
-    const infoArray = gameState.playerInfo;
-=======
     const gameState = await getGameState();
     const infoArray = gameState.playerInfo
->>>>>>> main
     for (let i = 0; i < infoArray.length; i++) {
       if (infoArray[i].player_id === player_id) {
         let name = infoArray[i].name;

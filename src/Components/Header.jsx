@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({props:{message, currentDay}}) => {
+const Header = ({ message, currentDay }) => {
   return (
     <div>
       <div>Sus Puppies!</div>

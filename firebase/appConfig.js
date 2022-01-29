@@ -61,7 +61,7 @@ async function updateUserEmail(username, email, nickname) {
   console.log(results);
 }
 
-updateUserEmail('user', 'newEmail@example.com', 'dogman');
+// updateUserEmail('user', 'newEmail@example.com', 'dogman');
 
 // Routes:==========================================
 
@@ -119,7 +119,13 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: () => {},
+  wolfVoteSubmit: () => {
+    var state;
+    onValue(ref(db), (snapshot) => {
+      state = snapshot.val();
+    });
+    console.log(state);
+  },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC
   // wolves have to vote
@@ -135,3 +141,5 @@ const routes = {
   // phase cycle
   // send
 };
+
+routes.wolfVoteSubmit();

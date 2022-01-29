@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const Voting = () => {
   return (

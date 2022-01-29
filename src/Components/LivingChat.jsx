@@ -12,7 +12,7 @@ const LivingChat = () => {
       <div><b>player3:</b> I think it was player5</div>
       <div><b>player8:</b> player5 sus</div>
       <br />
-      <input>type your message here...</input>
+      <input></input>
       <button>send message</button>
     </div>
   )

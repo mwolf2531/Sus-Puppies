@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import data from './mockData.js';
 import Header from './Components/Header.jsx';
 // import CenterDisplay from './CenterDisplay.jsx';
 // import PlayerFrame from './PlayerFrame.jsx';

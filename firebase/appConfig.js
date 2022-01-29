@@ -69,14 +69,14 @@ const getValue = (value) => {
   return value;
 };
 //Get Entire Gamestate Function
-const getGameState = async (obj) => {
+const getGameState = (cb) => {
   const state = ref(db);
-  await onValue(state, (snapshot) => {
+  onValue(state, (snapshot) => {
     const data = snapshot.val();
     console.log('this is the data', data.gameState);
-    obj['gameState'] = data.gameState;
+    // obj[gameState] = data.gameState;
+    cb(data.gameState);
   });
-  return obj;
 };
 
 const updateGameState = async (gameState) => {
@@ -154,14 +154,10 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: async (voteTuple) => {
-    const dbRef = ref(db);
-    const gameState = {};
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val();
-      gameState['gameState'] = data.gameState;
-    });
-    console.log('this is state ', gameState);
+  wolfVoteSubmit: async (obj) => {
+    // console.log('this is in wolfVote', obj);
+    const state = obj;
+    console.log('this is state', state);
   },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC
@@ -179,5 +175,5 @@ const routes = {
   // send
 };
 
-routes.wolfVoteSubmit();
-// getGameState();
+// routes.wolfVoteSubmit();
+getGameState();

@@ -65,13 +65,18 @@ async function updateUserEmail(username, email, nickname) {
 
 // Routes:==========================================
 
+const getValue = (value) => {
+  return value;
+};
 //Get Entire Gamestate Function
-const getGameState = () => {
-  const currentGame = ref(db);
-  onValue(currentGame, (snapshot) => {
-    console.log(snapshot.val());
-    return snapshot.val();
+const getGameState = async (obj) => {
+  const state = ref(db);
+  await onValue(state, (snapshot) => {
+    const data = snapshot.val();
+    console.log('this is the data', data.gameState);
+    obj['gameState'] = data.gameState;
   });
+  return obj;
 };
 
 const updateGameState = async (gameState) => {
@@ -80,9 +85,9 @@ const updateGameState = async (gameState) => {
   const results = await update(ref(db), updates);
   console.log(results);
   return results;
-}
+};
 
-const phaseCycle = () => { };
+const phaseCycle = () => {};
 // phase cycle
 // if end of game
 // set game status = ended
@@ -124,7 +129,7 @@ const routes = {
     // ghostChat => submit message
     // takes id, message
     const gameState = await getGameState();
-    const infoArray = gameState.playerInfo
+    const infoArray = gameState.playerInfo;
     for (let i = 0; i < infoArray.length; i++) {
       if (infoArray[i].player_id === player_id) {
         let name = infoArray[i].name;
@@ -135,7 +140,7 @@ const routes = {
     const submission = [name, message];
     gameState.ghostChats.push(submission);
     const result = await updateGameState();
-    return(result);
+    return result;
   },
   villagerChatSubmit: () => {},
   // living chat => submit message
@@ -150,8 +155,13 @@ const routes = {
   // phase cycle
   // send state
   wolfVoteSubmit: async (voteTuple) => {
-    const state = await getGameState();
-    if ()
+    const dbRef = ref(db);
+    const gameState = {};
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      gameState['gameState'] = data.gameState;
+    });
+    console.log('this is state ', gameState);
   },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC
@@ -170,3 +180,4 @@ const routes = {
 };
 
 routes.wolfVoteSubmit();
+// getGameState();

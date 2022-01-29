@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Header from './Header.jsx';
+import Header from './Components/Header.jsx';
 // import CenterDisplay from './CenterDisplay.jsx';
 // import PlayerFrame from './PlayerFrame.jsx';
 // import LivingChat from './LivingChat.jsx';
@@ -43,18 +43,18 @@ const GamePage = () => {
 
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
-  //TODO: Fill in components properly with handlers.
-  <div>
-    <Header props={phaseResult}/>
-    <div>CenterDisplay</div>
-    <div>PlayerFrame</div>
-    <div>LivingChat</div>
-    <div>WolvesChat</div>
-    <div>ChatToggle</div>
-    <div>Voting</div>
-    <div>Ruleset</div>
-    <div>StartButton</div>
-  </div>)
+    //TODO: Fill in components properly with handlers.
+    <div>
+      <Header props={phaseResult} />
+      <div>CenterDisplay</div>
+      <div>PlayerFrame</div>
+      <div>LivingChat</div>
+      <div>WolvesChat</div>
+      <div>ChatToggle</div>
+      <div>Voting</div>
+      <div>Ruleset</div>
+      <div>StartButton</div>
+    </div>)
 }
 
 export default GamePage;

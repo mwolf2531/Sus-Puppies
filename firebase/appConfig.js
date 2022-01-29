@@ -61,18 +61,23 @@ async function updateUserEmail(username, email, nickname) {
   console.log(results);
 }
 
-updateUserEmail('user', 'newEmail@example.com', 'dogman');
+// updateUserEmail('user', 'newEmail@example.com', 'dogman');
 
 // Routes:==========================================
 
+const getValue = (value) => {
+  return value;
+};
 //Get Entire Gamestate Function
-const getGameState = () => {
-  const currentGame = ref(db);
-  onValue(currentGame, (snapshot) => {
-    console.log(snapshot.val());
-    return (snapshot.val());
+const getGameState = (cb) => {
+  const state = ref(db);
+  onValue(state, (snapshot) => {
+    const data = snapshot.val();
+    console.log('this is the data', data.gameState);
+    // obj[gameState] = data.gameState;
+    cb(data.gameState);
   });
-}
+};
 
 const updateGameState = async (gameState) => {
   const updates = {};
@@ -80,9 +85,9 @@ const updateGameState = async (gameState) => {
   const results = await update(ref(db), updates);
   console.log(results);
   return results;
-}
+};
 
-const phaseCycle = () => { };
+const phaseCycle = () => {};
 // phase cycle
 // if end of game
 // set game status = ended
@@ -97,12 +102,12 @@ const phaseCycle = () => { };
 // clear voting
 
 const routes = {
-  joinGame: () => { },
+  joinGame: () => {},
   // join game
   // create host if playerinfo array is empty
   // if playerinfo length greater than one
   // push player  into playerInfo array
-  startGame: () => { },
+  startGame: () => {},
   // start game
   // set game status from setup to playing
   // user submits 'x' number of wolves
@@ -113,18 +118,18 @@ const routes = {
   // clear previous results
   // clear all chats
   // reset phaseresults array
-  pauseGame: () => { },
+  pauseGame: () => {},
   // pause game
   // set game status to pause
   // if host changes state to pause or if player disconnected
-  resumeGame: () => { },
+  resumeGame: () => {},
   // resume game
   // set game status to playing
   ghostChatSubmit: async (player_id, message) => {
     // ghostChat => submit message
     // takes id, message
     const gameState = await getGameState();
-    const infoArray = gameState.playerInfo
+    const infoArray = gameState.playerInfo;
     for (let i = 0; i < infoArray.length; i++) {
       if (infoArray[i].player_id === player_id) {
         let name = infoArray[i].name;
@@ -135,13 +140,13 @@ const routes = {
     const submission = [name, message];
     gameState.ghostChats.push(submission);
     const result = await updateGameState();
-    return(result);
+    return result;
   },
-  villagerChatSubmit: () => { },
+  villagerChatSubmit: () => {},
   // living chat => submit message
-  wolfChatSubmit: () => { },
+  wolfChatSubmit: () => {},
   // wolf chat => submit message
-  playerVoteSubmit: () => { },
+  playerVoteSubmit: () => {},
   // player votes => submit vote
   // check for all votes
   // if not all votes send game state
@@ -149,7 +154,12 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: () => { },
+  wolfVoteSubmit: async (obj) => {
+    // console.log('this is in wolfVote', obj);
+    getGameState(wolfVoteSubmit);
+    const state = obj;
+    console.log('this is state', state);
+  },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC
   // wolves have to vote
@@ -165,3 +175,6 @@ const routes = {
   // phase cycle
   // send
 };
+
+// routes.wolfVoteSubmit();
+getGameState();

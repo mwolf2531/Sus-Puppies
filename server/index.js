@@ -6,9 +6,9 @@ app.use(express.json());
 app.use(express.static(__dirname + '/../public'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  res.send('Hello World!');
+});
 
 app.listen(port, () => {
-  console.log(`Werewolf listening on port ${port}`)
-})
+  console.log(`Werewolf listening on port ${port}`);
+});

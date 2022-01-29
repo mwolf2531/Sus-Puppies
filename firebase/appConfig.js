@@ -74,7 +74,19 @@ const getGameState = () => {
   });
 };
 
+<<<<<<< HEAD
 const phaseCycle = () => {};
+=======
+const updateGameState = async (gameState) => {
+  const updates = {};
+  updates['gameState'] = gameState;
+  const results = await update(ref(db), updates);
+  console.log(results);
+  return results;
+}
+
+const phaseCycle = () => { };
+>>>>>>> main
 // phase cycle
 // if end of game
 // set game status = ended
@@ -112,11 +124,16 @@ const routes = {
   resumeGame: () => {},
   // resume game
   // set game status to playing
-  ghostChatSubmit: (player_id, message) => {
+  ghostChatSubmit: async (player_id, message) => {
     // ghostChat => submit message
     // takes id, message
+<<<<<<< HEAD
 
     const infoArray = gameState.playerInfo;
+=======
+    const gameState = await getGameState();
+    const infoArray = gameState.playerInfo
+>>>>>>> main
     for (let i = 0; i < infoArray.length; i++) {
       if (infoArray[i].player_id === player_id) {
         let name = infoArray[i].name;
@@ -125,6 +142,9 @@ const routes = {
     }
     // store as name and message (based on playerInfo data)
     const submission = [name, message];
+    gameState.ghostChats.push(submission);
+    const result = await updateGameState();
+    return(result);
   },
   villagerChatSubmit: () => {},
   // living chat => submit message

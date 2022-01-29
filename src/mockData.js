@@ -13,7 +13,7 @@ const data = {
     gameStatus: 'playing',
     phaseResults: [[1, 'Night', 'sha2']] // An array of tuples that will be displayed at the end game screen. [current day, string for time of day of event, player name]
     playerInfo: [{name: 'Dare', picture: 'todo/pic' player_id: 'sha2'}, {name: 'himmat', picture: 'todo/pic', player_id: 'sha3'}, {name: 'Megan', picture: 'todo/pic', player_id: 'sha10'}, {name: 'Ryder', picture: 'todo/pic', player_id: 'sha1'}],
-    gDareChats: chatData,
+    ghostChats: chatData,
     livingChats: chatData,
     wolfChats: chatData,
     host: 'Dare', // This is a string that will match Dare's id which is also a string.

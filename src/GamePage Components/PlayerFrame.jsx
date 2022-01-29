@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Playfield = () => {
+const PlayerFrame = () => {
 
 
   return (
@@ -10,4 +10,4 @@ const Playfield = () => {
   )
 }
 
-export default Playfield;
+export default PlayerFrame;

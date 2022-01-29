@@ -6,8 +6,8 @@ const GhostChat = () => {
   //chatLog from socket.io?
   //watch for change in chatLog
   //functions:
-    //chatForm for sending messages
-    //clearChatAtEndOfGame
+  //chatForm for sending messages
+  //clearChatAtEndOfGame
   return (
     <div>
       <h3>Ghost Chat</h3>
@@ -16,7 +16,7 @@ const GhostChat = () => {
       <div><b>player11:</b> how?</div>
       <div><b>player5:</b> you were lynched</div>
       <br />
-      <input>type your message here...</input>
+      <input></input>
       <button>send message</button>
     </div>
   )

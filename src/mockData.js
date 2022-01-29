@@ -10,8 +10,8 @@ const data = {
     playerRoles: [['sha2', 0], ['sha10', 0], ['sha3', 0], ['sha1', 2]],
     voting: [['sha2', 'sha10'], ['sha10', null], ['sha3', 'sha10'], ['sha1', 'sha10']], //Null means none votes.
     gameStatus: 'playing',
-    phaseResults: [[1, 'Night', 'sha2']] // An array of tuples that will be displayed at the end game screen. [current day, string for time of day of event, player name]
-    playerInfo: [{ name: 'Dare', picture: 'todo/pic' player_id: 'sha2' }, { name: 'himmat', picture: 'todo/pic', player_id: 'sha3' }, { name: 'Megan', picture: 'todo/pic', player_id: 'sha10' }, { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }],
+    phaseResults: [[1, 'Night', 'sha2']], // An array of tuples that will be displayed at the end game screen. [current day, string for time of day of event, player name]
+    playerInfo: [{ name: 'Dare', picture: 'todo/pic', player_id: 'sha2' }, { name: 'himmat', picture: 'todo/pic', player_id: 'sha3' }, { name: 'Megan', picture: 'todo/pic', player_id: 'sha10' }, { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }],
     ghostChats: chatData,
     livingChats: chatData,
     wolfChats: chatData,

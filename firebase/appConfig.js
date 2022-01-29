@@ -138,9 +138,9 @@ const routes = {
   // kill player on majority
   // phase cycle
   // send state
-  wolfVoteSubmit: async () => {
+  wolfVoteSubmit: async (voteTuple) => {
     const state = await getGameState();
-    console.log(state);
+    if ()
   },
   // wolf votes => submit vote
   // SEER && HEALER LOGIC

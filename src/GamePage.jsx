@@ -10,7 +10,6 @@ import WolfChat from './Components/WolfChat.jsx';
 import Timer from './Components/Timer.jsx';
 import GameButton from './Components/GameButton.jsx';
 import Voting from './Components/Voting.jsx';
-import PlayerFrame from './Components/PlayerFrame.jsx';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -56,7 +55,7 @@ const GamePage = () => {
   }
   const handlePlayerJoiningGame = () => {
     //TODO: needs to tell server when a new player has connected
-      //assign player_id, take in user's name and user's chosen icon/image
+    //assign player_id, take in user's name and user's chosen icon/image
   }
 
   //Note: Divs are being used as place holders to avoid errors for missing components
@@ -66,7 +65,7 @@ const GamePage = () => {
       <Container fluid>
         <Row>
           <Col>
-            <Header 
+            <Header
               previousResult={previousResult}
               currentDay={currentDay}
               currentPhase={currentPhase}
@@ -74,27 +73,27 @@ const GamePage = () => {
           </Col>
         </Row>
         <Row id="chat-row">
-          <Col xs={4} id="column">
-            <LivingChat 
-               livingChats={livingChats}
-               playerInfo={playerInfo}
-               playerId={playerId}
+          <Col xs={3} id="column">
+            <LivingChat
+              livingChats={livingChats}
+              playerInfo={playerInfo}
+              playerId={playerId}
             />
           </Col>
           <Col id="column">
-            <PlayerFrame 
+            <PlayerFrame
               voting={voting}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
             />
           </Col>
           <Col id="column">
-            <Timer 
+            <Timer
               timer={timer}
-              currentPhase={currentPhase}    
+              currentPhase={currentPhase}
             />
           </Col>
-          <Col id="column">
+          <Col xs={3} id="column">
             <GhostChat
               ghostChats={ghostChats}
               playerInfo={playerInfo}
@@ -106,15 +105,15 @@ const GamePage = () => {
         <Row>
           <Col id="column">
             <Ruleset
-              {/* gameLogic object containing game-specific rules (# of wolves, etc) */}
+            /* gameLogic object containing game-specific rules (# of wolves, etc) */
             />
           </Col>
           <Col id="column">
-            <GameButton 
+            <GameButton
               playerId={playerId}
               gameStatus={gameStatus}
             />
-            <Voting 
+            <Voting
               timer={timer}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
@@ -126,7 +125,7 @@ const GamePage = () => {
               wolfChats={wolfChats}
               playerInfo={playerInfo}
               playerId={playerId}
-              playerRoles={playerRoles}  
+              playerRoles={playerRoles}
             />
           </Col>
         </Row>

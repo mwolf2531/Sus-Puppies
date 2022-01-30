@@ -38,9 +38,9 @@ const GamePage = () => {
 
   const [socket, setSocket] = useState(null);
 
-  // useEffect(() => {
-  //   setSocket(io('ws://localhost:8900'));
-  // }, []);
+  useEffect(() => {
+    setSocket(io('ws://localhost:8900'));
+  }, []);
 
   //TODO: Add Lifecycle methods as needed.
   useEffect(() => {

@@ -10,6 +10,10 @@ import WolfChat from './Components/WolfChat.jsx';
 import GhostChat from './Components/GhostChat.jsx';
 import Timer from './Components/Timer.jsx';
 import PlayerFrame from './Components/PlayerFrame.jsx';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Stack from 'react-bootstrap/Stack';
 
 
 
@@ -46,15 +50,37 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
-      <Header />
-      <LivingChat />
-      <Ruleset />
-      <GameButton />
-      <Voting />
-      <WolfChat />
-      <GhostChat />
-      <Timer />
-      <PlayerFrame />
+      <Container>
+        <Row>
+          <Col><Header /></Col>
+        </Row>
+        <Row>
+          <Col xs={4}>
+            <LivingChat />
+          </Col>
+          <Col>
+            <PlayerFrame />
+          </Col>
+          <Col>
+            <Timer />
+          </Col>
+          <Col>
+            <GhostChat />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Ruleset />
+          </Col>
+          <Col>
+            <GameButton />
+            <Voting />
+          </Col>
+          <Col>
+            <WolfChat />
+          </Col>
+        </Row>
+      </Container>
     </div>
   )
 }

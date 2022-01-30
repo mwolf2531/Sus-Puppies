@@ -1,0 +1,13 @@
+#chat-row {
+  height: 60vh;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+}
+
+#column {
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+}
+

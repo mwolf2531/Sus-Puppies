@@ -3,13 +3,32 @@ import Styled from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-const Voting = () => {
+const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
+  //need to get playerId through props from GamePage
+  const [voteSelection, setVoteSelection] = useState(null);
+
+  useEffect(() => {
+    //TODO: add lifecycle method to watch for cuurentPhase change
+  }, [currentPhase])
+
+  const submitVote = () => {
+    //EITHER:
+    //TODO: send voteSelection to handleVoting function in GamePage
+    //OR
+    //TODO: send voteSelection directly to server
+  }
+
   return (
     <>
       <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        {playerInfo
+          .filter(player => player.player_id !== playerId)
+          .map((player, idx) =>
+            {return <Dropdown.Item href="#/action-1" key={idx} >{player.name}</Dropdown.Item>}
+            // QUESTION for MEGAN: do we need the href tag to be unique for each dropdown item?
+            // TODO: figure out how to input index href tag so they are unique
+          )
+        }
       </DropdownButton>
       <button type="button">Skip Vote</button>
       <button type="button">Submit</button>

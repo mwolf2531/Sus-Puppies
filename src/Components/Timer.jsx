@@ -33,7 +33,7 @@ const Timer = (props) => {
   // }, [timeLeft])
 
   return (
-    <div>
+    <div id='column' >
       <h2>Timer</h2>
       <Sun />
       <Moon />

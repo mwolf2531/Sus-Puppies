@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { gameState, playerState } from './mockData.js';
 import PlayerFrame from './Components/PlayerFrame.jsx';
@@ -16,10 +16,9 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
 
-
+import { io } from 'socket.io-client';
 
 const GamePage = () => {
-
   //Note: These states are not final in anyway.
   const [timer, setTimer] = useState(0);
   const [previousResult, setPreviousResult] = useState('');
@@ -36,6 +35,12 @@ const GamePage = () => {
   const [host, setHost] = useState('');
   const [playerId, setPlayerId] = useState('');
 
+
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io('ws://localhost:8900'));
+  }, []);
 
   //TODO: Add Lifecycle methods as needed.
 
@@ -62,6 +67,17 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
+<<<<<<< HEAD
+      <Header />
+      <LivingChat socket={socket} />
+      <Ruleset />
+      <GameButton />
+      <Voting />
+      <WolfChat />
+      <GhostChat />
+      <Timer />
+      <PlayerFrame />
+=======
       <Container fluid>
         <Row>
           <Col>
@@ -126,8 +142,9 @@ const GamePage = () => {
           </Col>
         </Row>
       </Container>
+>>>>>>> main
     </div>
-  )
-}
+  );
+};
 
 export default GamePage;

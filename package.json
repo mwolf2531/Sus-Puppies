@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Multiplayer online version of classic accusation game Werewolf!",
   "private": true,
-
   "scripts": {
     "webpack": "webpack --watch",
     "start": "nodemon server/index.js"
@@ -28,7 +27,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.1",
     "react-dom": "^17.0.2",
-    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

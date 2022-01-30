@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Header = ({ message, currentDay }) => {
+const Header = ({ currentPhase, currentDay, previousResult }) => {
   return (
     <div>
-      <div>Sus Puppies!</div>
-      <div>{message}</div>
-      <div>{currentDay}</div>
+      <span>Sus Puppies!</span>
+      <span>{previousResult}</span>
+      <span>{currentPhase}</span>
+      <span>{currentDay}</span>
     </div>
   )
 }

@@ -17,7 +17,7 @@ const data = {
     wolfChats: chatData, //Himmat: I'm picturing this as an array. Need to change in GamePage if different
     host: 'sha2', // This is a string that will match Dare's id which is also a string.
     //QUESTION: where will the Ruleset component get data about the current game rules?
-      //we mentioned have a GameLogic object listing the particular game rules
+    //we mentioned have a GameLogic object listing the particular game rules
   },
   playerState: {
     player_id: 'host', // Asked to be a string. It could be a weird string like this: '12bx#sdr311'
@@ -25,4 +25,4 @@ const data = {
 }
 //Note: First player to log in will be mapped to host property in the incoming data.
 
-export default data;
+module.exports = { data };

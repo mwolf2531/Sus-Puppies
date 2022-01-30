@@ -10,6 +10,12 @@ import WolfChat from './Components/WolfChat.jsx';
 import Timer from './Components/Timer.jsx';
 import GameButton from './Components/GameButton.jsx';
 import Voting from './Components/Voting.jsx';
+import PlayerFrame from './Components/PlayerFrame.jsx';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Stack from 'react-bootstrap/Stack';
+
 
 
 
@@ -57,50 +63,74 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
-      <Header
-        previousResult={previousResult}
-        currentDay={currentDay}
-        currentPhase={currentPhase}
-      />
-      <LivingChat
-        livingChats={livingChats}
-        playerInfo={playerInfo}
-        playerId={playerId}
-      />
-      <Ruleset
-        {/* gameLogic object containing game-specific rules (# of wolves, etc) */}
-      />
-      <GameButton
-        playerId={playerId}
-        gameStatus={gameStatus}
-      />
-      <Voting
-        timer={timer}
-        playerInfo={playerInfo}
-        currentPhase={currentPhase}
-        playerRoles={playerRoles}
-      />
-      <WolfChat
-        wolfChats={wolfChats}
-        playerInfo={playerInfo}
-        playerId={playerId}
-        playerRoles={playerRoles}
-      />
-      <GhostChat
-        ghostChats={ghostChats}
-        playerInfo={playerInfo}
-        playerId={playerId}
-        playerRoles={playerRoles}
-      />
-      <Timer
-        timer={timer}
-        currentPhase={currentPhase}
-      />
-      <PlayerFrame
-        voting={voting}
-        playerInfo={playerInfo}
-        currentPhase={currentPhase}
-      />
+      <Container fluid>
+        <Row>
+          <Col>
+            <Header 
+              previousResult={previousResult}
+              currentDay={currentDay}
+              currentPhase={currentPhase}
+            />
+          </Col>
+        </Row>
+        <Row id="chat-row">
+          <Col xs={4} id="column">
+            <LivingChat 
+               livingChats={livingChats}
+               playerInfo={playerInfo}
+               playerId={playerId}
+            />
+          </Col>
+          <Col id="column">
+            <PlayerFrame 
+              voting={voting}
+              playerInfo={playerInfo}
+              currentPhase={currentPhase}
+            />
+          </Col>
+          <Col id="column">
+            <Timer 
+              timer={timer}
+              currentPhase={currentPhase}    
+            />
+          </Col>
+          <Col id="column">
+            <GhostChat
+              ghostChats={ghostChats}
+              playerInfo={playerInfo}
+              playerId={playerId}
+              playerRoles={playerRoles}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col id="column">
+            <Ruleset
+              {/* gameLogic object containing game-specific rules (# of wolves, etc) */}
+            />
+          </Col>
+          <Col id="column">
+            <GameButton 
+              playerId={playerId}
+              gameStatus={gameStatus}
+            />
+            <Voting 
+              timer={timer}
+              playerInfo={playerInfo}
+              currentPhase={currentPhase}
+              playerRoles={playerRoles}
+            />
+          </Col>
+          <Col id="column">
+            <WolfChat
+              wolfChats={wolfChats}
+              playerInfo={playerInfo}
+              playerId={playerId}
+              playerRoles={playerRoles}  
+            />
+          </Col>
+        </Row>
+      </Container>
     </div>
   )
 }

@@ -80,15 +80,11 @@ const GamePage = () => {
               playerId={playerId}
             />
           </Col>
-          <Col id="column">
+          <Col id="column" className="clearfix">
             <PlayerFrame
               voting={voting}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
-            />
-          </Col>
-          <Col id="column">
-            <Timer
               timer={timer}
               currentPhase={currentPhase}
             />

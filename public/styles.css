@@ -10,3 +10,13 @@
   border-style: solid;
   border-color: black;
 }
+
+#timer {
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  float: right;
+  position: relative;
+  left: -50%; /* or right 50% */
+  text-align: left;
+}

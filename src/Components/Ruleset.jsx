@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const RuleSet = () => {
+const Ruleset = () => {
   return (
     <div>
       <h3>Rule Set</h3>
@@ -13,4 +13,4 @@ const RuleSet = () => {
   )
 }
 
-export default RuleSet;
+export default Ruleset;

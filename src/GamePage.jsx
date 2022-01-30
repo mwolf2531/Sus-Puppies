@@ -50,35 +50,35 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
             <Header />
           </Col>
         </Row>
-        <Row>
-          <Col xs={4}>
+        <Row id="chat-row">
+          <Col xs={4} id="column">
             <LivingChat />
           </Col>
-          <Col>
+          <Col id="column">
             <PlayerFrame />
           </Col>
-          <Col>
+          <Col id="column">
             <Timer />
           </Col>
-          <Col>
+          <Col id="column">
             <GhostChat />
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col id="column">
             <Ruleset />
           </Col>
-          <Col>
+          <Col id="column">
             <GameButton />
             <Voting />
           </Col>
-          <Col>
+          <Col id="column">
             <WolfChat />
           </Col>
         </Row>

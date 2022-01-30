@@ -46,7 +46,7 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
-      <Header props={phaseResult} />
+      <Header />
       <LivingChat />
       <Ruleset />
       <GameButton />

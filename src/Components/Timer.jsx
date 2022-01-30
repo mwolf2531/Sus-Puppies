@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
-import sun from '../../images/sun.png';
-import moon from '../../images/moon.png';
-import arrow from '../../images/arrow.png';
+const sun = '../../images/sun.png';
+const moon = '../../images/moon.png';
+const arrow = '../../images/arrow.png';
 
 const Sun = Styled.span`
   background-image: url(${sun});
@@ -20,17 +20,17 @@ const Arrow = Styled.span`
 `;
 
 const Timer = (props) => {
-  const [timeLeft, setTimeLeft] = useState(200);
+  // const [timeLeft, setTimeLeft] = useState(200);
 
-  const tick = () => {
-    while (timeLeft >= 0) {
-      setTimeLeft(timeLeft - 1);
-    }
-  }
+  // const tick = () => {
+  //   while (timeLeft >= 0) {
+  //     setTimeLeft(timeLeft - 1);
+  //   }
+  // }
 
-  useEffect(() => {
-    tick();
-  }, [timeLeft])
+  // useEffect(() => {
+  //   tick();
+  // }, [timeLeft])
 
   return (
     <div>
@@ -38,7 +38,7 @@ const Timer = (props) => {
       <Sun />
       <Moon />
       <Arrow />
-      <span>{timeLeft}</span>
+      {/* <span>{timeLeft}</span> */}
     </div>
   )
 }

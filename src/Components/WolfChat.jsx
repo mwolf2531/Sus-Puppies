@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const WereWolfChat = () => {
+const WolfChat = () => {
   return (
     <div>
       <h3>Werewolf Chat</h3>
@@ -11,12 +11,12 @@ const WereWolfChat = () => {
       <div><b>player5:</b> I agree</div>
       <div><b>player6:</b> player8 it is</div>
       <br />
-      <input>type your message here...</input>
+      <input type="text"></input>
       <button>send message</button>
     </div>
   )
 }
 
-export default WereWolfChat;
+export default WolfChat;
 
 

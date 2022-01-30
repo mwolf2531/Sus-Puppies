@@ -7,6 +7,7 @@ import {
   push,
   update,
   child,
+  get,
 } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -66,11 +67,17 @@ updateUserEmail('user', 'newEmail@example.com', 'dogman');
 // Routes:==========================================
 
 //Get Entire Gamestate Function
-const getGameState = () => {
+const getGameState = async () => {
   const currentGame = ref(db);
-  onValue(currentGame, (snapshot) => {
-    console.log(snapshot.val());
-    return (snapshot.val());
+  let result;
+  get(currentGame).then((snapshot) => {
+    if (snapshot.exists()) {
+      console.log('why', snapshot.val());
+      result = (snapshot.val());
+      return(result);
+    }
+  }).catch((error) => {
+    console.log(error);
   });
 }
 
@@ -134,7 +141,7 @@ const routes = {
     // store as name and message (based on playerInfo data)
     const submission = [name, message];
     gameState.ghostChats.push(submission);
-    const result = await updateGameState();
+    const result = await updateGameState(gameState);
     return(result);
   },
   villagerChatSubmit: () => { },
@@ -165,3 +172,5 @@ const routes = {
   // phase cycle
   // send
 };
+const data = await getGameState();
+console.log('Conlog', data);

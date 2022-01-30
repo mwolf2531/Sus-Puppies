@@ -2,6 +2,22 @@ import React, { useState, useEffect } from 'react';
 // import Styled from 'styled-components';
 
 const GhostChat = () => {
+  const { socket } = props;
+
+  const [newMessage, setNewMessage] = useState('');
+  const [chat, setChat] = useState([]);
+
+  useEffect(() => {
+    socket?.on('ghost-chat-feed', (message) => {
+      setChat((chat) => [...chat, message]);
+    });
+  }, [socket]);
+
+  const handleMessageSubmit = (event) => {
+    event.preventDefault();
+    socket.emit('ghost-chat-send', newMessage);
+    setNewMessage('');
+  };
   //props playerName
   //chatLog from socket.io?
   //watch for change in chatLog
@@ -11,13 +27,17 @@ const GhostChat = () => {
   return (
     <div>
       <h3>Ghost Chat</h3>
-      <div><b>player1:</b> are we ded?</div>
-      <div><b>player2:</b> i think so</div>
-      <div><b>player11:</b> how?</div>
-      <div><b>player5:</b> you were lynched</div>
+      {chat.map((msg, i) => (
+        <div key={i}>{msg}</div>
+      ))}
       <br />
-      <input></input>
-      <button>send message</button>
+      <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => {
+                setNewMessage(e.target.value);
+              }}></input>
+      <button onClick={handleMessageSubmit}>send message</button>
     </div>
   )
 }

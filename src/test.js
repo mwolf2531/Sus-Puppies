@@ -1,5 +1,4 @@
 // Import the functions you need from the SDKs you need
-
 import {
   getDatabase,
   ref,
@@ -11,6 +10,8 @@ import {
 } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
+import GamePage from './GamePage.jsx';
+import React from 'react';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -39,7 +40,7 @@ const logDB = (db) => {
 
 function writeUserData(name) {
   // create game state
-  console.log(name);
+  console.log('From writeUserData Handler: ', name);
   set(ref(db), {
     gameState: {
       user: name,
@@ -47,8 +48,26 @@ function writeUserData(name) {
     },
   });
 }
+
+const updateChat = ref(db, 'gameState/');
+// onValue(updateChat, (snapshot) => {
+//   const data = snapshot.val();
+//   console.log('from updateChat: ', data);
+
+// });
+
+
+// db.on("value", function(snapshot) {
+//   const data = snapshot.val();
+//   console.log(data);
+//   <GamePage props={data}/>
+//   }
+// , (err) => {
+//   console.log('it failed', err);
+// });
+
 // reflect the new change in state.
 
 // able to reac and write the state.
 
-export default writeUserData
+export {writeUserData, updateChat};

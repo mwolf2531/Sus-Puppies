@@ -189,7 +189,6 @@
 // // const firebaseConfig = require('./firebaseConfig.json');
 // const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 // const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
-const { getDatabase } = require('firebase-admin/database');
 // getDatabase();
 // // const app = express();
 // // const port = 3000;
@@ -198,39 +197,40 @@ const { getDatabase } = require('firebase-admin/database');
 // // app.use(express.static(__dirname + '/../public'));
 
 // // app.get('/', (req, res) => {
-// //   res.send('Hello World!');
-// // });
+  // //   res.send('Hello World!');
+  // // });
 
-// // app.listen(port, () => {
-// //   console.log(`Werewolf listening on port ${port}`);
-// // });
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAcf1dGs8NmySy5P9oRoggd4y-aSIXxZco",
-//   authDomain: "sus-puppies.firebaseapp.com",
-//   databaseURL: "https://sus-puppies-default-rtdb.firebaseio.com",
-//   projectId: "sus-puppies",
-//   storageBucket: "sus-puppies.appspot.com",
-//   messagingSenderId: "132969167509",
-//   appId: "1:132969167509:web:f45792a0d2f09aef4f799c",
-//   measurementId: "G-FSJ9VERHPW"
-// };
-
-
-// const app = initializeApp(firebaseConfig);
-// // const app = initializeApp({
-// //   credential: cert('./firebaseConfig.json'),
-// //   databaseURL: 'https://sus-puppies-default-rtdb.firebaseio.com/'
-// // });
+  // // app.listen(port, () => {
+    // //   console.log(`Werewolf listening on port ${port}`);
+    // // });
+    // const firebaseConfig = {
+      //   apiKey: "AIzaSyAcf1dGs8NmySy5P9oRoggd4y-aSIXxZco",
+      //   authDomain: "sus-puppies.firebaseapp.com",
+      //   databaseURL: "https://sus-puppies-default-rtdb.firebaseio.com",
+      //   projectId: "sus-puppies",
+      //   storageBucket: "sus-puppies.appspot.com",
+      //   messagingSenderId: "132969167509",
+      //   appId: "1:132969167509:web:f45792a0d2f09aef4f799c",
+      //   measurementId: "G-FSJ9VERHPW"
+      // };
 
 
-// // console.log('????', app);
-// const db = getDatabase(app);
+      // const app = initializeApp(firebaseConfig);
+      // // const app = initializeApp({
+        // //   credential: cert('./firebaseConfig.json'),
+        // //   databaseURL: 'https://sus-puppies-default-rtdb.firebaseio.com/'
+        // // });
 
-// // console.log(db)
+
+        // // console.log('????', app);
+        // const db = getDatabase(app);
+
+        // // console.log(db)
 
 
 
 const admin = require("firebase-admin");
+const { getDatabase } = require('firebase-admin/database');
 
 const serviceAccount = require("./firebaseConfig.json");
 
@@ -242,21 +242,13 @@ const x = admin.initializeApp({
 const db = getDatabase(x);
 // const ref = db.ref("restricted_access/secret_document");
 const ref = db.ref();
+
+
 ref.on("value", function(snapshot) {
   console.log(snapshot.val());
-  // set(ref(db), {
-  //   gameState: {
-  //     user: name,
-  //     email: `${name}@suspup.com`,
-  //   },
-  });
 }, (err) => {
   console.log('it failed', err);
 });
-
-// To make a change based on an incoming state change
-
-// able to read and write the state.
 
 
 

@@ -1,8 +1,39 @@
 import React, { useState, useEffect } from 'react';
 // import Styled from 'styled-components';
-import cb from '../test.js';
-const LivingChat = () => {
+import {writeUserData, updateChat} from '../test.js';
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  push,
+  update,
+  child,
+} from 'firebase/database';
+const LivingChat = ({props}) => {
+  let data = props;
   const [nameTest, setNameTest] = useState('');
+  const [log, setLog] = useState({});
+  const [chat, setChat] = useState('');
+
+  onValue(updateChat, (snapshot) => {
+    const data = snapshot.val();
+    console.log('from updateChat: ', data.email);
+    if (chat !== data.email){
+      setChat(data.email);
+    }
+  });
+  // useEffect(() => {
+  //   console.log('----', props)
+  //   setLog(props);
+  //   // return () => {
+  //   //   // Clean up the subscription
+  //   //   subscription.unsubscribe();
+  //   // };
+  // }, [props]);
+  // const data = props.email;
+
+  console.log('From Living Chat Component: ', props, 'this has to run');
   return (
     <div>
       <h3>Living Chat</h3>
@@ -12,6 +43,7 @@ const LivingChat = () => {
       <div><b>player5:</b> vote for player11!</div>
       <div><b>player3:</b> I think it was player5</div>
       <div><b>player8:</b> player5 sus</div>
+      <div>{chat}</div>
       <br />
       <input value={nameTest} onChange={(e) =>{
         e.preventDefault();
@@ -19,10 +51,11 @@ const LivingChat = () => {
       }}></input>
       <button onClick={(e) => {
         e.preventDefault();
-        cb(nameTest)
+        writeUserData(nameTest)
       }}>send message</button>
+      <div>{`${JSON.stringify(log)}`}</div>
     </div>
   )
 }
 
-export default LivingChat;
+export  {LivingChat};

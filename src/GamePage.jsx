@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from './Components/Header.jsx';
-import LivingChat from './Components/LivingChat.jsx';
+import {LivingChat} from './Components/LivingChat.jsx';
 import Ruleset from './Components/Ruleset.jsx';
 import GameButton from './Components/GameButton.jsx';
 import Voting from './Components/Voting.jsx';
@@ -13,7 +13,7 @@ import PlayerFrame from './Components/PlayerFrame.jsx';
 
 
 
-const GamePage = () => {
+const GamePage = (props) => {
 
   //Note: These states are not final in anyway.
   const [time, setTime] = useState(0);

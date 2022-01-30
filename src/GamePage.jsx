@@ -99,6 +99,7 @@ const GamePage = () => {
               playerInfo={playerInfo}
               playerId={playerId}
               playerRoles={playerRoles}
+              socket={socket}
             />
           </Col>
         </Row>
@@ -123,6 +124,7 @@ const GamePage = () => {
               playerInfo={playerInfo}
               playerId={playerId}
               playerRoles={playerRoles}
+              socket={socket}
             />
           </Col>
         </Row>

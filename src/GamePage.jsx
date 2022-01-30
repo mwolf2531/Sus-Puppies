@@ -67,17 +67,6 @@ const GamePage = () => {
   return (
     //TODO: Fill in components properly with handlers.
     <div>
-<<<<<<< HEAD
-      <Header />
-      <LivingChat socket={socket} />
-      <Ruleset />
-      <GameButton />
-      <Voting />
-      <WolfChat />
-      <GhostChat />
-      <Timer />
-      <PlayerFrame />
-=======
       <Container fluid>
         <Row>
           <Col>
@@ -142,7 +131,6 @@ const GamePage = () => {
           </Col>
         </Row>
       </Container>
->>>>>>> main
     </div>
   );
 };

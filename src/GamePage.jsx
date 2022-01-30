@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from './Components/Header.jsx';
@@ -11,10 +11,9 @@ import GhostChat from './Components/GhostChat.jsx';
 import Timer from './Components/Timer.jsx';
 import PlayerFrame from './Components/PlayerFrame.jsx';
 
-
+import { io } from 'socket.io-client';
 
 const GamePage = () => {
-
   //Note: These states are not final in anyway.
   const [time, setTime] = useState(0);
   const [centerDisplay, setCenterDisplay] = useState({});
@@ -28,26 +27,32 @@ const GamePage = () => {
   const [gameLogic, setGameLogic] = useState({});
   const [votingRecord, setVotingRecord] = useState({});
 
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io('ws://localhost:8900'));
+  }, []);
+
   //TODO: Add Lifecycle methods as needed.
 
   //TODO: create handleFunctions. Esp for GameEvents
 
   const handlePhaseChange = () => {
     //TODO:
-  }
+  };
   const handleVoting = () => {
     //TODO:
-  }
+  };
   const handleEndOfGame = () => {
     //TODO:
-  }
+  };
 
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
     <div>
       <Header />
-      <LivingChat />
+      <LivingChat socket={socket} />
       <Ruleset />
       <GameButton />
       <Voting />
@@ -56,7 +61,7 @@ const GamePage = () => {
       <Timer />
       <PlayerFrame />
     </div>
-  )
-}
+  );
+};
 
 export default GamePage;

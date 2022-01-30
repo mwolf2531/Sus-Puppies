@@ -4,8 +4,6 @@ const io = require('socket.io')(8900, {
   },
 });
 
-const array = [];
-
 io.on('connection', (socket) => {
   console.log('user connected with socket id :', socket.id);
 

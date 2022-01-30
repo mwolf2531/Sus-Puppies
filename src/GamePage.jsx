@@ -15,7 +15,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
-
 import { io } from 'socket.io-client';
 
 const GamePage = () => {
@@ -35,7 +34,6 @@ const GamePage = () => {
   const [host, setHost] = useState('');
   const [playerId, setPlayerId] = useState('');
 
-
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -48,20 +46,20 @@ const GamePage = () => {
 
   const handlePhaseChange = () => {
     //TODO: needs to update currentDay and currentPhase on server when timer runs out
-  }
+  };
   //QUESTION: are individual player votes sent individually to the server?
   // or are they updated in GamePage to be sent up all together?
   const handleVoting = () => {
     //TODO: needs to send voting object to the server to get phaseResults
-  }
+  };
   const handleEndOfGame = () => {
     //endgame conditions might automatically be determined from the server
     //TODO: needs to send playerRoles (and voting?) to server to determine if game ends
-  }
+  };
   const handlePlayerJoiningGame = () => {
     //TODO: needs to tell server when a new player has connected
     //assign player_id, take in user's name and user's chosen icon/image
-  }
+  };
 
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
@@ -83,6 +81,7 @@ const GamePage = () => {
               livingChats={livingChats}
               playerInfo={playerInfo}
               playerId={playerId}
+              socket={socket}
             />
           </Col>
           <Col id="column" className="clearfix">
@@ -110,10 +109,7 @@ const GamePage = () => {
             />
           </Col>
           <Col id="column">
-            <GameButton
-              playerId={playerId}
-              gameStatus={gameStatus}
-            />
+            <GameButton playerId={playerId} gameStatus={gameStatus} />
             <Voting
               timer={timer}
               playerInfo={playerInfo}

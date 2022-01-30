@@ -52,7 +52,9 @@ const GamePage = () => {
     <div>
       <Container>
         <Row>
-          <Col><Header /></Col>
+          <Col>
+            <Header />
+          </Col>
         </Row>
         <Row>
           <Col xs={4}>

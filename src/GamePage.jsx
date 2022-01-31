@@ -85,7 +85,9 @@ const GamePage = () => {
     //TODO: Fill in components properly with handlers.
     <div>
       <Container fluid>
-        <Login />
+        <Login
+        socket={socket}
+        />
         <Row>
           <Col>
             <Header

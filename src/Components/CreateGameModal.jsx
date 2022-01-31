@@ -1,18 +1,59 @@
 import React, { useState, useEffect } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
-const CreateGameModal = () => {
 
+const CreateGameModal = ({socket}) => {
+
+  const [show, setShow] = useState(true);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleChange = (e, stateSet) => {
+    e.preventDefault();
+    const data  = e.target.value;
+    stateSet(data);
+  };
+
+  useEffect(() => {
+
+  }, [socket]);
+  const formMaker = (nameOfForm, type, numMax, isRequired) => {
+
+    return (
+      type === 'number' ?
+      <label htmlFor={`${nameOfForm-form}`}>{`${nameOfForm}`}</label>
+      <input type="number" id={`${nameOfForm-form}`} name={`${nameOfForm}`} required={isRequired}
+       minlength="4" maxlength="8" size="10"></input>
+       : null
+
+    )
+
+  }
 
   return (
-    <div>
-      Number of Wolves:
-      <input type="text"></input>
-      <div>
-        <button type="button">Create Game</button>
-      </div>
-    </div>
-  )
-
+    <>
+      <Modal
+      show={show}
+      onHide={handleClose}
+      enforceFocus={true}
+      >
+        <Modal.Header closeButton={false}>
+          <Modal.Title>Welcome to Sus Puppies!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Game Options</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="primary"
+            onClick={(e) => {handleClose}}
+            >
+            Create Game
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
 
 export default CreateGameModal;

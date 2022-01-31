@@ -4,9 +4,9 @@ const Header = ({ currentPhase, currentDay, previousResult }) => {
 
   return (
     <div>
-      <span>Sus Puppies!</span>
-      <span>{previousResult}</span>
-      <span>{currentPhase}</span>
+      <span>Sus Puppies! </span>
+      <span>{previousResult} </span>
+      <span>{currentPhase} </span>
       <span>{currentDay}</span>
     </div>
   )

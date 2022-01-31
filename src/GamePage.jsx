@@ -110,7 +110,6 @@ const GamePage = () => {
               playerInfo={playerInfo}
               currentPhase={currentPhase}
               timer={timer}
-              currentPhase={currentPhase}
             />
           </Col>
           <Col xs={3} className="column whiteCard">
@@ -132,6 +131,7 @@ const GamePage = () => {
           <Col className="column whiteCard no-margin">
             <GameButton
               playerId={playerId}
+              playerInfo={playerInfo}
               gameStatus={gameStatus}
             />
             <Voting

@@ -13,16 +13,17 @@ const gameState = {
   currentPhase: '',
   gameStatus: '',
   phaseResults: [],
-  users: [],
+  playerInfo: [],
   votes: [],
   wolves: {
     number: 0,
     players: [],
   },
-  host: {},
+  // host: {},
 };
 
 io.on('connection', (socket) => {
+  const socketID = socket.id;
   socket.on('login', ({ username, password }) => {
     console.log(`Login attempt: userName ${username} password: ${password}`);
     // TODO: login logic~
@@ -33,7 +34,7 @@ io.on('connection', (socket) => {
       data: {
         username,
         password,
-        socket: socket.id,
+        socket: socketID,
       },
     };
     console.log(options.data);
@@ -41,8 +42,13 @@ io.on('connection', (socket) => {
       .then(({body, status, data}) => {
         console.log(`status: ${status} ${data}`);
         if (data !== "Error, Bad Username/Password. Check Password"){
-          gameState.host
+
+          if (gameState.playerInfo.length === 0) {
+            gameState.host = {username, socket: socketID, host: true};
+          }
+          gameState.playerInfo.push({username, socket: socketID});
           io.emit('login-success', body);
+          io.emit('playerInfo-feed', gameState.playerInfo);
         } else {
           io.emit('login-failed', 'Incorrect password!')
         }

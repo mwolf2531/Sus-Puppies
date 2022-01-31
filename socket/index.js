@@ -11,9 +11,9 @@ const gameState = {
   previousResult: '',
   currentDay: 0,
   currentPhase: '',
-  gameStatus: '',
   phaseResults: [],
   playerInfo: [],
+  gameStatus: '',
   votes: [],
   wolves: {
     number: 0,
@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
         if (data !== 'Error, Bad Username/Password. Check Password') {
-          const playerState = {username, player_id: socketID};
+          const playerState = { username, player_id: socketID };
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;
@@ -67,6 +67,13 @@ io.on('connection', (socket) => {
   //host logic
   socket.on('host-send', (messageOrObject) => {
     // change server game state based on host command
+    if (message === 'pause') {
+    } else if (message === 'resume') {
+    } else {
+    }
+
+    //rulesSet sender TODO:
+    // io.emit('ruleset-feed', object);
 
     // send game status to all players (including host)
     io.emit('gameStatus-feed', stringOfServerGameStatus);
@@ -90,21 +97,33 @@ io.on('connection', (socket) => {
     if (gameState.currentPhase === 'day') {
       if (gameState.votes.length === numLiving || gameState.timer === 0) {
         phaseChange();
+        let returnObj = {
+          timer: gameState.timer,
+          previousResult: gameState.previousResult,
+          currentDay: gameState.currentDay,
+          currentPhase: gameState.currentPhase,
+          phaseResults: gameState.phaseResults,
+          playerInfo: gameState.playerInfo,
+        };
+
+        io.emit('phaseChange-feed', returnObj);
       }
     } else {
       if (gameState.votes.length === numWolves || gameState.timer === 0) {
         phaseChange();
+        let returnObj = {
+          timer: gameState.timer,
+          previousResult: gameState.previousResult,
+          currentDay: gameState.currentDay,
+          currentPhase: gameState.currentPhase,
+          phaseResults: gameState.phaseResults,
+          playerInfo: gameState.playerInfo,
+        };
+
+        io.emit('phaseChange-feed', returnObj);
       }
     }
-    // if voting logic is finished send updated users array from game state
-    io.emit('playerInfo-feed', array);
   });
-
-  // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase
-  // io.emit('header-feed', object);
-
-  //rulesSet sender TODO:
-  // io.emit('ruleset-feed', object);
 
   // living chat logic
   socket.on('living-chat-send', (message) => {
@@ -123,7 +142,6 @@ io.on('connection', (socket) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
   });
-
 });
 
 instrument(io, { auth: false });
@@ -172,12 +190,20 @@ const phaseChange = () => {
       if (gameState.users[victim].role === 2) {
         gameState.users[victim].role = 3;
         numWolves--;
-        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+        gameState.phaseResults.push([
+          gameState.currentDay,
+          gameState.currentPhase,
+          victim,
+        ]);
       } else {
         //Hang Other Victim
         gameState.users[victim].role = 1;
         numVillagers--;
-        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+        gameState.phaseResults.push([
+          gameState.currentDay,
+          gameState.currentPhase,
+          victim,
+        ]);
       }
       gameState.previousResult = victim + ' was hung yesterday!';
     }
@@ -198,7 +224,7 @@ const phaseChange = () => {
         victim = voteKeys[i];
         maxVotes = votes[voteKeys[i]];
       } else if (votes[voteKeys[i]] === maxVotes) {
-        let coinFlip = (Math.floor(Math.random() * 2) == 0);
+        let coinFlip = Math.floor(Math.random() * 2) == 0;
         if (coinFlip) {
           victim = voteKeys[i];
         }
@@ -209,7 +235,11 @@ const phaseChange = () => {
     }
     gameState.users[victim].role = 1;
     numVillagers--;
-    gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+    gameState.phaseResults.push([
+      gameState.currentDay,
+      gameState.currentPhase,
+      victim,
+    ]);
     gameState.previousResult = victim + ' was eaten last night!';
   }
   //2. Check if game has ended
@@ -217,9 +247,9 @@ const phaseChange = () => {
     console.log('Villagers win');
   } else if (wolves >= numVillagers) {
     console.log('Wolves Win');
-  } else
+  }
   //3. Game Continues
-  if (gameState.currentPhase === 'day') {
+  else if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
     gameState.timer = 90;
     gameState.votes = [];

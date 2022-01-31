@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { GiSquare, GiCheckMark, GiHelp, GiWolfHowl, GiHeartPlus, GiBleedingEye} from 'react-icons/gi';
+import { GiSquare, GiCheckMark, GiHelp, GiWolfHowl, GiHeartPlus, GiBleedingEye } from 'react-icons/gi';
 import werewolf from '../../public/images/werewolf.png';
 import s1 from '../../public/images/1.svg';
 
@@ -21,12 +21,12 @@ const Player = ({ player, currentPhase, number }) => {
   }, [currentPhase])
 
   return (
-    <div>
+    <div className="item2">
       {player === undefined
-      ? <h5>Player Name</h5>
-      : <h5>{player.name}</h5>
+        ? <h5>Player Name</h5>
+        : <h5>{player.name}</h5>
       }
-      <span onClick={handleClick} style={{height:"4vh"}}>
+      <span onClick={handleClick} style={{ height: "4vh" }}>
         {currentIcon}
       </span>
       <div>

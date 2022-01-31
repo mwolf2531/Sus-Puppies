@@ -14,6 +14,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
+import Login from './Components/Login.jsx';
+
 
 
 import { io } from 'socket.io-client';
@@ -82,9 +84,12 @@ const GamePage = () => {
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
-    <div>
-      <Container fluid>
-        <Row>
+    <>
+      <Container fluid className="set-height" id="game">
+        <Login
+        socket={socket}
+        />
+        <Row id="header">
           <Col>
             <Header
               previousResult={previousResult}
@@ -94,7 +99,7 @@ const GamePage = () => {
           </Col>
         </Row>
         <Row id="chat-row">
-          <Col xs={3} id="column">
+          <Col xs={3} className="column whiteCard">
             <LivingChat
               livingChats={livingChats}
               playerInfo={playerInfo}
@@ -102,16 +107,15 @@ const GamePage = () => {
               socket={socket}
             />
           </Col>
-          <Col id="column" className="clearfix">
+          <Col className="column">
             <PlayerFrame
               voting={voting}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
               timer={timer}
-              currentPhase={currentPhase}
             />
           </Col>
-          <Col xs={3} id="column">
+          <Col xs={3} className="column whiteCard">
             <GhostChat
               ghostChats={ghostChats}
               playerInfo={playerInfo}
@@ -121,15 +125,16 @@ const GamePage = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col id="column">
+        <Row id="bottom-row">
+          <Col className="column whiteCard">
             <Ruleset
             /* gameLogic object containing game-specific rules (# of wolves, etc) */
             />
           </Col>
-          <Col id="column">
+          <Col className="column whiteCard no-margin">
             <GameButton
               playerId={playerId}
+              playerInfo={playerInfo}
               gameStatus={gameStatus}
             />
             <Voting
@@ -139,7 +144,7 @@ const GamePage = () => {
               playerRoles={playerRoles}
             />
           </Col>
-          <Col id="column">
+          <Col className="column whiteCard">
             <WolfChat
               wolfChats={wolfChats}
               playerInfo={playerInfo}
@@ -149,8 +154,8 @@ const GamePage = () => {
             />
           </Col>
         </Row>
-      </Container>
-    </div>
+      </Container >
+    </ >
   );
 };
 

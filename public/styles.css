@@ -21,7 +21,7 @@ body {
 #header {
   background: rgba(255,255,255,.12);
   color: white;
-  height: 40px;
+  height: 85px;
   margin-bottom:12px;
   margin-top: 12px;
   margin-left: 1px;
@@ -56,7 +56,7 @@ body {
 }
 
 #bottom-row{
-  height:365px;
+  height:335px;
 }
 
 .column {
@@ -85,7 +85,22 @@ body {
 
 .chat-message {
   position: absolute;
+  display: flex;
   bottom: 0;
   padding: 23px;
+  padding-left: 0px;
+  margin: auto;
+  width: 25%;
 }
+
+.wolf-chat-message {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  padding: 23px;
+  padding-left: 0px;
+  margin: auto;
+  width: 32%;
+}
+
 

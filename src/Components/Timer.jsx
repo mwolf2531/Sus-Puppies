@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
-const sun = './images/sun.png';
-const moon = './images/moon.png';
-const arrow = './images/arrow.png';
+import { GlobalStyles, SectionHeader } from '../../public/sharedStyles.js';
+// const sun = './images/sun.png';
+// const moon = './images/moon.png';
+// const arrow = './images/arrow.png';
+import sun from '../../public/images/sun.png';
+import moon from '../../public/images/moon.png';
+import arrow from '../../public/images/arrow.png';
 
-const Sun = Styled.span`
-  background-image: url(${sun});
-  height: 20vh;
-`;
+// const Sun = Styled.span`
+//   background-image: url(${sun});
+//   height: 20vh;
+// `;
 
-const Moon = Styled.span`
-  background-image: url(${moon});
-  height: 20vh;
-`;
+// const Moon = Styled.span`
+//   background-image: url(${moon});
+//   height: 20vh;
+// `;
 
-const Arrow = Styled.span`
-  background-image: url(${arrow});
-  height: 20vh;
-`;
+// const Arrow = Styled.span`
+//   background-image: url(${arrow});
+//   height: 20vh;
+// `;
 
 const Timer = ({ timer, currentPhase }) => {
   // const [timeLeft, setTimeLeft] = useState(200);
@@ -34,22 +38,33 @@ const Timer = ({ timer, currentPhase }) => {
 
   return (
     <div id='column' >
-      <h2>Timer</h2>
+      <SectionHeader>Timer</SectionHeader>
       {currentPhase === 'day'
       ? (
       <>
-        <Sun />
-        <Arrow />
-        <Moon />
+        <span style={{float:"left"}}>
+          <div style={{display:"flex", justifyContent: "center", size:"50vh"}}>
+            {timer}
+          </div>
+          <img src={arrow} style={{height:"7vh"}} />
+        </span>
+        <span style={{float:"right"}}>
+          <img src={moon} style={{height:"20vh"}}/>
+        </span>
       </>)
       : (
       <>
-        <Moon />
-        <Arrow />
-        <Sun />
+        <span style={{float:"left"}}>
+          <div style={{display:"flex", justifyContent: "center", size:"50vh"}}>
+            {timer}
+          </div>
+          <img src={arrow} style={{height:"7vh"}} />
+        </span>
+        <span style={{float:"right"}}>
+          <img src={sun} style={{height:"20vh"}} />
+        </span>
       </>)
       }
-      <span>{timer}</span>
     </div>
   )
 }

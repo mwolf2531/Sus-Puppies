@@ -18,7 +18,7 @@ const PlayerFrame = (props) => {
           <Row id="playerFrame-top-row">
             Top Row
           </Row>
-          <Row id="playerFrame-table">
+          <Row id="playerFrame-timer">
             <Timer
               timer={props.timer}
               currentPhase={props.currentPhase}

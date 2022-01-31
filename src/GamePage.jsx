@@ -96,7 +96,7 @@ const GamePage = () => {
           </Col>
         </Row>
         <Row id="chat-row">
-          <Col xs={3} className="column">
+          <Col xs={3} className="column whiteCard">
             <LivingChat
               livingChats={livingChats}
               playerInfo={playerInfo}
@@ -113,7 +113,7 @@ const GamePage = () => {
               currentPhase={currentPhase}
             />
           </Col>
-          <Col xs={3} className="column">
+          <Col xs={3} className="column whiteCard">
             <GhostChat
               ghostChats={ghostChats}
               playerInfo={playerInfo}
@@ -124,12 +124,12 @@ const GamePage = () => {
           </Col>
         </Row>
         <Row id="bottom-row">
-          <Col className="column">
+          <Col className="column whiteCard">
             <Ruleset
             /* gameLogic object containing game-specific rules (# of wolves, etc) */
             />
           </Col>
-          <Col className="column">
+          <Col className="column whiteCard no-margin">
             <GameButton
               playerId={playerId}
               gameStatus={gameStatus}
@@ -141,7 +141,7 @@ const GamePage = () => {
               playerRoles={playerRoles}
             />
           </Col>
-          <Col className="column">
+          <Col className="column whiteCard">
             <WolfChat
               wolfChats={wolfChats}
               playerInfo={playerInfo}

@@ -6,6 +6,7 @@ html {
 
 body {
   height: 100%;
+  background: rgba(26, 15, 60, 1) !important;
 }
 
 #game{
@@ -18,17 +19,21 @@ body {
 }
 
 #header {
-  background: rgba(26, 15, 60, 0.75);
+  background: rgba(255,255,255,.12);
   color: white;
   height: 40px;
+  margin-bottom:12px;
+  margin-top: 12px;
+  margin-left: 1px;
+  margin-right: 1px;
+  border-radius: 12px;
 }
 
 #chat-row {
   flex:1;
-  border: 1px;
+  border: 0px;
   border-style: solid;
-  border-color: black;
-  position: relative; /*cb*/
+  position: relative;
 }
 
 #playerFrame-col-2{
@@ -39,23 +44,35 @@ body {
 #playerFrame-top-row{
   height:100px;
 }
-#playerFrame-table{
+
+#playerFrame-timer{
   flex:1;
+  border: 1px solid white;
+  border-radius: 12px;
 }
+
 #playerFrame-bottom-row{
   height:100px;
 }
 
 #bottom-row{
-  height:220px;
+  height:365px;
 }
 
 .column {
-  border: 1px;
-  border-style: solid;
-  border-color: black;
-  background: rgba(26, 15, 60, 0.75);
   color: white;
+  border-radius: 12px;
+}
+
+.whiteCard{
+  background: rgba(255,255,255,.12);
+  margin:12px;
+  padding:12px;
+}
+
+.no-margin{
+  margin-left:0px;
+  margin-right:0px;
 }
 
 #row-2 {

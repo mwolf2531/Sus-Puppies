@@ -20,7 +20,6 @@ const { socket } = props;
     socket.emit('ghost-chat-send', newMessage);
     setNewMessage('');
   };
-
   return (
     <div>
       <h3>Ghost Chat</h3>

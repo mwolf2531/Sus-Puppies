@@ -10,11 +10,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
+  console.log('POST: /login', req.body);
   try {
-    const username = req.query.username;
-    const password = req.query.password;
-    const socket = req.query.socket;
+    const username = req.body.username;
+    const password = req.body.password;
+    const socket = req.body.socket;
     const data = await login(username, password, socket);
     res.status(200).send(data);
   } catch (err) {
@@ -34,7 +35,8 @@ const login = async (username, password, socket) => {
       });
       return data;
     } else if ( data.password !== password) {
-      return ("Error, Bad Username/Password. Check Password");
+      // return ("Error, Bad Username/Password. Check Password");
+      throw new Error("Error, Bad Username/Password. Check Password");
     } else {
       data = await User.findOneAndUpdate(username, {username, password, socket}, {bew: true});
       return data;

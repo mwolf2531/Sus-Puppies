@@ -11,11 +11,32 @@ const Login = ({socket}) => {
   const [header, setHeader] = useState('Please Log in :]');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const handleChange = (e, stateSet) => {
     e.preventDefault();
     const data  = e.target.value;
     stateSet(data);
-  }
+  };
+
+  useEffect(() => {
+    console.log('Sent to server: ', userName, password);
+    socket?.on('login-failed', () => {
+      console.log('failed login attempt');
+      //TODO: implement login failed logic.
+      setHeader('Incorrect username and password or username taken :]')
+    });
+    socket?.on('login-success', () => {
+      console.log('Good login');
+      setShow(false);
+      //TODO: add some playerstate??????
+    });
+  }, [socket]);
+
+  const loginAttempt = () => {
+    socket.emit('login', {userName, password});
+    setUserName('');
+    setPassword('');
+  };
   return (
     <>
       <Modal
@@ -28,26 +49,31 @@ const Login = ({socket}) => {
         </Modal.Header>
         <Modal.Body>{`${header}`}</Modal.Body>
         <Modal.Footer>
-          <label for="userInput">Login Name: </label>
+          <label htmlFor="userInput">Login Name: </label>
           <input
             value={userName}
             type="text"
             id="userInput"
+            required={true}
             onChange={(e) => handleChange(e, setUserName)}
           />
-          <label for="passwordInput">Password: </label>
+          <label htmlFor="passwordInput">Password: </label>
           <input
             value={password}
-            type="text"
+            type="password"
             id="passwordInput"
+            required={true}
             onChange={(e) => handleChange(e, setPassword)}
             />
           <Button
             variant="primary"
             onClick={(e) => {
-              e.preventDefault();
-
-              handleClose();
+              if (userName && password) {
+                e.preventDefault();
+                loginAttempt()
+              } else {
+                setHeader('Please enter a username and password')
+              }
             }}
             >
             Login

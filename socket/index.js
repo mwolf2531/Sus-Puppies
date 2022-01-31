@@ -6,22 +6,24 @@ const io = require('socket.io')(8900, {
   },
 });
 
-io.on('connection', (socket) => {
-  console.log('user connected with socket id :', socket.id);
+var gameState = {
+  timer: 90,
+  previousResult: '',
+  currentDay: 0,
+  currentPhase: '',
+  gameStatus: '',
+  phaseResults: [],
+  users: [],
+  votes: [],
+  wolves: {
+    number: 0,
+    players: [],
+  },
+  host: {},
+};
 
-  socket.on('living-chat-send', (message) => {
-    console.log('socket server recieved message from ghost:', message);
-    io.emit('living-chat-feed', message);
-  });
-  socket.on('ghost-chat-send', (message) => {
-    console.log('socket server recieved message from ghost:', message);
-    io.emit('ghost-chat-feed', message);
-  });
-  socket.on('wolf-chat-send', (message) => {
-    console.log('socket server recieved message from wolf:', message);
-    io.emit('wolf-chat-feed', message);
-  });
-  socket.on('login', ({userName, password}) => {
+io.on('connection', (socket) => {
+  socket.on('login', ({ userName, password }) => {
     console.log(`Login attempt: userName ${userName} password: ${password}`);
     // TODO: login logic~
     const options = {
@@ -36,16 +38,30 @@ io.on('connection', (socket) => {
     };
     console.log(options.data);
     axios(options)
-    .then((res) => {
-      console.log(`status: ${res.status} ${res.body}`);
-      io.emit('login-success', res.body);
-      //TODO: add a route for creating player state
-    })
-    .catch((e) => {
-      console.log('Failed connection: ', e);
-      io.emit('login-failed');
-    });
+      .then((res) => {
+        console.log(`status: ${res.status} ${res.body}`);
+        io.emit('login-success', res.body);
+        //TODO: add a route for creating player state
+      })
+      .catch((e) => {
+        console.log('Failed connection: ', e);
+        io.emit('login-failed');
+      });
+  });
 
+  socket.on('living-chat-send', (message) => {
+    console.log('socket server recieved message from living:', message);
+    io.emit('living-chat-feed', message);
+  });
+
+  socket.on('ghost-chat-send', (message) => {
+    console.log('socket server recieved message from ghost:', message);
+    io.emit('ghost-chat-feed', message);
+  });
+
+  socket.on('wolf-chat-send', (message) => {
+    console.log('socket server recieved message from wolf:', message);
+    io.emit('wolf-chat-feed', message);
   });
 });
 

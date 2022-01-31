@@ -6,23 +6,24 @@ const io = require('socket.io')(8900, {
   },
 });
 
-var gameState = {
+const gameState = {
   timer: 90,
   previousResult: '',
   currentDay: 0,
   currentPhase: '',
   gameStatus: '',
   phaseResults: [],
-  users: [],
+  playerInfo: [],
   votes: [],
   wolves: {
     number: 0,
     players: [],
   },
-  host: {},
+  // host: {},
 };
 
 io.on('connection', (socket) => {
+  const socketID = socket.id;
   socket.on('login', ({ username, password }) => {
     console.log(`Login attempt: userName ${username} password: ${password}`);
     // TODO: login logic~
@@ -33,15 +34,21 @@ io.on('connection', (socket) => {
       data: {
         username,
         password,
-        socket: socket.id,
+        socket: socketID,
       },
     };
     console.log(options.data);
     axios(options)
-      .then((res) => {
-        console.log(`status: ${res.status} ${res.data}`);
-        if (res.data !== "Error, Bad Username/Password. Check Password"){
-          io.emit('login-success', res.body);
+      .then(({body, status, data}) => {
+        console.log(`status: ${status} ${data}`);
+        if (data !== "Error, Bad Username/Password. Check Password"){
+
+          if (gameState.playerInfo.length === 0) {
+            gameState.host = {username, socket: socketID, host: true};
+          }
+          gameState.playerInfo.push({username, socket: socketID});
+          io.emit('login-success', body);
+          io.emit('playerInfo-feed', gameState.playerInfo);
         } else {
           io.emit('login-failed', 'Incorrect password!')
         }

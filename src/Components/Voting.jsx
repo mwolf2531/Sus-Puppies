@@ -16,9 +16,8 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
     //TODO: send voteSelection to handleVoting function in GamePage
     //OR
     //TODO: send voteSelection directly to server
-
     // VOTE SENDER
-    socket.emit('vote-send', voteObjectOrArray);
+    // socket.emit('vote-send', voteObjectOrArray);
   };
 
   return (

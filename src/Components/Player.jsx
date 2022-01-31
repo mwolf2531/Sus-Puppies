@@ -20,7 +20,7 @@ const Player = ({ player, currentPhase, number }) => {
   }, [currentPhase])
 
   return (
-    <div>
+    <div className="item2">
       {player === undefined
         ? <h5>Player Name</h5>
         : <h5>{player.name}</h5>

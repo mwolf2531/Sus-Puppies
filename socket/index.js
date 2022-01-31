@@ -67,16 +67,17 @@ io.on('connection', (socket) => {
   //host logic
   socket.on('host-send', (messageOrObject) => {
     // change server game state based on host command
-    if (message === 'pause') {
-    } else if (message === 'resume') {
+    if (messageOrObject === 'pause') {
+    } else if (messageOrObject === 'resume') {
     } else {
+      console.log(messageOrObject)
     }
 
     //rulesSet sender TODO:
     // io.emit('ruleset-feed', object);
 
     // send game status to all players (including host)
-    io.emit('gameStatus-feed', stringOfServerGameStatus);
+    io.emit('gameStatus-feed', 'paused');
   });
 
   // votes logic

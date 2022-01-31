@@ -7,21 +7,20 @@ const formMaker = (nameOfForm, type, numMax, numMin, isRequired, cb) => {
   const [integer, setInteger] = useState(1);
   const [boolean, setBoolean] = useState(false);
   const handleChange = (e, stateSet) => {
+    const value = e.target.value;
     e.preventDefault();
-    const data  = Math.max(Math.min(e.target.value, numMax), numMin);
+    const data  = Math.max(Math.min(value, numMax), numMin);
     stateSet(data);
     cb(data)
   };
-  let form
   return (
-    (type === 'number') ?
     <>
       <label
-      htmlFor={`${nameOfForm-form}`}
-      >{`${nameOfForm}`}</label>
+      htmlFor={`${nameOfForm}-form`}
+      >{`${nameOfForm}: `}</label>
       <input
       type="number"
-      id={`${nameOfForm-form}`}
+      id={`${nameOfForm}-form`}
       name={`${nameOfForm}`}
       required={isRequired}
       min={numMin}
@@ -29,20 +28,6 @@ const formMaker = (nameOfForm, type, numMax, numMin, isRequired, cb) => {
       value={integer}
       onChange={(e) => {
         handleChange(e, setInteger);
-      }}></input>
-    </>
-    :
-     <>
-      <label
-      htmlFor={`${nameOfForm-form}`}
-      >{`${nameOfForm}`}</label>
-      <input
-      type="checkbox"
-      id={`${nameOfForm-form}`}
-      name={`${nameOfForm}`}
-      value={boolean}
-      onChange={(e) => {
-        handleChange(e, setBoolean);
       }}></input>
     </>
   )
@@ -83,15 +68,16 @@ const CreateGameModal = ({socket, playerState}) => {
         </Modal.Header>
         <Modal.Body>Game Options</Modal.Body>
         <Modal.Footer>
-
           {formMaker('Number of players', 'number', 20, 1, true, (data)=> options.numPlayers = data )}
           {formMaker('Number of wolves', 'number', 20, 1, true, (data)=> options.numWolves = data )}
           {formMaker('Timer(seconds)', 'number', 90, 1, true, (data)=> options.timer = data )}
-          {formMaker('Seer', 'checkbox', 20, 1, false, (data)=> options.seer = data )}
-          {formMaker('Medic', 'checkbox', 20, 1, false, (data)=> options.medic = data )}
           <Button
             variant="primary"
-            onClick={(e) => {handleClose}}
+            onClick={(e) => {
+              e.preventDefault();
+              socket?.emit('host-send', options);
+              handleClose();
+            }}
             >
             Create Game
           </Button>

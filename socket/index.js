@@ -1,6 +1,7 @@
+const { instrument } = require('@socket.io/admin-ui');
 const io = require('socket.io')(8900, {
   cors: {
-    origin: '*',
+    origin: ['http://localhost:3000', 'https://admin.socket.io'],
   },
 });
 
@@ -20,3 +21,9 @@ io.on('connection', (socket) => {
     io.emit('wolf-chat-feed', message);
   });
 });
+
+instrument(io, { auth: false });
+// how to use socket.io admin ui. ::::
+// start up servers in terminal
+// go to "admin.socket.io"  in browser
+// clear path option in browser and toggle websocket only option on

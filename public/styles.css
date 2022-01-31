@@ -83,3 +83,9 @@ body {
   height: 35%;
 }
 
+.chat-message {
+  position: absolute;
+  bottom: 0;
+  padding: 23px;
+}
+

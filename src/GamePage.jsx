@@ -14,6 +14,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
+import Login from './Components/Login.jsx';
+
 
 
 import { io } from 'socket.io-client';
@@ -83,6 +85,7 @@ const GamePage = () => {
     //TODO: Fill in components properly with handlers.
     <div>
       <Container fluid>
+        <Login />
         <Row>
           <Col>
             <Header

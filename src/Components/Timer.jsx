@@ -19,7 +19,7 @@ const Arrow = Styled.span`
   height: 20vh;
 `;
 
-const Timer = (props) => {
+const Timer = ({ timer, currentPhase }) => {
   // const [timeLeft, setTimeLeft] = useState(200);
 
   // const tick = () => {
@@ -35,10 +35,21 @@ const Timer = (props) => {
   return (
     <div id='column' >
       <h2>Timer</h2>
-      <Sun />
-      <Moon />
-      <Arrow />
-      {/* <span>{timeLeft}</span> */}
+      {currentPhase === 'day'
+      ? (
+      <>
+        <Sun />
+        <Arrow />
+        <Moon />
+      </>)
+      : (
+      <>
+        <Moon />
+        <Arrow />
+        <Sun />
+      </>)
+      }
+      <span>{timer}</span>
     </div>
   )
 }

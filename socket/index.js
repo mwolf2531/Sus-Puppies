@@ -5,7 +5,15 @@ const io = require('socket.io')(8900, {
   },
 });
 
-const users = [];
+var gameState = {
+  previousResult: '',
+  currentDay: 0,
+  currentPhase: '',
+  gameStatus: '',
+  phaseResults: [],
+  users: [],
+  host: {},
+};
 
 io.on('connection', (socket) => {
   socket.on('join-server', (info) => {
@@ -18,7 +26,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('living-chat-send', (message) => {
-    console.log('socket server recieved message from ghost:', message);
+    console.log('socket server recieved message from lving:', message);
     io.emit('living-chat-feed', message);
   });
   socket.on('ghost-chat-send', (message) => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
-const sun = '../../images/sun.png';
-const moon = '../../images/moon.png';
-const arrow = '../../images/arrow.png';
+const sun = './images/sun.png';
+const moon = './images/moon.png';
+const arrow = './images/arrow.png';
 
 const Sun = Styled.span`
   background-image: url(${sun});

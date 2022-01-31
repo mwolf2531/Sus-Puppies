@@ -47,7 +47,7 @@ const Login = ({socket}) => {
             onClick={(e) => {
               e.preventDefault();
 
-              handleClose
+              handleClose();
             }}
             >
             Login

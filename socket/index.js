@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 const axios = require('axios');
 
+=======
+const { instrument } = require('@socket.io/admin-ui');
+>>>>>>> 87ada121a0d009d91396c0cb75c28eb803f58962
 const io = require('socket.io')(8900, {
   cors: {
-    origin: '*',
+    origin: ['http://localhost:3000', 'https://admin.socket.io'],
   },
 });
 
@@ -48,3 +52,9 @@ io.on('connection', (socket) => {
 
   });
 });
+
+instrument(io, { auth: false });
+// how to use socket.io admin ui. ::::
+// start up servers in terminal
+// go to "admin.socket.io"  in browser
+// clear path option in browser and toggle websocket only option on

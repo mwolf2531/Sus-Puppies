@@ -11,7 +11,27 @@ const data = {
     voting: [['sha2', 'sha10'], ['sha10', null], ['sha3', 'sha10'], ['sha1', 'sha10']], //Null means none votes.
     gameStatus: 'not started',
     phaseResults: [[1, 'Night', 'sha2']], // An array of tuples that will be displayed at the end game screen. [current day, string for time of day of event, player name]
-    playerInfo: [{ name: 'Dare', picture: 'todo/pic', player_id: 'sha2' }, { name: 'himmat', picture: 'todo/pic', player_id: 'sha3' }, { name: 'Megan', picture: 'todo/pic', player_id: 'sha10' }, { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }],
+    playerInfo: [{ name: 'Dare', picture: 'todo/pic', player_id: 'sha2' }, { name: 'himmat', picture: 'todo/pic', player_id: 'sha3' },
+    { name: 'Megan', picture: 'todo/pic', player_id: 'sha10' }, { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+      // , { name: 'Ryder', picture: 'todo/pic', player_id: 'sha1' }
+
+
+    ],
     ghostChats: chatData, //Himmat: I'm picturing this as an array. Need to change in GamePage if different
     livingChats: chatData, //Himmat: I'm picturing this as an array. Need to change in GamePage if different
     wolfChats: chatData, //Himmat: I'm picturing this as an array. Need to change in GamePage if different

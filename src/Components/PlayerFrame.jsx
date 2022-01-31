@@ -10,9 +10,9 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
   let currentPlayerKey = 1;
 
   return (
-    <div>
-      <Row id="chat-row">
-        <Col id="column">
+    <>
+      <Row id="chat-row" className="set-height">
+        <Col xs={2} className="column">
           Left Column
           <Player
             player={playerInfo[0]}
@@ -35,8 +35,8 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             })
           }
         </Col>
-        <Col id="column">
-          <Row>
+        <Col className="column" id="playerFrame-col-2">
+          <Row id="playerFrame-top-row">
             Top Row
             {playerInfo
               .slice(1, 6)
@@ -51,13 +51,13 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
               })
             }
           </Row>
-          <Row>
+          <Row id="playerFrame-timer">
             <Timer
               timer={timer}
               currentPhase={currentPhase}
             />
           </Row>
-          <Row>
+          <Row id="playerFrame-bottom-row">
             Bottom Row
             {playerInfo
               .slice(11, 16)
@@ -73,7 +73,7 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             }
           </Row>
         </Col>
-        <Col id="column">
+        <Col xs={2} className="column">
           Right Column
             {playerInfo
               .slice(6, 11)
@@ -88,7 +88,7 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             }
         </Col>
       </Row>
-    </div>
+    </>
   )
 }
 

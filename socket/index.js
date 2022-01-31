@@ -167,7 +167,7 @@ const phaseChange = () => {
         maxVotes = votes[voteKeys[i]];
       }
     }
-    if (maxVotes >== majority && victim !== 'NULL') {
+    if (maxVotes >= majority && victim !== 'NULL') {
       //Hang Victim Wolf
       if (gameState.users[victim].role === 2) {
         gameState.users[victim].role = 3;

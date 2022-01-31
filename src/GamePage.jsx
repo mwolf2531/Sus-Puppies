@@ -83,10 +83,10 @@ const GamePage = () => {
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
-    <div>
-      <Container fluid>
+    <>
+      <Container fluid className="set-height" id="game">
         <Login />
-        <Row>
+        <Row id="header">
           <Col>
             <Header
               previousResult={previousResult}
@@ -96,7 +96,7 @@ const GamePage = () => {
           </Col>
         </Row>
         <Row id="chat-row">
-          <Col xs={3} id="column">
+          <Col xs={3} className="column">
             <LivingChat
               livingChats={livingChats}
               playerInfo={playerInfo}
@@ -104,7 +104,7 @@ const GamePage = () => {
               socket={socket}
             />
           </Col>
-          <Col id="column" className="clearfix">
+          <Col className="column">
             <PlayerFrame
               voting={voting}
               playerInfo={playerInfo}
@@ -113,7 +113,7 @@ const GamePage = () => {
               currentPhase={currentPhase}
             />
           </Col>
-          <Col xs={3} id="column">
+          <Col xs={3} className="column">
             <GhostChat
               ghostChats={ghostChats}
               playerInfo={playerInfo}
@@ -123,13 +123,13 @@ const GamePage = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col id="column">
+        <Row id="bottom-row">
+          <Col className="column">
             <Ruleset
             /* gameLogic object containing game-specific rules (# of wolves, etc) */
             />
           </Col>
-          <Col id="column">
+          <Col className="column">
             <GameButton
               playerId={playerId}
               gameStatus={gameStatus}
@@ -141,7 +141,7 @@ const GamePage = () => {
               playerRoles={playerRoles}
             />
           </Col>
-          <Col id="column">
+          <Col className="column">
             <WolfChat
               wolfChats={wolfChats}
               playerInfo={playerInfo}
@@ -151,8 +151,8 @@ const GamePage = () => {
             />
           </Col>
         </Row>
-      </Container>
-    </div>
+      </Container >
+    </ >
   );
 };
 

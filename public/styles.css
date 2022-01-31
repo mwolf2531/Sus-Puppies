@@ -1,17 +1,68 @@
 html {
   background: #1A0F3C;
+  color: white;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#game{
+  display: flex;
+  flex-direction: column;
+}
+
+.set-height {
+  height: 100%;
+}
+
+#header {
+  background: rgba(26, 15, 60, 0.75);
+  color: white;
+  height: 40px;
 }
 
 #chat-row {
-  height: 60vh;
+  flex:1;
   border: 1px;
   border-style: solid;
   border-color: black;
+  position: relative; /*cb*/
 }
 
-#column {
+#playerFrame-col-2{
+  display: flex;
+  flex-direction: column;
+}
+
+#playerFrame-top-row{
+  height:100px;
+}
+#playerFrame-table{
+  flex:1;
+}
+#playerFrame-bottom-row{
+  height:100px;
+}
+
+#bottom-row{
+  height:220px;
+}
+
+.column {
   border: 1px;
   border-style: solid;
   border-color: black;
+  background: rgba(26, 15, 60, 0.75);
+  color: white;
+}
+
+#row-2 {
+  height: 60%;
+}
+
+#row-3 {
+  height: 35%;
 }
 

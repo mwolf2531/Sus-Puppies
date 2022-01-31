@@ -103,6 +103,28 @@ body {
   width: 32%;
 }
 
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0px;
+  grid-auto-rows: 140px;
+  grid-template-areas:
+    " . . . ."
+    ". a a ."
+    ". a a ."
+    ". . . .";
+}
+.item1 {
+  grid-area: a;
+  align-self: center;
+  justify-self: center;
+}
+
+.item2 {
+  align-self: center;
+  justify-self: center;
+}
+
 .fade-in {
   transition: opacity 1s ease;
 }

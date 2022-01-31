@@ -17,8 +17,8 @@ const Fader = (props) => {
           fade: "fade-in",
         });
       }
-    },2000);
-    return () => {};
+    }, 2000);
+    return () => clearInterval(timeout);
   }, [fadeProp]);
 
   return (

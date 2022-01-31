@@ -107,7 +107,7 @@ instrument(io, { auth: false });
 // go to "admin.socket.io"  in browser
 // clear path option in browser and toggle websocket only option on
 
-socket.on('phase-change', () => {
+const phaseChange = () => {
   //Phase Change
   //0. Build Variables
   let numWolves = 0;
@@ -121,7 +121,6 @@ socket.on('phase-change', () => {
     }
   }
   let numLiving = numWolves + numVillagers;
-
   //1. Tally Votes
   if (gameState.currentPhase === 'day') {
     let votes = {};
@@ -144,57 +143,56 @@ socket.on('phase-change', () => {
       }
     }
     if (maxVotes >== majority) {
-    //Hang Victim Wolf
-  if (gameState.users[victim].role === 'wolf') {
-    gameState.users[victim].role = 'deadWolf';
-    numWolves--;
-    gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+      //Hang Victim Wolf
+      if (gameState.users[victim].role === 'wolf') {
+        gameState.users[victim].role = 'deadWolf';
+        numWolves--;
+        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+      } else {
+        //Hang Other Victim
+        gameState.users[victim].role = 'deadVillager';
+        numVillagers--;
+        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+      }
+    }
   } else {
-    //Hang Other Victim
+    //Wolf Vote Logic
+    for (let i = 0; i < gameState.votes.length; i++) {
+      if (votes[gameState.votes[i][1]]) {
+        votes[gameState.votes[i][1]]++;
+      } else {
+        votes[gameState.votes[i][1]] = 1;
+      }
+    }
+    let voteKeys = Object.keys(votes);
+    let maxVotes = -1;
+    let victim = '';
+    for (let i = 0; i < voteKeys.length; i++) {
+      if (votes[voteKeys[i]] > maxVotes) {
+        victim = voteKeys[i];
+        maxVotes = votes[voteKeys[i]];
+      } else if (votes[voteKeys[i]] === maxVotes) {
+        let coinFlip = (Math.floor(Math.random() * 2) == 0);
+        if (coinFlip) {
+          victim = voteKeys[i];
+        }
+      }
+    }
     gameState.users[victim].role = 'deadVillager';
     numVillagers--;
     gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
   }
-}
+  //2. Check if game has ended
+  if (numWolves === 0) {
+    console.log('Wolves win');
+  } else (if wolves >== numVillagers) {
+    console.log('Wolves Win');
+  } else
+  //3. Game Continues
+  if (gameState.currentPhase === 'day') {
+    gameState.currentPhase = 'night';
   } else {
-  //Wolf Vote Logic
-  for (let i = 0; i < gameState.votes.length; i++) {
-    if (votes[gameState.votes[i][1]]) {
-      votes[gameState.votes[i][1]]++;
-    } else {
-      votes[gameState.votes[i][1]] = 1;
-    }
+    gameState.currentPhase = 'day';
+    gameState.currentDay++;
   }
-  let voteKeys = Object.keys(votes);
-  let maxVotes = -1;
-  let victim = '';
-  for (let i = 0; i < voteKeys.length; i++) {
-    if (votes[voteKeys[i]] > maxVotes) {
-      victim = voteKeys[i];
-      maxVotes = votes[voteKeys[i]];
-    } else if (votes[voteKeys[i]] === maxVotes) {
-      let coinFlip = (Math.floor(Math.random() * 2) == 0);
-      if (coinFlip) {
-        victim = voteKeys[i];
-      }
-    }
-  }
-  gameState.users[victim].role = 'deadVillager';
-  numVillagers--;
-  gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
-}
-
-//2. Check if game has ended
-if (numWolves === 0) {
-  console.log('Wolves win');
-} else (if wolves >== numVillagers) {
-  console.log('Wolves Win');
-} else
-//3. Game Continues
-if (gameState.currentPhase === 'day') {
-  gameState.currentPhase = 'night';
-} else {
-  gameState.currentPhase = 'day';
-  gameState.currentDay++;
-}
-});
+};

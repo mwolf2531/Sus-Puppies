@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 const GhostChat = (props) => {
 
-const { socket } = props;
+  const { socket } = props;
 
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
@@ -27,14 +27,16 @@ const { socket } = props;
         <div key={i}>{msg}</div>
       ))}
       <br />
-      <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => {
-          setNewMessage(e.target.value);
-        }}
-      ></input>
-      <button onClick={handleMessageSubmit}>send message</button>
+      <div className="chat-message">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => {
+            setNewMessage(e.target.value);
+          }}
+        ></input>
+        <button onClick={handleMessageSubmit}>send message</button>
+      </div>
     </div>
   );
 };

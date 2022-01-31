@@ -85,7 +85,9 @@ const GamePage = () => {
     //TODO: Fill in components properly with handlers.
     <>
       <Container fluid className="set-height" id="game">
-        <Login />
+        <Login
+        socket={socket}
+        />
         <Row id="header">
           <Col>
             <Header

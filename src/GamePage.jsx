@@ -56,19 +56,24 @@ const GamePage = () => {
     setHost(data.gameState.host);
     setPlayerId(data.playerState.player_id);
     setPlayerState(data.playerState);
-
   }, []);
 
   //TODO: Add Lifecycle methods as needed.
   useEffect(() => {
-    socket?.on('playerInfo-feed', (playerInfoArray) => {
-      setPlayerInfo(playerInfoArray)
+    socket?.on('phaseChange-feed', (gameStateObj) => {
+      // TODO: GameState object to be desctructred and update state
     });
+
     socket?.on('playerState-feed', (playerStateObject) => {
       setPlayerState(playerStateObject);
       setPlayerId(playerStateObject.player_id);
     });
+
+    // socket?.on('gameStatus', (string) => {
+    //   // TODO: update gameStatus
+    // });
   }, [socket]);
+
   //TODO: create handleFunctions. Esp for GameEvents
 
   const handlePhaseChange = () => {
@@ -87,20 +92,6 @@ const GamePage = () => {
     //TODO: needs to tell server when a new player has connected
     //assign player_id, take in user's name and user's chosen icon/image
   };
-
-  // HEADER RECEIVER
-  // useEffect(() => {
-  //   socket.on('header-feed', (obj) => {
-  //     // destructure obj to update state
-  //   });
-  // }, [socket]);
-
-  // GAMESTATUS RECEIVER
-  // useEffect(() => {
-  //   socket.on('gameStatus-feed', (stringOfGameStatus) => {
-  //     // update game status
-  //   });
-  // }, [socket]);
 
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (

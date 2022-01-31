@@ -68,9 +68,29 @@ io.on('connection', (socket) => {
   });
 
   // votes logic
-  socket.on('vote-send', (whatever) => {
+  socket.on('vote-send', (voteTuple) => {
     // Voting logic and changing server game state here
-
+    gameState.votes.push(voteTuple);
+    let numWolves = 0;
+    let numVillagers = 0;
+    for (let i = 0; i < gameState.users.length; i++) {
+      if (gameState.users[i].role === 2) {
+        numWolves++;
+      } else if (gameState.users[i].role === 0) {
+        //This If statement would include || seer || healer if added
+        numVillagers++;
+      }
+    }
+    let numLiving = numWolves + numVillagers;
+    if (gameState.currentPhase === 'day') {
+      if (gameState.votes.length === numLiving || gameState.timer === 0) {
+        phaseChange();
+      }
+    } else {
+      if (gameState.votes.length === numWolves || gameState.timer === 0) {
+        phaseChange();
+      }
+    }
     // if voting logic is finished send updated users array from game state
     io.emit('playerInfo-feed', array);
   });
@@ -154,6 +174,7 @@ const phaseChange = () => {
         numVillagers--;
         gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
       }
+      gameState.previousResult = victim + ' was hung yesterday!';
     }
   } else {
     //Wolf Vote Logic
@@ -178,21 +199,29 @@ const phaseChange = () => {
         }
       }
     }
+    if (maxVotes === -1) {
+      //TODO: choose a living non-wolf at random to kill
+    }
     gameState.users[victim].role = 1;
     numVillagers--;
     gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+    gameState.previousResult = victim + ' was eaten last night!';
   }
   //2. Check if game has ended
   if (numWolves === 0) {
-    console.log('Wolves win');
+    console.log('Villagers win');
   } else (if wolves >== numVillagers) {
     console.log('Wolves Win');
   } else
   //3. Game Continues
   if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
+    gameState.timer = 90;
+    gameState.votes = [];
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
+    gameState.timer = 90;
+    gameState.votes = [];
   }
 };

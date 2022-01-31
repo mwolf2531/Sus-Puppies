@@ -9,32 +9,35 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
 
   useEffect(() => {
     //TODO: add lifecycle method to watch for cuurentPhase change
-  }, [currentPhase])
+  }, [currentPhase]);
 
   const submitVote = () => {
     //EITHER:
     //TODO: send voteSelection to handleVoting function in GamePage
     //OR
     //TODO: send voteSelection directly to server
-  }
+
+    // VOTE SENDER
+    socket.emit('vote-send', voteObjectOrArray);
+  };
 
   return (
     <>
       <DropdownButton id="dropdown-basic-button" title="Dropdown button">
         {playerInfo
-          .filter(player => player.player_id !== playerId)
+          .filter((player) => player.player_id !== playerId)
           .map((player, idx) => {
-            return <Dropdown.Item href="#/action-1" key={idx} >{player.name}</Dropdown.Item>}
-          )
-        }
+            return (
+              <Dropdown.Item href="#/action-1" key={idx}>
+                {player.name}
+              </Dropdown.Item>
+            );
+          })}
       </DropdownButton>
       <button type="button">Skip Vote</button>
       <button type="button">Submit</button>
     </>
-  )
-}
+  );
+};
 
 export default Voting;
-
-
-

@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
     // Voting logic and changing server game state here
 
     // if voting logic is finished send updated users array from game state
-    io.emit('vote-feed');
+    io.emit('playerInfo-feed', array);
   });
 
   // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase

@@ -83,6 +83,13 @@ const GamePage = () => {
   //   });
   // }, [socket]);
 
+  // GAMESTATUS RECEIVER
+  // useEffect(() => {
+  //   socket.on('gameStatus-feed', (stringOfGameStatus) => {
+  //     // update game status
+  //   });
+  // }, [socket]);
+
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.

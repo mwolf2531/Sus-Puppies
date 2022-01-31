@@ -73,9 +73,29 @@ io.on('connection', (socket) => {
   });
 
   // votes logic
-  socket.on('vote-send', (whatever) => {
+  socket.on('vote-send', (voteTuple) => {
     // Voting logic and changing server game state here
-
+    gameState.votes.push(voteTuple);
+    let numWolves = 0;
+    let numVillagers = 0;
+    for (let i = 0; i < gameState.users.length; i++) {
+      if (gameState.users[i].role === 2) {
+        numWolves++;
+      } else if (gameState.users[i].role === 0) {
+        //This If statement would include || seer || healer if added
+        numVillagers++;
+      }
+    }
+    let numLiving = numWolves + numVillagers;
+    if (gameState.currentPhase === 'day') {
+      if (gameState.votes.length === numLiving || gameState.timer === 0) {
+        phaseChange();
+      }
+    } else {
+      if (gameState.votes.length === numWolves || gameState.timer === 0) {
+        phaseChange();
+      }
+    }
     // if voting logic is finished send updated users array from game state
     io.emit('playerInfo-feed', array);
   });
@@ -103,6 +123,7 @@ io.on('connection', (socket) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
   });
+
 });
 
 instrument(io, { auth: false });
@@ -110,3 +131,102 @@ instrument(io, { auth: false });
 // start up servers in terminal
 // go to "admin.socket.io"  in browser
 // clear path option in browser and toggle websocket only option on
+
+const phaseChange = () => {
+  //Phase Change
+  //0. Build Variables
+  let numWolves = 0;
+  let numVillagers = 0;
+  for (let i = 0; i < gameState.users.length; i++) {
+    if (gameState.users[i].role === 2) {
+      numWolves++;
+    } else if (gameState.users[i].role === 0) {
+      //This If statement would include || seer || healer if added
+      numVillagers++;
+    }
+  }
+  let numLiving = numWolves + numVillagers;
+  //1. Tally Votes
+  if (gameState.currentPhase === 'day') {
+    let votes = {};
+    //Villager Vote Logic
+    for (let i = 0; i < gameState.votes.length; i++) {
+      if (votes[gameState.votes[i][1]]) {
+        votes[gameState.votes[i][1]]++;
+      } else {
+        votes[gameState.votes[i][1]] = 1;
+      }
+    }
+    let voteKeys = Object.keys(votes);
+    let maxVotes = -1;
+    let victim = '';
+    let majority = Math.round(numLiving / 2);
+    for (let i = 0; i < voteKeys.length; i++) {
+      if (votes[voteKeys[i]] > maxVotes) {
+        victim = voteKeys[i];
+        maxVotes = votes[voteKeys[i]];
+      }
+    }
+    if (maxVotes >= majority && victim !== 'NULL') {
+      //Hang Victim Wolf
+      if (gameState.users[victim].role === 2) {
+        gameState.users[victim].role = 3;
+        numWolves--;
+        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+      } else {
+        //Hang Other Victim
+        gameState.users[victim].role = 1;
+        numVillagers--;
+        gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+      }
+      gameState.previousResult = victim + ' was hung yesterday!';
+    }
+  } else {
+    //Wolf Vote Logic
+    for (let i = 0; i < gameState.votes.length; i++) {
+      if (votes[gameState.votes[i][1]]) {
+        votes[gameState.votes[i][1]]++;
+      } else {
+        votes[gameState.votes[i][1]] = 1;
+      }
+    }
+    let voteKeys = Object.keys(votes);
+    let maxVotes = -1;
+    let victim = '';
+    for (let i = 0; i < voteKeys.length; i++) {
+      if (votes[voteKeys[i]] > maxVotes) {
+        victim = voteKeys[i];
+        maxVotes = votes[voteKeys[i]];
+      } else if (votes[voteKeys[i]] === maxVotes) {
+        let coinFlip = (Math.floor(Math.random() * 2) == 0);
+        if (coinFlip) {
+          victim = voteKeys[i];
+        }
+      }
+    }
+    if (maxVotes === -1) {
+      //TODO: choose a living non-wolf at random to kill
+    }
+    gameState.users[victim].role = 1;
+    numVillagers--;
+    gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
+    gameState.previousResult = victim + ' was eaten last night!';
+  }
+  //2. Check if game has ended
+  if (numWolves === 0) {
+    console.log('Villagers win');
+  } else (if wolves >== numVillagers) {
+    console.log('Wolves Win');
+  } else
+  //3. Game Continues
+  if (gameState.currentPhase === 'day') {
+    gameState.currentPhase = 'night';
+    gameState.timer = 90;
+    gameState.votes = [];
+  } else {
+    gameState.currentPhase = 'day';
+    gameState.currentDay++;
+    gameState.timer = 90;
+    gameState.votes = [];
+  }
+};

@@ -23,15 +23,15 @@ var gameState = {
 };
 
 io.on('connection', (socket) => {
-  socket.on('login', ({ userName, password }) => {
-    console.log(`Login attempt: userName ${userName} password: ${password}`);
+  socket.on('login', ({ username, password }) => {
+    console.log(`Login attempt: userName ${username} password: ${password}`);
     // TODO: login logic~
     const options = {
       url: '/login',
       method: 'post',
       baseURL: 'http://localhost:3000',
       data: {
-        userName,
+        username,
         password,
         socket: socket.id,
       },
@@ -39,13 +39,17 @@ io.on('connection', (socket) => {
     console.log(options.data);
     axios(options)
       .then((res) => {
-        console.log(`status: ${res.status} ${res.body}`);
-        io.emit('login-success', res.body);
+        console.log(`status: ${res.status} ${res.data}`);
+        if (res.data !== "Error, Bad Username/Password. Check Password"){
+          io.emit('login-success', res.body);
+        } else {
+          io.emit('login-failed', 'Incorrect password!')
+        }
         //TODO: add a route for creating player state
       })
       .catch((e) => {
         console.log('Failed connection: ', e);
-        io.emit('login-failed');
+        io.emit('login-failed', 'Failed to reach server!');
       });
   });
 

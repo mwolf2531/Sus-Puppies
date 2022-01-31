@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  console.log('POST: /login', req.body);
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -26,7 +25,7 @@ app.post('/login', async (req, res) => {
 const login = async (username, password, socket) => {
   try {
     //Database code goes here - check for existing user, create if new
-    let data = await User.findOne({username: username}).exec();
+    const data = await User.findOne({username: username}).exec();
     if (data === null) {
       data = await User.create({
         username: username,
@@ -35,8 +34,8 @@ const login = async (username, password, socket) => {
       });
       return data;
     } else if ( data.password !== password) {
-      // return ("Error, Bad Username/Password. Check Password");
-      throw new Error("Error, Bad Username/Password. Check Password");
+      return ("Error, Bad Username/Password. Check Password");
+      // throw new Error("Error, Bad Username/Password. Check Password");
     } else {
       data = await User.findOneAndUpdate(username, {username, password, socket}, {bew: true});
       return data;

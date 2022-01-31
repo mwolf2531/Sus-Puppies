@@ -20,10 +20,10 @@ const Login = ({socket}) => {
 
   useEffect(() => {
     console.log('Sent to server: ', userName, password);
-    socket?.on('login-failed', () => {
+    socket?.on('login-failed', (responseString) => {
       console.log('failed login attempt');
       //TODO: implement login failed logic.
-      setHeader('Incorrect username and password or username taken :]')
+      setHeader(responseString);
     });
     socket?.on('login-success', () => {
       console.log('Good login');
@@ -33,7 +33,7 @@ const Login = ({socket}) => {
   }, [socket]);
 
   const loginAttempt = () => {
-    socket.emit('login', {userName, password});
+    socket.emit('login', {username: userName, password});
     setUserName('');
     setPassword('');
   };

@@ -36,7 +36,7 @@ const formMaker = (nameOfForm, type, numMax, numMin, isRequired, cb) => {
 
 const CreateGameModal = ({socket, playerState}) => {
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const options ={
     numPlayers: 1,
     numWolves: 1,
@@ -51,7 +51,7 @@ const CreateGameModal = ({socket, playerState}) => {
 
   }
   useEffect(() => {
-    if (playerState.host) {
+    if (playerState.host === true) {
       handleShow();
     }
   }, [socket, playerState]);

@@ -70,7 +70,6 @@ io.on('connection', (socket) => {
     if (messageOrObject === 'pause') {
     } else if (messageOrObject === 'resume') {
     } else {
-      console.log(messageOrObject)
     }
 
     //rulesSet sender TODO:

@@ -17,8 +17,20 @@ const CreateGameModal = ({socket}) => {
   };
 
   useEffect(() => {
-  }, [socket]);
 
+  }, [socket]);
+  const formMaker = (nameOfForm, type, numMax, isRequired) => {
+
+    return (
+      type === 'number' ?
+      <label htmlFor={`${nameOfForm-form}`}>{`${nameOfForm}`}</label>
+      <input type="number" id={`${nameOfForm-form}`} name={`${nameOfForm}`} required={isRequired}
+       minlength="4" maxlength="8" size="10"></input>
+       : null
+
+    )
+
+  }
 
   return (
     <>

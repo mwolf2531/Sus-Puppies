@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { GiSquare, GiCheckMark, GiHelp, GiWerewolf, GiWolfHead, GiWolfHowl, GiMedicalPackAlt, GiMedicalPack, GiHeartPlus, GiAllSeeingEye, GiBleedingEye, GiSemiClosedEye, GiSheikahEye, FcAssistant, FcBusinessman, FcBusinesswoman, FcCustomerSupport, FcPortraitMode, FcReuse, FcSportsMode, FcVoicePresentation, FcSelfie, FcPodiumWithSpeaker } from 'react-icons/gi';
+import { GiSquare, GiCheckMark, GiHelp, GiWerewolf, GiWolfHead, GiWolfHowl, GiMedicalPackAlt, GiMedicalPack, GiHeartPlus, GiAllSeeingEye, GiBleedingEye, GiSemiClosedEye, GiSheikahEye} from 'react-icons/gi';
+import werewolf from '../../public/images/werewolf.png';
 
 const Player = ({ player, currentPhase, number }) => {
   const icons = [<GiSquare />, <GiCheckMark />, <GiHelp />, <GiWerewolf />, <GiWolfHead />, <GiWolfHowl />, <GiMedicalPackAlt />, <GiMedicalPack />, <GiHeartPlus />, <GiAllSeeingEye />, <GiBleedingEye />, <GiSemiClosedEye />, <GiSheikahEye />];
-
-  // const pictures = [<FcAssistant />, <FcBusinessman />, <FcBusinesswoman />, <FcCustomerSupport />, <FcPortraitMode />, <FcReuse />, <FcSportsMode />, <FcVoicePresentation />, <FcSelfie />, <FcPodiumWithSpeaker />]
 
   const [index, setIndex] = useState(0);
   const [currentIcon, setCurrentIcon] = useState(icons[index]);
@@ -26,12 +25,12 @@ const Player = ({ player, currentPhase, number }) => {
       ? <h5>Player Name</h5>
       : <h5>{player.name}</h5>
       }
-      <div onClick={handleClick}>
+      <span onClick={handleClick} style={{height:"4vh"}}>
         {currentIcon}
-      </div>
+      </span>
       <div>
         {/* TODO: need to render player icon according to its format */}
-        {/* {pictures[number]} */}
+        <img src={werewolf} style={{height:"7vh"}} />
       </div>
     </div>
   )

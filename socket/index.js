@@ -1,3 +1,4 @@
+const axios = require('axios');
 const { instrument } = require('@socket.io/admin-ui');
 const io = require('socket.io')(8900, {
   cors: {
@@ -36,6 +37,32 @@ io.on('connection', (socket) => {
   socket.on('wolf-chat-send', (message) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
+  });
+  socket.on('login', ({userName, password}) => {
+    console.log(`Login attempt: userName ${userName} password: ${password}`);
+    // TODO: login logic~
+    const options = {
+      url: '/login',
+      method: 'post',
+      baseURL: 'http://localhost:3000',
+      data: {
+        userName,
+        password,
+        socket: socket.id,
+      },
+    };
+    console.log(options.data);
+    axios(options)
+    .then((res) => {
+      console.log(`status: ${res.status} ${res.body}`);
+      io.emit('login-success', res.body);
+      //TODO: add a route for creating player state
+    })
+    .catch((e) => {
+      console.log('Failed connection: ', e);
+      io.emit('login-failed');
+    });
+
   });
 });
 

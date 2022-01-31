@@ -11,7 +11,31 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
 
   return (
     <>
-      <Row id="chat-row" className="set-height">
+      <div className="wrapper">
+        {playerInfo
+          .map((player, idx) => {
+            currentPlayerKey++;
+            return (
+              <Player
+                player={player}
+                key={currentPlayerKey}
+                index={currentPlayerKey}
+                currentPhase={currentPhase}
+              />
+            )
+          })
+        }
+        <div className="item1" id="playerFrame-timer">
+          <Timer />
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default PlayerFrame;
+
+{/* <Row id="chat-row" className="set-height">
         <Col xs={4} className="column">
           <Player
             player={playerInfo[0]}
@@ -26,13 +50,13 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
               currentPlayerKey = playerInfo.length;
               currentPlayerKey--;
               return (<Row>
-                  <Player
-                    player={player}
-                    key={currentPlayerKey}
-                    index={currentPlayerKey}
-                    currentPhase={currentPhase}
-                  />
-                </Row>)
+                <Player
+                  player={player}
+                  key={currentPlayerKey}
+                  index={currentPlayerKey}
+                  currentPhase={currentPhase}
+                />
+              </Row>)
             })
           }
         </Col>
@@ -94,9 +118,4 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             })
           }
         </Col>
-      </Row>
-    </>
-  )
-}
-
-export default PlayerFrame;
+      </Row> */}

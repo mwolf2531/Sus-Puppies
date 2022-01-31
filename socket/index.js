@@ -42,12 +42,17 @@ io.on('connection', (socket) => {
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
         if (data !== 'Error, Bad Username/Password. Check Password') {
+          const playerState = {username, player_id: socketID};
           if (gameState.playerInfo.length === 0) {
-            gameState.host = { username, socket: socketID, host: true };
+            playerState.host = true;
+            gameState.host = playerState;
+          } else {
+            playerState.host = false;
           }
-          gameState.playerInfo.push({ username, socket: socketID });
+          gameState.playerInfo.push(playerState);
           io.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
+          io.emit('playerState-feed', playerState);
         } else {
           io.emit('login-failed', 'Incorrect password!');
         }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const Ruleset = () => {
+ const Ruleset = (/* needs game logic object */) => {
   return (
     <div>
       <h3>Rule Set</h3>

@@ -23,10 +23,8 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
       <DropdownButton id="dropdown-basic-button" title="Dropdown button">
         {playerInfo
           .filter(player => player.player_id !== playerId)
-          .map((player, idx) =>
-            {return <Dropdown.Item href="#/action-1" key={idx} >{player.name}</Dropdown.Item>}
-            // QUESTION for MEGAN: do we need the href tag to be unique for each dropdown item?
-            // TODO: figure out how to input index href tag so they are unique
+          .map((player, idx) => {
+            return <Dropdown.Item href="#/action-1" key={idx} >{player.name}</Dropdown.Item>}
           )
         }
       </DropdownButton>

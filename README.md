@@ -11,3 +11,7 @@ Multiplayer online version of classic accusation game Werewolf!
 
 ## Scripts to run
 - `npm run webpack` - Runs webpack with the --watch flag
+- `npm run start-socket` - Runs socket server
+
+## Local Process to run
+- Spin up a mongoose server

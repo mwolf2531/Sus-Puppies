@@ -37,31 +37,31 @@ const Timer = ({ timer, currentPhase }) => {
   // }, [timeLeft])
 
   return (
-    <div id='column' >
+    <div id='column'>
       <SectionHeader>Timer</SectionHeader>
       {currentPhase === 'day'
       ? (
       <>
-        <span style={{float:"left"}}>
-          <div style={{display:"flex", justifyContent: "center", size:"50vh"}}>
+        <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
+          <div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
             {timer}
           </div>
-          <img src={arrow} style={{height:"7vh"}} />
+          <img src={arrow} style={{height:"4vh"}} />
         </span>
-        <span style={{float:"right"}}>
-          <img src={moon} style={{height:"20vh"}}/>
+        <span style={{float:"right", paddingTop: "40%"}}>
+          <img src={moon} style={{height:"10vh"}}/>
         </span>
       </>)
       : (
       <>
-        <span style={{float:"left"}}>
-          <div style={{display:"flex", justifyContent: "center", size:"50vh"}}>
+        <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
+          <div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
             {timer}
           </div>
-          <img src={arrow} style={{height:"7vh"}} />
+          <img src={arrow} style={{height:"4vh"}} />
         </span>
-        <span style={{float:"right"}}>
-          <img src={sun} style={{height:"20vh"}} />
+        <span style={{float:"right", paddingTop: "40%"}}>
+          <img src={sun} style={{height:"10vh"}} />
         </span>
       </>)
       }

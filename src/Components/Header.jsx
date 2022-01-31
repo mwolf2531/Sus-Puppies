@@ -5,12 +5,11 @@ const Header = ({ currentPhase, currentDay, previousResult }) => {
 
   return (
     <div>
-      <span>
-        <img src={logo} style={{height:"10vh"}} />
+      <span style={{position:"absolute", right: "94.5%"}}>
+        <img src={logo} style={{height:"7vh"}} />
       </span>
-      <span style={{display:"flex", justifyContent: "left"}}>Sus Puppies! </span>
-      <span style={{display:"flex", justifyContent: "center"}}>{previousResult} </span>
-      <span style={{display:"flex", justifyContent: "right"}}>{currentPhase} {currentDay}</span>
+      <span style={{position:"absolute", right: "50%", top: "3%", fontSize:"2vh", color:"red"}}>{previousResult} </span>
+      <span style={{position:"absolute", right: "5%", top: "3%", fontSize:"2vh"}}>{currentPhase} {currentDay}</span>
     </div>
   )
 }

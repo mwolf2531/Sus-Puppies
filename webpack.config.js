@@ -10,6 +10,17 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.(jpg|jpeg|gif|png)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            publicPath: 'images',
+            outputPath: 'images',
+          }
+        }
+      },
     ],
   },
   resolve: {

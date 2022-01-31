@@ -32,10 +32,13 @@ const login = async (username, password, socket) => {
         password: password,
         socket: socket
       });
+      return data;
     } else if ( data.password !== password) {
       return ("Error, Bad Username/Password. Check Password");
+    } else {
+      data = await User.findOneAndUpdate(username, {username, password, socket}, {bew: true});
+      return data;
     }
-    return data;
   } catch (err) {
     return err;
   }

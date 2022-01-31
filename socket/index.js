@@ -215,7 +215,7 @@ const phaseChange = () => {
   //2. Check if game has ended
   if (numWolves === 0) {
     console.log('Villagers win');
-  } else (if wolves >== numVillagers) {
+  } else if (wolves >= numVillagers) {
     console.log('Wolves Win');
   } else
   //3. Game Continues

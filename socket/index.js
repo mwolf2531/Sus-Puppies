@@ -23,6 +23,7 @@ var gameState = {
 };
 
 io.on('connection', (socket) => {
+  //  login
   socket.on('login', ({ userName, password }) => {
     console.log(`Login attempt: userName ${userName} password: ${password}`);
     // TODO: login logic~
@@ -49,16 +50,41 @@ io.on('connection', (socket) => {
       });
   });
 
+  //host logic
+  socket.on('host-send', (messageOrObject) => {
+    // change server game state based on host command
+
+    // send game status to all players (including host)
+    io.emit('gameStatus-feed', stringOfServerGameStatus);
+  });
+
+  // votes logic
+  socket.on('vote-send', (whatever) => {
+    // Voting logic and changing server game state here
+
+    // if voting logic is finished send updated users array from game state
+    io.emit('vote-feed');
+  });
+
+  // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase
+  io.emit('header-feed', object);
+
+  //rulesSet sender
+  io.emit('ruleset-feed', object);
+
+  // living chat logic
   socket.on('living-chat-send', (message) => {
     console.log('socket server recieved message from living:', message);
     io.emit('living-chat-feed', message);
   });
 
+  // ghost chat logic
   socket.on('ghost-chat-send', (message) => {
     console.log('socket server recieved message from ghost:', message);
     io.emit('ghost-chat-feed', message);
   });
 
+  // wolf chat logic
   socket.on('wolf-chat-send', (message) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);

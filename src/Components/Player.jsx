@@ -30,7 +30,7 @@ const Player = ({ player, currentPhase, number }) => {
       </span>
       <div>
         {/* TODO: need to render player icon according to its format */}
-        <img src={werewolf} style={{height:"7vh"}} />
+        <img src={werewolf} style={{height:"7vh", backgroundColor:"white", borderRadius:'1em'}} />
       </div>
     </div>
   )

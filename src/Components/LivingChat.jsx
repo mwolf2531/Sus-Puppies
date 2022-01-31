@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import Styled from 'styled-components';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 
 const LivingChat = (props) => {
   const { socket } = props;
@@ -27,14 +28,19 @@ const LivingChat = (props) => {
         <div key={i}>{msg}</div>
       ))}
       <br />
-      <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => {
-          setNewMessage(e.target.value);
-        }}
-      ></input>
-      <button onClick={handleMessageSubmit}>send message</button>
+      <div className="chat-message">
+        <InputGroup>
+          <Form.Control
+            type="text"
+            placeholder="Message.."
+            value={newMessage}
+            onChange={(e) => {
+              setNewMessage(e.target.value);
+            }}
+          />
+          <Button variant="warning" onClick={handleMessageSubmit}>Send</Button>{' '}
+        </InputGroup>
+      </div>
     </div>
   );
 };

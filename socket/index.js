@@ -5,8 +5,17 @@ const io = require('socket.io')(8900, {
   },
 });
 
+const users = [];
+
 io.on('connection', (socket) => {
-  console.log('user connected with socket id :', socket.id);
+  socket.on('join-server', (info) => {
+    const user = {
+      username,
+      id: socket.id,
+    };
+    users.push(user);
+    io.emit('users', users);
+  });
 
   socket.on('living-chat-send', (message) => {
     console.log('socket server recieved message from ghost:', message);

@@ -1,9 +1,6 @@
 import React from 'react';
 
-
-
 const Header = ({ currentPhase, currentDay, previousResult }) => {
-
 
   return (
     <div>

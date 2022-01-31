@@ -76,10 +76,10 @@ io.on('connection', (socket) => {
   });
 
   // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase
-  io.emit('header-feed', object);
+  // io.emit('header-feed', object);
 
   //rulesSet sender TODO:
-  io.emit('ruleset-feed', object);
+  // io.emit('ruleset-feed', object);
 
   // living chat logic
   socket.on('living-chat-send', (message) => {

@@ -77,11 +77,12 @@ const GamePage = () => {
   };
 
   // HEADER RECEIVER
-  useEffect(() => {
-    socket.on('header-feed', (obj) => {
-      // destructure obj to update state
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on('header-feed', (obj) => {
+  //     // destructure obj to update state
+  //   });
+  // }, [socket]);
+
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.

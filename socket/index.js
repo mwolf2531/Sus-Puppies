@@ -6,7 +6,7 @@ const io = require('socket.io')(8900, {
   },
 });
 
-var gameState = {
+const gameState = {
   timer: 90,
   previousResult: '',
   currentDay: 0,
@@ -38,10 +38,11 @@ io.on('connection', (socket) => {
     };
     console.log(options.data);
     axios(options)
-      .then((res) => {
-        console.log(`status: ${res.status} ${res.data}`);
-        if (res.data !== "Error, Bad Username/Password. Check Password"){
-          io.emit('login-success', res.body);
+      .then(({body, status, data}) => {
+        console.log(`status: ${status} ${data}`);
+        if (data !== "Error, Bad Username/Password. Check Password"){
+          gameState.host
+          io.emit('login-success', body);
         } else {
           io.emit('login-failed', 'Incorrect password!')
         }

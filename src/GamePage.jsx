@@ -16,8 +16,6 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Login from './Components/Login.jsx';
 
-
-
 import { io } from 'socket.io-client';
 
 const GamePage = () => {
@@ -36,7 +34,6 @@ const GamePage = () => {
   const [wolfChats, setWolfChats] = useState([]);
   const [host, setHost] = useState('');
   const [playerId, setPlayerId] = useState('');
-
 
   const [socket, setSocket] = useState(null);
 
@@ -59,36 +56,46 @@ const GamePage = () => {
   }, []);
 
   //TODO: Add Lifecycle methods as needed.
-  useEffect(() => {
-
-  }, [socket])
+  useEffect(() => {}, [socket]);
   //TODO: create handleFunctions. Esp for GameEvents
 
   const handlePhaseChange = () => {
     //TODO: needs to update currentDay and currentPhase on server when timer runs out
-  }
+  };
   //QUESTION: are individual player votes sent individually to the server?
   // or are they updated in GamePage to be sent up all together?
   const handleVoting = () => {
     //TODO: needs to send voting object to the server to get phaseResults
-  }
+  };
   const handleEndOfGame = () => {
     //endgame conditions might automatically be determined from the server
     //TODO: needs to send playerRoles (and voting?) to server to determine if game ends
-  }
+  };
   const handlePlayerJoiningGame = () => {
     //TODO: needs to tell server when a new player has connected
     //assign player_id, take in user's name and user's chosen icon/image
-  }
+  };
+
+  // HEADER RECEIVER
+  // useEffect(() => {
+  //   socket.on('header-feed', (obj) => {
+  //     // destructure obj to update state
+  //   });
+  // }, [socket]);
+
+  // GAMESTATUS RECEIVER
+  // useEffect(() => {
+  //   socket.on('gameStatus-feed', (stringOfGameStatus) => {
+  //     // update game status
+  //   });
+  // }, [socket]);
 
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
     <>
       <Container fluid className="set-height" id="game">
-        <Login
-        socket={socket}
-        />
+        <Login socket={socket} />
         <Row id="header">
           <Col>
             <Header
@@ -154,8 +161,8 @@ const GamePage = () => {
             />
           </Col>
         </Row>
-      </Container >
-    </ >
+      </Container>
+    </>
   );
 };
 

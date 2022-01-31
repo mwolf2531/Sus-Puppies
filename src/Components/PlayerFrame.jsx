@@ -13,7 +13,6 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
     <>
       <Row id="chat-row" className="set-height">
         <Col xs={4} className="column">
-          Left Column
           <Player
             player={playerInfo[0]}
             key={currentPlayerKey}
@@ -26,28 +25,31 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             .map((player, idx) => {
               currentPlayerKey = playerInfo.length;
               currentPlayerKey--;
-              return <Player
-                player={player}
-                key={currentPlayerKey}
-                index={currentPlayerKey}
-                currentPhase={currentPhase}
-              />
+              return (<Row>
+                  <Player
+                    player={player}
+                    key={currentPlayerKey}
+                    index={currentPlayerKey}
+                    currentPhase={currentPhase}
+                  />
+                </Row>)
             })
           }
         </Col>
         <Col className="column" id="playerFrame-col-2">
           <Row id="playerFrame-top-row">
-            Top Row
             {playerInfo
               .slice(1, 6)
               .map((player, idx) => {
                 currentPlayerKey++;
-                return <Player
-                  player={player}
-                  key={currentPlayerKey}
-                  index={currentPlayerKey}
-                  currentPhase={currentPhase}
-                />
+                return (<Col>
+                  <Player
+                    player={player}
+                    key={currentPlayerKey}
+                    index={currentPlayerKey}
+                    currentPhase={currentPhase}
+                  />
+                </Col>)
               })
             }
           </Row>
@@ -58,32 +60,37 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             />
           </Row>
           <Row id="playerFrame-bottom-row">
-            Bottom Row
             {playerInfo
               .slice(11, 16)
+              .reverse()
               .map((player, idx) => {
-                currentPlayerKey++;
-                return <Player
-                  player={player}
-                  key={currentPlayerKey}
-                  index={currentPlayerKey}
-                  currentPhase={currentPhase}
-                />
+                currentPlayerKey = playerInfo.length;
+                currentPlayerKey--;
+                return (<Col>
+                  <Player
+                    player={player}
+                    key={currentPlayerKey}
+                    index={currentPlayerKey}
+                    currentPhase={currentPhase}
+                  />
+                </Col>)
               })
             }
           </Row>
         </Col>
         <Col xs={4} className="column">
-          Right Column
           {playerInfo
             .slice(6, 11)
             .map((player, idx) => {
               currentPlayerKey++;
-              return <Player
-                player={player}
-                key={currentPlayerKey}
-                currentPhase={currentPhase}
-              />
+              return (<Row>
+                <Player
+                  player={player}
+                  key={currentPlayerKey}
+                  index={currentPlayerKey}
+                  currentPhase={currentPhase}
+                />
+              </Row>)
             })
           }
         </Col>

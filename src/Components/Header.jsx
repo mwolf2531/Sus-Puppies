@@ -1,13 +1,16 @@
 import React from 'react';
+import logo from '../../public/images/logo.svg';
 
 const Header = ({ currentPhase, currentDay, previousResult }) => {
 
   return (
     <div>
-      <span>Sus Puppies! </span>
-      <span>{previousResult} </span>
-      <span>{currentPhase} </span>
-      <span>{currentDay}</span>
+      <span>
+        <img src={logo} style={{height:"10vh"}} />
+      </span>
+      <span style={{display:"flex", justifyContent: "left"}}>Sus Puppies! </span>
+      <span style={{display:"flex", justifyContent: "center"}}>{previousResult} </span>
+      <span style={{display:"flex", justifyContent: "right"}}>{currentPhase} {currentDay}</span>
     </div>
   )
 }

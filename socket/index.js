@@ -39,18 +39,17 @@ io.on('connection', (socket) => {
     };
     console.log(options.data);
     axios(options)
-      .then(({body, status, data}) => {
+      .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
-        if (data !== "Error, Bad Username/Password. Check Password"){
-
+        if (data !== 'Error, Bad Username/Password. Check Password') {
           if (gameState.playerInfo.length === 0) {
-            gameState.host = {username, socket: socketID, host: true};
+            gameState.host = { username, socket: socketID, host: true };
           }
-          gameState.playerInfo.push({username, socket: socketID});
+          gameState.playerInfo.push({ username, socket: socketID });
           io.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
         } else {
-          io.emit('login-failed', 'Incorrect password!')
+          io.emit('login-failed', 'Incorrect password!');
         }
         //TODO: add a route for creating player state
       })
@@ -60,16 +59,41 @@ io.on('connection', (socket) => {
       });
   });
 
+  //host logic
+  socket.on('host-send', (messageOrObject) => {
+    // change server game state based on host command
+
+    // send game status to all players (including host)
+    io.emit('gameStatus-feed', stringOfServerGameStatus);
+  });
+
+  // votes logic
+  socket.on('vote-send', (whatever) => {
+    // Voting logic and changing server game state here
+
+    // if voting logic is finished send updated users array from game state
+    io.emit('playerInfo-feed', array);
+  });
+
+  // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase
+  // io.emit('header-feed', object);
+
+  //rulesSet sender TODO:
+  // io.emit('ruleset-feed', object);
+
+  // living chat logic
   socket.on('living-chat-send', (message) => {
     console.log('socket server recieved message from living:', message);
     io.emit('living-chat-feed', message);
   });
 
+  // ghost chat logic
   socket.on('ghost-chat-send', (message) => {
     console.log('socket server recieved message from ghost:', message);
     io.emit('ghost-chat-feed', message);
   });
 
+  // wolf chat logic
   socket.on('wolf-chat-send', (message) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);

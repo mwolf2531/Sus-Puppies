@@ -12,7 +12,7 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
   return (
     <>
       <Row id="chat-row" className="set-height">
-        <Col xs={2} className="column">
+        <Col xs={4} className="column">
           Left Column
           <Player
             player={playerInfo[0]}
@@ -73,19 +73,19 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             }
           </Row>
         </Col>
-        <Col xs={2} className="column">
+        <Col xs={4} className="column">
           Right Column
-            {playerInfo
-              .slice(6, 11)
-              .map((player, idx) => {
-                currentPlayerKey++;
-                return <Player
-                  player={player}
-                  key={currentPlayerKey}
-                  currentPhase={currentPhase}
-                />
-              })
-            }
+          {playerInfo
+            .slice(6, 11)
+            .map((player, idx) => {
+              currentPlayerKey++;
+              return <Player
+                player={player}
+                key={currentPlayerKey}
+                currentPhase={currentPhase}
+              />
+            })
+          }
         </Col>
       </Row>
     </>

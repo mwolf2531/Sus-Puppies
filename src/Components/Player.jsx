@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { GiSquare, GiCheckMark, GiHelp, GiWerewolf, GiWolfHead, GiWolfHowl, GiMedicalPackAlt, GiMedicalPack, GiHeartPlus, GiAllSeeingEye, GiBleedingEye, GiSemiClosedEye, GiSheikahEye} from 'react-icons/gi';
+import { GiSquare, GiCheckMark, GiHelp, GiWolfHowl, GiHeartPlus, GiBleedingEye} from 'react-icons/gi';
 import werewolf from '../../public/images/werewolf.png';
 
 const Player = ({ player, currentPhase, number }) => {
-  const icons = [<GiSquare />, <GiCheckMark />, <GiHelp />, <GiWerewolf />, <GiWolfHead />, <GiWolfHowl />, <GiMedicalPackAlt />, <GiMedicalPack />, <GiHeartPlus />, <GiAllSeeingEye />, <GiBleedingEye />, <GiSemiClosedEye />, <GiSheikahEye />];
+  const icons = [<GiSquare />, <GiCheckMark />, <GiHelp />, <GiWolfHowl />, <GiHeartPlus />, <GiBleedingEye />];
 
   const [index, setIndex] = useState(0);
   const [currentIcon, setCurrentIcon] = useState(icons[index]);

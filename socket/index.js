@@ -13,7 +13,7 @@ var gameState = {
   currentPhase: '',
   gameStatus: '',
   phaseResults: [],
-  users: [],
+  playerInfo: [],
   votes: [],
   wolves: {
     number: 0,
@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
   // phase change, HEADER update sender, sending an object based on gameState.previousResult, gameState.currentDay and gameState.currentPhase
   io.emit('header-feed', object);
 
-  //rulesSet sender
+  //rulesSet sender TODO:
   io.emit('ruleset-feed', object);
 
   // living chat logic

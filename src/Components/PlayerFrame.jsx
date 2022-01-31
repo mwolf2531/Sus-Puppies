@@ -9,30 +9,30 @@ const PlayerFrame = (props) => {
 
   return (
 
-    <div>
-      <Row id="chat-row">
-        <Col id="column">
+    <>
+      <Row id="chat-row" className="set-height">
+        <Col xs={2} className="column">
           Left Column
         </Col>
-        <Col id="column">
-          <Row>
+        <Col className="column" id="playerFrame-col-2">
+          <Row id="playerFrame-top-row">
             Top Row
           </Row>
-          <Row>
+          <Row id="playerFrame-timer">
             <Timer
               timer={props.timer}
               currentPhase={props.currentPhase}
             />
           </Row>
-          <Row>
+          <Row id="playerFrame-bottom-row">
             Bottom Row
           </Row>
         </Col>
-        <Col id="column">
+        <Col xs={2} className="column">
           Right Column
         </Col>
       </Row>
-    </div>
+    </>
   )
 }
 

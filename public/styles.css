@@ -103,6 +103,7 @@ body {
   width: 32%;
 }
 
+<<<<<<< HEAD
 .wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -125,4 +126,13 @@ body {
   justify-self: center;
 }
 
+=======
+.fade-in {
+  transition: opacity 1s ease;
+}
+>>>>>>> 578e6ef1f1f0eaf3757d43ac2727cb9c3ec09383
 
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}

@@ -113,9 +113,9 @@ const phaseChange = () => {
   let numWolves = 0;
   let numVillagers = 0;
   for (let i = 0; i < gameState.users.length; i++) {
-    if (gameState.users[i].role === 'wolf') {
+    if (gameState.users[i].role === 2) {
       numWolves++;
-    } else if (gameState.users[i].role === 'villager') {
+    } else if (gameState.users[i].role === 0) {
       //This If statement would include || seer || healer if added
       numVillagers++;
     }
@@ -142,15 +142,15 @@ const phaseChange = () => {
         maxVotes = votes[voteKeys[i]];
       }
     }
-    if (maxVotes >== majority) {
+    if (maxVotes >== majority && victim !== 'NULL') {
       //Hang Victim Wolf
-      if (gameState.users[victim].role === 'wolf') {
-        gameState.users[victim].role = 'deadWolf';
+      if (gameState.users[victim].role === 2) {
+        gameState.users[victim].role = 3;
         numWolves--;
         gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
       } else {
         //Hang Other Victim
-        gameState.users[victim].role = 'deadVillager';
+        gameState.users[victim].role = 1;
         numVillagers--;
         gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
       }
@@ -178,7 +178,7 @@ const phaseChange = () => {
         }
       }
     }
-    gameState.users[victim].role = 'deadVillager';
+    gameState.users[victim].role = 1;
     numVillagers--;
     gameState.phaseResults.push([gameState.currentDay, gameState.currentPhase, victim]);
   }

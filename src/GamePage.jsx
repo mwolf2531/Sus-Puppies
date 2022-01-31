@@ -28,7 +28,7 @@ const GamePage = () => {
   const [currentPhase, setCurrentPhase] = useState('');
   const [playerRoles, setPlayerRoles] = useState([]);
   const [voting, setVoting] = useState([]);
-  const [gameStatus, setGameStatus] = useState('');
+  const [gameStatus, setGameStatus] = useState('not started');
   const [phaseResults, setPhaseResults] = useState([]);
   const [playerInfo, setPlayerInfo] = useState([]);
   const [ghostChats, setGhostChats] = useState([]);
@@ -42,10 +42,6 @@ const GamePage = () => {
 
   useEffect(() => {
     setSocket(io('ws://localhost:8900'));
-  }, []);
-
-  //TODO: Add Lifecycle methods as needed.
-  useEffect(() => {
     setTimer(data.gameState.timer);
     setPreviousResult(data.gameState.previousResult);
     setCurrentDay(data.gameState.currentDay);
@@ -60,7 +56,12 @@ const GamePage = () => {
     setWolfChats(data.gameState.wolfChats);
     setHost(data.gameState.host);
     setPlayerId(data.playerState.player_id);
-  })
+  }, []);
+
+  //TODO: Add Lifecycle methods as needed.
+  useEffect(() => {
+
+  }, [socket])
   //TODO: create handleFunctions. Esp for GameEvents
 
   const handlePhaseChange = () => {

@@ -68,6 +68,25 @@ const GamePage = () => {
       setPlayerState(playerStateObject);
       setPlayerId(playerStateObject.player_id);
     });
+    socket?.on('gameState-feed', ({
+      timer,
+      previousResult,
+      currentDay,
+      currentPhase,
+      phaseResults,
+      playerInfo,
+      gameStatus,
+      votes,
+      wolves,
+    }) => {
+      setTimer(timer);
+      setPreviousResult(previousResult);
+      setCurrentDay(currentDay);
+      setCurrentPhase(currentPhase);
+      setPhaseResults(phaseResults);
+      setPlayerInfo(playerInfo);
+      setGameStatus(gameStatus);
+    });
 
     // socket?.on('gameStatus', (string) => {
     //   // TODO: update gameStatus

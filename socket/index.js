@@ -53,6 +53,7 @@ io.on('connection', (socket) => {
           io.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
           io.emit('playerState-feed', playerState);
+          io.emit('gameState-feed', gameState);
         } else {
           io.emit('login-failed', 'Incorrect password!');
         }
@@ -69,7 +70,15 @@ io.on('connection', (socket) => {
     // change server game state based on host command
     if (messageOrObject === 'pause') {
     } else if (messageOrObject === 'resume') {
-    } else {
+    } else if (typeof messageOrObject === 'object') {
+      console.log(messageOrObject);
+      const {numPlayers, numWolves, timer, seer, medic} = messageOrObject;
+      gameState.timer = timer;
+      gameState.wolves.number = numWolves;
+      gameState.expectedPlayers = numPlayers;
+      gameState.isSeer = seer;
+      gameState.isMedic = medic;
+      io.emit('gameState-feed', gameState);
     }
 
     //rulesSet sender TODO:

@@ -51,7 +51,7 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
         onChange={logChange}
       />
       <div className="game-button">
-        <Button variant="warning">Skip Vote</Button>{' '}
+        <Button variant="warning" style={{ marginRight: "18px" }}>Skip Vote</Button>{' '}
         <Button variant="secondary">Submit</Button>{' '}
       </div>
     </>

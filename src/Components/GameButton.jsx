@@ -8,10 +8,10 @@ const GameButton = ({ playerId, playerInfo, gameStatus }) => {
   }, [gameStatus]);
 
   return (
-    <div className="game-button">
-      <Button variant="warning">Pause Game</Button>{' '}
+    <div className="game-button" >
+      <Button variant="warning" style={{ marginRight: "18px" }}>Pause Game</Button>{' '}
       <Button variant="secondary">Start Game</Button>{' '}
-    </div>
+    </div >
   )
 }
 

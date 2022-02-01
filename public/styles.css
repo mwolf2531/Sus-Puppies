@@ -9,6 +9,13 @@ body {
   background: rgba(26, 15, 60, 1) !important;
 }
 
+h3 {
+  border-bottom: 1px solid white;
+  width: 100%;
+  display: block;
+  padding-bottom: 5px;
+}
+
 #game{
   display: flex;
   flex-direction: column;
@@ -103,13 +110,26 @@ body {
   width: 32%;
 }
 
+.game-button {
+  display: flex;
+  bottom: 0;
+  padding: 23px;
+  margin: auto;
+  justify-content: center;
+}
+
+.dropdown {
+  color:black;
+  padding-top: 5px;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0px;
   grid-auto-rows: 140px;
   grid-template-areas:
-    " . . . ."
+    ". . . ."
     ". a a ."
     ". a a ."
     ". . . .";

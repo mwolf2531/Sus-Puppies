@@ -89,6 +89,9 @@ class CountDown {
 }
 
 io.on('connection', (socket) => {
+  const countdownTimer = new CountDown(gameState, (time) => {
+    socket.emit('timer-feed', time);
+  })
   const socketID = socket.id;
   socket.on('login', ({ username, password }) => {
     console.log(`Login attempt: userName ${username} password: ${password}`);
@@ -152,7 +155,7 @@ io.on('connection', (socket) => {
       gameState.isMedic = medic;
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
-      //TODO: start logic
+      countdownTimer.start()
       io.emit('gameStatus-feed', 'start');
     }
 

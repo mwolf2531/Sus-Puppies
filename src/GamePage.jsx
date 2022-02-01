@@ -64,10 +64,31 @@ const GamePage = () => {
       // TODO: GameState object to be desctructred and update state
       // Deconstruct the gameStateObj, write state with new data
     });
-
+    socket?.on('timer-feed', (timeData) => {
+      setTimer(timeData);
+    });
     socket?.on('playerState-feed', (playerStateObject) => {
       setPlayerState(playerStateObject);
       setPlayerId(playerStateObject.player_id);
+    });
+    socket?.on('gameState-feed', ({
+      timer,
+      previousResult,
+      currentDay,
+      currentPhase,
+      phaseResults,
+      playerInfo,
+      gameStatus,
+      votes,
+      wolves,
+    }) => {
+      setTimer(timer);
+      setPreviousResult(previousResult);
+      setCurrentDay(currentDay);
+      setCurrentPhase(currentPhase);
+      setPhaseResults(phaseResults);
+      setPlayerInfo(playerInfo);
+      setGameStatus(gameStatus);
     });
 
     // socket?.on('gameStatus', (string) => {
@@ -151,6 +172,7 @@ const GamePage = () => {
               playerId={playerId}
               playerInfo={playerInfo}
               gameStatus={gameStatus}
+              socket={socket}
             />
             <Voting
               timer={timer}

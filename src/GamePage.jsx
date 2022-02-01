@@ -62,6 +62,7 @@ const GamePage = () => {
   useEffect(() => {
     socket?.on('phaseChange-feed', (gameStateObj) => {
       // TODO: GameState object to be desctructred and update state
+      // Deconstruct the gameStateObj, write state with new data
     });
 
     socket?.on('playerState-feed', (playerStateObject) => {
@@ -155,7 +156,9 @@ const GamePage = () => {
               timer={timer}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
+              playerState={playerState}
               playerRoles={playerRoles}
+              socket={socket}
             />
           </Col>
           <Col className="column whiteCard">

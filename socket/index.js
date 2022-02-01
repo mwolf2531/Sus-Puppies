@@ -10,7 +10,7 @@ const gameState = {
   timer: 90,
   previousResult: '',
   currentDay: 0,
-  currentPhase: '',
+  currentPhase: 'day',
   phaseResults: [],
   playerInfo: [],
   gameStatus: '',
@@ -81,14 +81,16 @@ io.on('connection', (socket) => {
 
   // votes logic
   socket.on('vote-send', (voteTuple) => {
+    console.log('socket server recieved voteTuple: ', voteTuple);
     // Voting logic and changing server game state here
     gameState.votes.push(voteTuple);
+    console.log(gameState);
     let numWolves = 0;
     let numVillagers = 0;
-    for (let i = 0; i < gameState.users.length; i++) {
-      if (gameState.users[i].role === 2) {
+    for (let i = 0; i < gameState.playerInfo.length; i++) {
+      if (gameState.playerInfo[i].role === 2) {
         numWolves++;
-      } else if (gameState.users[i].role === 0) {
+      } else if (gameState.playerInfo[i].role === 0) {
         //This If statement would include || seer || healer if added
         numVillagers++;
       }
@@ -155,10 +157,10 @@ const phaseChange = () => {
   //0. Build Variables
   let numWolves = 0;
   let numVillagers = 0;
-  for (let i = 0; i < gameState.users.length; i++) {
-    if (gameState.users[i].role === 2) {
+  for (let i = 0; i < gameState.playerInfo.length; i++) {
+    if (gameState.playerInfo[i].role === 2) {
       numWolves++;
-    } else if (gameState.users[i].role === 0) {
+    } else if (gameState.playerInfo[i].role === 0) {
       //This If statement would include || seer || healer if added
       numVillagers++;
     }
@@ -187,8 +189,8 @@ const phaseChange = () => {
     }
     if (maxVotes >= majority && victim !== 'NULL') {
       //Hang Victim Wolf
-      if (gameState.users[victim].role === 2) {
-        gameState.users[victim].role = 3;
+      if (gameState.playerInfo[victim].role === 2) {
+        gameState.playerInfo[victim].role = 3;
         numWolves--;
         gameState.phaseResults.push([
           gameState.currentDay,
@@ -197,7 +199,7 @@ const phaseChange = () => {
         ]);
       } else {
         //Hang Other Victim
-        gameState.users[victim].role = 1;
+        gameState.playerInfo[victim].role = 1;
         numVillagers--;
         gameState.phaseResults.push([
           gameState.currentDay,
@@ -233,7 +235,7 @@ const phaseChange = () => {
     if (maxVotes === -1) {
       //TODO: choose a living non-wolf at random to kill
     }
-    gameState.users[victim].role = 1;
+    gameState.playerInfo[victim].role = 1;
     numVillagers--;
     gameState.phaseResults.push([
       gameState.currentDay,

@@ -357,9 +357,27 @@ const phaseChange = () => {
   //2. Check if game has ended
   if (numWolves === 0) {
     gameState.previousResult = 'Villagers Win!';
+    let returnObj = {
+      timer: gameState.timer,
+      previousResult: gameState.previousResult,
+      currentDay: gameState.currentDay,
+      currentPhase: gameState.currentPhase,
+      phaseResults: gameState.phaseResults,
+      playerInfo: gameState.playerInfo,
+    };
+    io.emit('gameState-feed', returnObj);
     console.log('Villagers win');
   } else if (wolves >= numVillagers) {
     gameState.previousResult = 'Wolves Win!';
+    let returnObj = {
+      timer: gameState.timer,
+      previousResult: gameState.previousResult,
+      currentDay: gameState.currentDay,
+      currentPhase: gameState.currentPhase,
+      phaseResults: gameState.phaseResults,
+      playerInfo: gameState.playerInfo,
+    };
+    io.emit('gameState-feed', returnObj);
     console.log('Wolves Win');
   }
   //3. Game Continues

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 // import Styled from 'styled-components';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
-const GhostChat = (props) => {
-
-  const { socket } = props;
-
+const GhostChat = ({
+  socket,
+  playerInfo,
+  playerId,
+  playerState,
+  playerRoles,
+}) => {
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -18,14 +21,18 @@ const GhostChat = (props) => {
 
   const handleMessageSubmit = (event) => {
     event.preventDefault();
-    socket.emit('ghost-chat-send', newMessage);
+    let messageObject = { username: playerState.username, message: newMessage };
+    socket.emit('ghost-chat-send', messageObject);
     setNewMessage('');
   };
   return (
     <div>
       <h3>Ghost Chat</h3>
       {chat.map((msg, i) => (
-        <div key={i}>{msg}</div>
+        <div className="chatblock" key={i}>
+          <div className="username">{msg.username} </div>
+          <div className="message">{msg.message} </div>
+        </div>
       ))}
       <br />
       <div className="chat-message">
@@ -38,10 +45,12 @@ const GhostChat = (props) => {
               setNewMessage(e.target.value);
             }}
           />
-          <Button variant="warning" onClick={handleMessageSubmit}>Send</Button>{' '}
+          <Button variant="warning" onClick={handleMessageSubmit}>
+            Send
+          </Button>{' '}
         </InputGroup>
       </div>
-    </div >
+    </div>
   );
 };
 

@@ -33,7 +33,7 @@ const gameState = {
  * @return {object} Returns new instance of CountDown.
  */
 class CountDown {
-  constructor(objectReference = gameState, cb = (time)=>time) {
+  constructor(objectReference = gameState, cb = (time) => time) {
     this.gameState = objectReference;
     this.countDownReference;
     this.cb = cb;
@@ -51,7 +51,7 @@ class CountDown {
       this.stop();
       this.gameState.timer = this.gameState.initTimer;
     }
-    if (this.gameState.timer > 1){
+    if (this.gameState.timer > 1) {
       this.isCounting = true;
       this.countDownReference = setTimeout(this.countdown, 1000);
     }
@@ -88,11 +88,10 @@ class CountDown {
   }
 }
 
-
 io.on('connection', (socket) => {
   const countdownTimer = new CountDown(gameState, (time) => {
     socket.emit('timer-feed', time);
-  })
+  });
   const socketID = socket.id;
   socket.on('login', ({ username, password }) => {
     console.log(`Login attempt: userName ${username} password: ${password}`);
@@ -147,7 +146,7 @@ io.on('connection', (socket) => {
       io.emit('gameStatus-feed', 'playing');
     } else if (typeof messageOrObject === 'object') {
       console.log(messageOrObject);
-      const {numPlayers, numWolves, timer, seer, medic} = messageOrObject;
+      const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
       gameState.wolves.number = numWolves;
@@ -156,13 +155,12 @@ io.on('connection', (socket) => {
       gameState.isMedic = medic;
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
-      countdownTimer.start()
+      countdownTimer.start();
       io.emit('gameStatus-feed', 'start');
     }
 
     //rulesSet sender TODO:
     // io.emit('ruleset-feed', object);
-
   });
 
   // votes logic
@@ -227,6 +225,21 @@ io.on('connection', (socket) => {
   socket.on('wolf-chat-send', (message) => {
     console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
+  });
+
+  socket.on('disconnect', (reason) => {
+    console.log(`user ${socket.id} disconnected`);
+    if (gameState.playerInfo.length !== 0) {
+      if (gameState.playerInfo[0].player_id === socket.id) {
+        if (gameState.playerInfo.length > 1) {
+          gameState.playerInfo[1].host = true;
+          gameState.playerInfo.shift();
+          console.log(
+            `Host disconnected, ${gameState.playerInfo[0].username} is the new host`
+          );
+        }
+      }
+    }
   });
 });
 

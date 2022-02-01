@@ -70,25 +70,28 @@ const GamePage = () => {
       setPlayerState(playerStateObject);
       setPlayerId(playerStateObject.player_id);
     });
-    socket?.on('gameState-feed', ({
-      timer,
-      previousResult,
-      currentDay,
-      currentPhase,
-      phaseResults,
-      playerInfo,
-      gameStatus,
-      votes,
-      wolves,
-    }) => {
-      setTimer(timer);
-      setPreviousResult(previousResult);
-      setCurrentDay(currentDay);
-      setCurrentPhase(currentPhase);
-      setPhaseResults(phaseResults);
-      setPlayerInfo(playerInfo);
-      setGameStatus(gameStatus);
-    });
+    socket?.on(
+      'gameState-feed',
+      ({
+        timer,
+        previousResult,
+        currentDay,
+        currentPhase,
+        phaseResults,
+        playerInfo,
+        gameStatus,
+        votes,
+        wolves,
+      }) => {
+        setTimer(timer);
+        setPreviousResult(previousResult);
+        setCurrentDay(currentDay);
+        setCurrentPhase(currentPhase);
+        setPhaseResults(phaseResults);
+        setPlayerInfo(playerInfo);
+        setGameStatus(gameStatus);
+      }
+    );
 
     // socket?.on('gameStatus', (string) => {
     //   // TODO: update gameStatus
@@ -120,10 +123,7 @@ const GamePage = () => {
     <>
       <Container fluid className="set-height" id="game">
         <Login socket={socket} />
-        <CreateGameModal
-        socket={socket}
-        playerState={playerState}
-        />
+        <CreateGameModal socket={socket} playerState={playerState} />
         <Row id="header">
           <Col>
             <Header
@@ -139,6 +139,7 @@ const GamePage = () => {
               livingChats={livingChats}
               playerInfo={playerInfo}
               playerId={playerId}
+              playerState={playerState}
               socket={socket}
             />
           </Col>
@@ -155,6 +156,7 @@ const GamePage = () => {
               ghostChats={ghostChats}
               playerInfo={playerInfo}
               playerId={playerId}
+              playerState={playerState}
               playerRoles={playerRoles}
               socket={socket}
             />
@@ -185,6 +187,7 @@ const GamePage = () => {
               wolfChats={wolfChats}
               playerInfo={playerInfo}
               playerId={playerId}
+              playerState={playerState}
               playerRoles={playerRoles}
               socket={socket}
             />

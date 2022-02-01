@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import Styled from 'styled-components';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
-const LivingChat = (props) => {
-  const { socket } = props;
-
+const LivingChat = ({ socket, playerInfo, playerId, playerState }) => {
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -17,7 +15,8 @@ const LivingChat = (props) => {
 
   const handleMessageSubmit = (event) => {
     event.preventDefault();
-    socket.emit('living-chat-send', newMessage);
+    let messageObject = { username: playerState.username, message: newMessage };
+    socket.emit('living-chat-send', messageObject);
     setNewMessage('');
   };
 
@@ -25,7 +24,10 @@ const LivingChat = (props) => {
     <div>
       <h3>Living Chat</h3>
       {chat.map((msg, i) => (
-        <div key={i}>{msg}</div>
+        <div className="chatblock" key={i}>
+          <div className="username">{msg.username} </div>
+          <div className="message">{msg.message} </div>
+        </div>
       ))}
       <br />
       <div className="chat-message">
@@ -38,7 +40,9 @@ const LivingChat = (props) => {
               setNewMessage(e.target.value);
             }}
           />
-          <Button variant="warning" onClick={handleMessageSubmit}>Send</Button>{' '}
+          <Button variant="warning" onClick={handleMessageSubmit}>
+            Send
+          </Button>{' '}
         </InputGroup>
       </div>
     </div>

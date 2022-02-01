@@ -71,28 +71,6 @@ const GamePage = () => {
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
     });
-<<<<<<< HEAD
-    socket?.on('gameState-feed', ({
-      timer,
-      previousResult,
-      currentDay,
-      currentPhase,
-      phaseResults,
-      playerInfo,
-      gameStatus,
-      votes,
-      wolves,
-    }) => {
-      console.log("pInfo", playerInfo);
-      setTimer(timer);
-      setPreviousResult(previousResult);
-      setCurrentDay(currentDay);
-      setCurrentPhase(currentPhase);
-      setPhaseResults(phaseResults);
-      setPlayerInfo(playerInfo);
-      setGameStatus(gameStatus);
-    });
-=======
     socket?.on(
       'gameState-feed',
       ({
@@ -115,7 +93,6 @@ const GamePage = () => {
         setGameStatus(gameStatus);
       }
     );
->>>>>>> d59f05b4b4f629b69e51412b72d9047b4bceca66
 
     // socket?.on('gameStatus', (string) => {
     //   // TODO: update gameStatus
@@ -162,12 +139,8 @@ const GamePage = () => {
             <LivingChat
               // livingChats={livingChats}
               playerInfo={playerInfo}
-<<<<<<< HEAD
               // playerId={playerId}
-=======
-              playerId={playerId}
               playerState={playerState}
->>>>>>> d59f05b4b4f629b69e51412b72d9047b4bceca66
               socket={socket}
             />
           </Col>
@@ -183,14 +156,9 @@ const GamePage = () => {
             <GhostChat
               // ghostChats={ghostChats}
               playerInfo={playerInfo}
-<<<<<<< HEAD
               // playerId={playerId}
-              // playerRoles={playerRoles}
-=======
-              playerId={playerId}
               playerState={playerState}
-              playerRoles={playerRoles}
->>>>>>> d59f05b4b4f629b69e51412b72d9047b4bceca66
+              // playerRoles={playerRoles}
               socket={socket}
             />
           </Col>
@@ -221,14 +189,9 @@ const GamePage = () => {
             <WolfChat
               // wolfChats={wolfChats}
               playerInfo={playerInfo}
-<<<<<<< HEAD
               // playerId={playerId}
               // playerRoles={playerRoles}
-=======
-              playerId={playerId}
               playerState={playerState}
-              playerRoles={playerRoles}
->>>>>>> d59f05b4b4f629b69e51412b72d9047b4bceca66
               socket={socket}
             />
           </Col>

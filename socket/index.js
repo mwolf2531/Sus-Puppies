@@ -13,7 +13,7 @@ const gameState = {
   currentPhase: '',
   phaseResults: [],
   playerInfo: [],
-  gameStatus: '',
+  gameStatus: 'setup',
   votes: [],
   wolves: {
     number: 0,

@@ -70,18 +70,15 @@ const CreateGameModal = ({socket, playerState}) => {
         <Modal.Body>Game Options</Modal.Body>
         <Modal.Footer>
           {formMaker('Number of players', 'number', 20, 1, true, (data)=> {
-            const newOptions = Object.create(options);
-            newOptions.numPlayers = data;
+            const newOptions = Object.assign(options, {numPlayers: data});
             setOptions(newOptions);
           })}
           {formMaker('Number of wolves', 'number', 20, 1, true, (data)=> {
-            const newOptions = Object.create(options);
-            newOptions.numWolves = data;
+            const newOptions = Object.assign(options, {numWolves: data});
             setOptions(newOptions);
           })}
           {formMaker('Timer(seconds)', 'number', 90, 1, true, (data)=> {
-            const newOptions = Object.create(options);
-            newOptions.timer = data;
+            const newOptions = Object.assign(options, {timer: data});
             setOptions(newOptions);
           })}
           <Button

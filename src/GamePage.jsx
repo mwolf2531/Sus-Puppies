@@ -37,6 +37,7 @@ const GamePage = () => {
   // const [playerId, setPlayerId] = useState('');
   const [playerState, setPlayerState] = useState({});
   const [wolves, setWolves] = useState({});
+  const [initialTimer, setInitialTimer] = useState(90);
 
   const [socket, setSocket] = useState(null);
 
@@ -84,6 +85,7 @@ const GamePage = () => {
         gameStatus,
         votes,
         wolves,
+        initTimer,
       }) => {
         setTimer(timer);
         setPreviousResult(previousResult);
@@ -93,6 +95,8 @@ const GamePage = () => {
         setPlayerInfo(playerInfo);
         setGameStatus(gameStatus);
         setWolves(wolves);
+        console.log('initial timer: ', initTimer);
+        setInitialTimer(initTimer);
       }
     );
 
@@ -168,8 +172,9 @@ const GamePage = () => {
         <Row id="bottom-row">
           <Col className="column whiteCard">
             <Ruleset
-            /* gameLogic object containing game-specific rules (# of wolves, etc) */
               wolves={wolves}
+              initialTimer={initialTimer}
+              playerInfo={playerInfo}
             />
           </Col>
           <Col className="column whiteCard no-margin">

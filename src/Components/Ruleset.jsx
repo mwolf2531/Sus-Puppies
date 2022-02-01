@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const Ruleset = ({ wolves }) => {
+const Ruleset = ({ wolves, initialTimer, playerInfo }) => {
   // ruleset receiever
   // socket.on('ruleset-feed', object of gamesettings)
   console.log('WOLVES: ', wolves);
   return (
     <div>
-      <h3>Rule Set</h3>
-      <div>28 Players</div>
+      <h3>Ruleset</h3>
+      <div>{playerInfo.length} Players</div>
       <div>{wolves.number} Werewolves</div>
-      <div>Time for voting 2: 00</div>
-      <div>No seer / healer</div>
+      <div>{initialTimer} seconds per round</div>
     </div>
   );
 };

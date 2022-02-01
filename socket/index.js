@@ -8,6 +8,7 @@ const io = require('socket.io')(8900, {
 
 const gameState = {
   timer: 90,
+  initTimer: 90,
   previousResult: '',
   currentDay: 0,
   currentPhase: '',
@@ -21,6 +22,73 @@ const gameState = {
   },
   // host: {},
 };
+/**
+ * CountDown will decrement the timer property in the reference object and pass the result to the callback including 0.
+ * This class has four methods. start, stop, countdown, and newCountDown
+ * Only call start, stop, and newCountDown.
+ * @param {object} objectReference This should be gameState. Otherwise object must have timer and initTimer properties with int values.
+ * @param {function} cb Will be passed the new decremented timer value.
+ * Example: timer === 90 -> cb(89). cb will never recieve 90 but will recieve 0
+ * cb is not provided then default behavior will return timer value and update object.
+ * @return {object} Returns new instance of CountDown.
+ */
+class CountDown {
+  constructor(objectReference = gameState, cb = (time)=>time) {
+    this.gameState = objectReference;
+    this.countDownReference;
+    this.cb = cb;
+    this.isCounting = false;
+    this.countdown = this.countdown.bind(this);
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+  }
+  /**
+   * Do not call this function directly. It will create erratic behavior. Use start(), stop(), or newCountDown().
+   * @param {boolean} isNewCountDown true will reset and continue countdown. false will generate a new countdown instance
+   */
+  countdown(isNewCountDown) {
+    if (isNewCountDown) {
+      this.stop();
+      this.gameState.timer = this.gameState.initTimer;
+    }
+    if (this.gameState.timer > 1){
+      this.isCounting = true;
+      this.countDownReference = setTimeout(this.countdown, 1000);
+    }
+    this.cb(--this.gameState.timer);
+  }
+  /**
+   * Start() does not take any params. Will continue counting down or start new countdown based on object timer/initTimer properties.
+   * Will not add an additional timer if called while actively counting down.
+   * If you need a new countdown then call newCountDown()
+   */
+  start() {
+    //TODO
+    if (this.isCounting) return;
+    if (this.gameState.timer > 0) {
+      this.countdown(false);
+    } else {
+      this.countdown(true);
+    }
+  }
+  /**
+   * Stops and clears countdown instance. Does not take params.
+   */
+  stop() {
+    //TODO
+    this.isCounting = false;
+    clearTimeout(this.countDownReference);
+  }
+  /**
+   * Creates a new countdown. Does not take any params
+   * It will reset current countdown. This does not stop the countdown. Call stop() first before calling newCountDown().
+   */
+  newCountDown() {
+    this.countdown(true);
+  }
+}
+const test = new CountDown(gameState, (time) => {console.log(time)})
+test.start();
 
 io.on('connection', (socket) => {
   const socketID = socket.id;
@@ -69,23 +137,30 @@ io.on('connection', (socket) => {
   socket.on('host-send', (messageOrObject) => {
     // change server game state based on host command
     if (messageOrObject === 'pause') {
+      // send game status to all players (including host)
+      gameState.gameStatus = 'paused';
+      io.emit('gameStatus-feed', 'paused');
     } else if (messageOrObject === 'resume') {
+      gameState.gameStatus = 'playing';
+      io.emit('gameStatus-feed', 'playing');
     } else if (typeof messageOrObject === 'object') {
       console.log(messageOrObject);
       const {numPlayers, numWolves, timer, seer, medic} = messageOrObject;
       gameState.timer = timer;
+      gameState.initTimer = timer;
       gameState.wolves.number = numWolves;
       gameState.expectedPlayers = numPlayers;
       gameState.isSeer = seer;
       gameState.isMedic = medic;
       io.emit('gameState-feed', gameState);
+    } else if (messageOrObject === 'start') {
+      //TODO: start logic
+      io.emit('gameStatus-feed', 'start');
     }
 
     //rulesSet sender TODO:
     // io.emit('ruleset-feed', object);
 
-    // send game status to all players (including host)
-    io.emit('gameStatus-feed', 'paused');
   });
 
   // votes logic

@@ -158,6 +158,9 @@ io.on('connection', (socket) => {
     } else if (messageOrObject === 'start') {
       countdownTimer.start();
       io.emit('gameStatus-feed', 'start');
+    } else if (messageOrObject === 'setup') {
+      //TODO: setup logic
+        //this is when a new game is being created
     }
 
     //rulesSet sender TODO:
@@ -183,6 +186,7 @@ io.on('connection', (socket) => {
     let numLiving = numWolves + numVillagers;
     if (gameState.currentPhase === 'day') {
       if (gameState.votes.length === numLiving || gameState.timer === 0) {
+        console.log('initiating phase change!');
         phaseChange();
         let returnObj = {
           timer: gameState.timer,

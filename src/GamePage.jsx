@@ -36,6 +36,7 @@ const GamePage = () => {
   const [host, setHost] = useState('');
   // const [playerId, setPlayerId] = useState('');
   const [playerState, setPlayerState] = useState({});
+  const [wolves, setWolves] = useState({});
 
   const [socket, setSocket] = useState(null);
 
@@ -91,6 +92,7 @@ const GamePage = () => {
         setPhaseResults(phaseResults);
         setPlayerInfo(playerInfo);
         setGameStatus(gameStatus);
+        setWolves(wolves);
       }
     );
 
@@ -167,6 +169,7 @@ const GamePage = () => {
           <Col className="column whiteCard">
             <Ruleset
             /* gameLogic object containing game-specific rules (# of wolves, etc) */
+              wolves={wolves}
             />
           </Col>
           <Col className="column whiteCard no-margin">

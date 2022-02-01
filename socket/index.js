@@ -193,7 +193,7 @@ io.on('connection', (socket) => {
           playerInfo: gameState.playerInfo,
         };
 
-        io.emit('phaseChange-feed', returnObj);
+        io.emit('gameState-feed', returnObj);
       }
     } else {
       if (gameState.votes.length === numWolves || gameState.timer === 0) {
@@ -207,7 +207,7 @@ io.on('connection', (socket) => {
           playerInfo: gameState.playerInfo,
         };
 
-        io.emit('phaseChange-feed', returnObj);
+        io.emit('gameState-feed', returnObj);
       }
     }
   });

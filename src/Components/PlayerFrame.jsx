@@ -26,7 +26,10 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
           })
         }
         <div className="item1" id="playerFrame-timer">
-          <Timer />
+          <Timer
+            timer={timer}
+            currentPhase={currentPhase}
+          />
         </div>
       </div>
     </>

@@ -63,7 +63,9 @@ const GamePage = () => {
     socket?.on('phaseChange-feed', (gameStateObj) => {
       // TODO: GameState object to be desctructred and update state
     });
-
+    socket?.on('timer-feed', (timeData) => {
+      setTimer(timeData);
+    });
     socket?.on('playerState-feed', (playerStateObject) => {
       setPlayerState(playerStateObject);
       setPlayerId(playerStateObject.player_id);
@@ -169,6 +171,7 @@ const GamePage = () => {
               playerId={playerId}
               playerInfo={playerInfo}
               gameStatus={gameStatus}
+              socket={socket}
             />
             <Voting
               timer={timer}

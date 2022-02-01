@@ -37,13 +37,14 @@ const formMaker = (nameOfForm, type, numMax, numMin, isRequired, cb) => {
 const CreateGameModal = ({socket, playerState}) => {
 
   const [show, setShow] = useState(false);
-  const options ={
+  const [options, setOptions] = useState({
     numPlayers: 1,
     numWolves: 1,
     timer: 1,
     seer: false,
     medic: false,
-  };
+  });
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -68,9 +69,21 @@ const CreateGameModal = ({socket, playerState}) => {
         </Modal.Header>
         <Modal.Body>Game Options</Modal.Body>
         <Modal.Footer>
-          {formMaker('Number of players', 'number', 20, 1, true, (data)=> options.numPlayers = data )}
-          {formMaker('Number of wolves', 'number', 20, 1, true, (data)=> options.numWolves = data )}
-          {formMaker('Timer(seconds)', 'number', 90, 1, true, (data)=> options.timer = data )}
+          {formMaker('Number of players', 'number', 20, 1, true, (data)=> {
+            const newOptions = Object.create(options);
+            newOptions.numPlayers = data;
+            setOptions(newOptions);
+          })}
+          {formMaker('Number of wolves', 'number', 20, 1, true, (data)=> {
+            const newOptions = Object.create(options);
+            newOptions.numWolves = data;
+            setOptions(newOptions);
+          })}
+          {formMaker('Timer(seconds)', 'number', 90, 1, true, (data)=> {
+            const newOptions = Object.create(options);
+            newOptions.timer = data;
+            setOptions(newOptions);
+          })}
           <Button
             variant="primary"
             onClick={(e) => {

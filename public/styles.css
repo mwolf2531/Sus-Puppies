@@ -54,7 +54,7 @@ h3 {
 
 #playerFrame-timer{
   flex:1;
-  border: 1px solid white;
+  border: 5px ridge white;
   border-radius: 12px;
 }
 

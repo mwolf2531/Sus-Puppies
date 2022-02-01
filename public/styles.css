@@ -103,13 +103,25 @@ body {
   width: 32%;
 }
 
+.game-button {
+  display: flex;
+  bottom: 0;
+  padding: 23px;
+  margin: auto;
+  justify-content: center;
+}
+
+.dropdown {
+  color:black;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0px;
   grid-auto-rows: 140px;
   grid-template-areas:
-    " . . . ."
+    ". . . ."
     ". a a ."
     ". a a ."
     ". . . .";

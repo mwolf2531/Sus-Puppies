@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
-// import Dropdown from 'react-bootstrap/Dropdown';
+import { Button } from 'react-bootstrap';
 // import DropdownButton from 'react-bootstrap/DropdownButton';
 import Select from 'react-select';
 
@@ -44,14 +44,16 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId }) => {
             );
           })}
       </DropdownButton> */}
+      <h3>Voting</h3>
       <Select
-        name="form-field-name"
-        value="one"
+        className="dropdown"
         options={options}
         onChange={logChange}
       />
-      <button type="button">Skip Vote</button>
-      <button type="button">Submit</button>
+      <div className="game-button">
+        <Button variant="warning">Skip Vote</Button>{' '}
+        <Button variant="secondary">Submit</Button>{' '}
+      </div>
     </>
   );
 };

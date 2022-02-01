@@ -25,12 +25,12 @@ import s20 from '../../public/images/20.svg';
 
 const Player = ({ player, currentPhase, number }) => {
   const icons = [
-    <GiSquare size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />,
-    <GiCheckMark size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />,
-    <GiHelp size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />,
-    <GiWolfHowl size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />,
-    <GiHeartPlus size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />,
-    <GiBleedingEye size={25} style={{marginLeft:"-25px", zIndex:"-1", paddingBottom: "5px"}} />
+    <GiSquare size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
+    <GiCheckMark size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
+    <GiHelp size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
+    <GiWolfHowl size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
+    <GiHeartPlus size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
+    <GiBleedingEye size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />
   ];
 
   const [index, setIndex] = useState(0);
@@ -55,12 +55,12 @@ const Player = ({ player, currentPhase, number }) => {
         </span>)
         : (<span onClick={handleClick}>
           {currentIcon}
-          &nbsp;{player.name}
+          &nbsp;{player.username}
         </span>)
       }
       <div>
         {/* TODO: need to render player icon according to its format */}
-        <img src={s1} style={{height:"7vh", backgroundColor:"white", borderRadius:'1em'}} />
+        <img src={s1} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />
       </div>
     </div>
   )

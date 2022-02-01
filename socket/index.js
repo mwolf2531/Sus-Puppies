@@ -87,8 +87,7 @@ class CountDown {
     this.countdown(true);
   }
 }
-const test = new CountDown(gameState, (time) => {console.log(time)})
-test.start();
+
 
 io.on('connection', (socket) => {
   const socketID = socket.id;

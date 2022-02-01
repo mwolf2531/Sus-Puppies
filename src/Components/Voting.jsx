@@ -4,15 +4,15 @@ import { Button } from 'react-bootstrap';
 // import DropdownButton from 'react-bootstrap/DropdownButton';
 import Select from 'react-select';
 
-const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId, playerState, socket }) => {
+const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, socket }) => {
   //need to get playerId through props from GamePage
-
+  console.log('compPInfo', playerInfo);
   const [voteSelection, setVoteSelection] = useState(null);
 
   const options = playerInfo
-    .filter((player) => player.player_id !== playerId)
+    .filter((player) => player.player_id !== playerState.player_id)
     .map((player, idx) => {
-      return { value: player.name, label: player.name }
+      return { value: player.username, label: player.username }
     });
 
   const logChange = (e) => {
@@ -25,7 +25,6 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerId, player
 
   const submitVote = (e) => {
     //TODO
-    console.log('value', e);
     let voteTuple = [playerState.username, e.value];
     // On Click of Submit button, create and send tuple of vote values
     // VOTE SENDER

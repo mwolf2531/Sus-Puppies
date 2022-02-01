@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
         if (data !== 'Error, Bad Username/Password. Check Password') {
-          const playerState = { username, player_id: socketID };
+          const playerState = { username, player_id: socketID, role: 0 }; //
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;
@@ -122,7 +122,8 @@ io.on('connection', (socket) => {
           gameState.playerInfo.push(playerState);
           io.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
-          io.emit('playerState-feed', playerState);
+          //TODO - CODE RED PRIORITY - CHANGE TO SOLO EMIT
+          io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {
           io.emit('login-failed', 'Incorrect password!');

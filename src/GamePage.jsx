@@ -138,6 +138,7 @@ const GamePage = () => {
           <Col xs={3} className="column whiteCard">
             <LivingChat
               // livingChats={livingChats}
+              currentPhase={currentPhase}
               playerInfo={playerInfo}
               // playerId={playerId}
               playerState={playerState}

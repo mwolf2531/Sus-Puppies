@@ -91,7 +91,7 @@ class CountDown {
 io.on('connection', (socket) => {
   const countdownTimer = new CountDown(gameState, (time) => {
     socket.emit('timer-feed', time);
-  })
+  });
   const socketID = socket.id;
   socket.on('login', ({ username, password }) => {
     console.log(`Login attempt: userName ${username} password: ${password}`);
@@ -155,7 +155,7 @@ io.on('connection', (socket) => {
       gameState.isMedic = medic;
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
-      countdownTimer.start()
+      countdownTimer.start();
       io.emit('gameStatus-feed', 'start');
     }
 
@@ -229,13 +229,15 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', (reason) => {
     console.log(`user ${socket.id} disconnected`);
-    if (gameState.playerInfo[0].player_id === socket.id) {
-      if (gameState.playerInfo.length > 1) {
-        gameState.playerInfo[1].host = true;
-        gameState.playerInfo.shift();
-        console.log(
-          `Host disconnected, ${gameState.playerInfo[0].username} is the new host`
-        );
+    if (gameState.playerInfo.length !== 0) {
+      if (gameState.playerInfo[0].player_id === socket.id) {
+        if (gameState.playerInfo.length > 1) {
+          gameState.playerInfo[1].host = true;
+          gameState.playerInfo.shift();
+          console.log(
+            `Host disconnected, ${gameState.playerInfo[0].username} is the new host`
+          );
+        }
       }
     }
   });

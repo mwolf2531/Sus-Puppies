@@ -24,35 +24,24 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
   }, [currentPhase]);
 
   const submitVote = (e) => {
-    //TODO
-    let voteTuple = [playerState.username, e.value];
+    let voteTuple = [playerState.username, voteSelection];
     // On Click of Submit button, create and send tuple of vote values
     // VOTE SENDER
+    console.log(voteTuple)
     socket.emit('vote-send', voteTuple);
   };
 
   return (
     <>
-      {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-        {playerInfo
-          .filter((player) => player.player_id !== playerId)
-          .map((player, idx) => {
-            return (
-              <Dropdown.Item href="#" key={idx}>
-                {player.name}
-              </Dropdown.Item>
-            );
-          })}
-      </DropdownButton> */}
       <h3>Voting</h3>
       <Select
         className="dropdown"
         options={options}
-        onChange={submitVote}
+        onChange={logChange}
       />
       <div className="game-button">
         <Button variant="warning" style={{ marginRight: "18px" }}>Skip Vote</Button>{' '}
-        <Button variant="secondary">Submit</Button>{' '}
+        <Button variant="secondary" onClick={submitVote}>Submit</Button>{' '}
         {/* submit button will have submitVote functionality
         state to track submitted status
         disable button if submitted is true */}

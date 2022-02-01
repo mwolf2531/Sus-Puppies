@@ -9,7 +9,7 @@ const io = require('socket.io')(8900, {
 const gameState = {
   timer: 90,
   initTimer: 90,
-  previousResult: '',
+  previousResult: 'Welcome to SusPuppies',
   currentDay: 0,
   currentPhase: 'day',
   phaseResults: [],
@@ -20,7 +20,7 @@ const gameState = {
     number: 0,
     players: [],
   },
-  // host: {},
+  host: {},
 };
 /**
  * CountDown will decrement the timer property in the reference object and pass the result to the callback including 0.
@@ -172,7 +172,7 @@ io.on('connection', (socket) => {
     console.log('socket server recieved voteTuple: ', voteTuple);
     // Voting logic and changing server game state here
     gameState.votes.push(voteTuple);
-    console.log(gameState);
+    console.log('vote submitted state', gameState);
     let numWolves = 0;
     let numVillagers = 0;
     for (let i = 0; i < gameState.playerInfo.length; i++) {
@@ -197,7 +197,7 @@ io.on('connection', (socket) => {
           playerInfo: gameState.playerInfo,
         };
 
-        io.emit('phaseChange-feed', returnObj);
+        io.emit('gameState-feed', returnObj);
       }
     } else {
       if (gameState.votes.length === numWolves || gameState.timer === 0) {
@@ -211,7 +211,7 @@ io.on('connection', (socket) => {
           playerInfo: gameState.playerInfo,
         };
 
-        io.emit('phaseChange-feed', returnObj);
+        io.emit('gameState-feed', returnObj);
       }
     }
   });
@@ -293,25 +293,31 @@ const phaseChange = () => {
     }
     if (maxVotes >= majority && victim !== 'NULL') {
       //Hang Victim Wolf
-      if (gameState.playerInfo[victim].role === 2) {
-        gameState.playerInfo[victim].role = 3;
-        numWolves--;
-        gameState.phaseResults.push([
-          gameState.currentDay,
-          gameState.currentPhase,
-          victim,
-        ]);
-      } else {
-        //Hang Other Victim
-        gameState.playerInfo[victim].role = 1;
-        numVillagers--;
-        gameState.phaseResults.push([
-          gameState.currentDay,
-          gameState.currentPhase,
-          victim,
-        ]);
+      for (let i = 0; i < gameState.playerInfo.length; i++) {
+        if (gameState.playerInfo[i].username === victim) {
+          if (gameState.playerInfo[i].role === 2) {
+            gameState.playerInfo[i].role = 3;
+            numWolves--;
+            gameState.phaseResults.push([
+              gameState.currentDay,
+              gameState.currentPhase,
+              victim,
+            ]);
+          } else {
+            //Hang Other Victim
+            gameState.playerInfo[i].role = 1;
+            numVillagers--;
+            gameState.phaseResults.push([
+              gameState.currentDay,
+              gameState.currentPhase,
+              victim,
+            ]);
+          }
+          gameState.previousResult = victim + ' was killed yesterday!';
+        }
       }
-      gameState.previousResult = victim + ' was hung yesterday!';
+    } else {
+      gameState.previousResult = 'No one was killed yesterday.';
     }
   } else {
     //Wolf Vote Logic
@@ -336,22 +342,46 @@ const phaseChange = () => {
         }
       }
     }
-    if (maxVotes === -1) {
+    if (maxVotes === -1 || victim === 'NULL') {
       //TODO: choose a living non-wolf at random to kill
     }
-    gameState.playerInfo[victim].role = 1;
-    numVillagers--;
-    gameState.phaseResults.push([
-      gameState.currentDay,
-      gameState.currentPhase,
-      victim,
-    ]);
-    gameState.previousResult = victim + ' was eaten last night!';
+    for (let i = 0; i < gameState.playerInfo.length; i++) {
+      if (gameState.playerInfo[i].username === victim) {
+        gameState.playerInfo[i].role = 1;
+        numVillagers--;
+        gameState.phaseResults.push([
+          gameState.currentDay,
+          gameState.currentPhase,
+          victim,
+        ]);
+        gameState.previousResult = victim + ' was eaten last night!';
+      }
+    }
   }
   //2. Check if game has ended
   if (numWolves === 0) {
+    gameState.previousResult = 'Villagers Win!';
+    let returnObj = {
+      timer: gameState.timer,
+      previousResult: gameState.previousResult,
+      currentDay: gameState.currentDay,
+      currentPhase: gameState.currentPhase,
+      phaseResults: gameState.phaseResults,
+      playerInfo: gameState.playerInfo,
+    };
+    io.emit('gameState-feed', returnObj);
     console.log('Villagers win');
   } else if (wolves >= numVillagers) {
+    gameState.previousResult = 'Wolves Win!';
+    let returnObj = {
+      timer: gameState.timer,
+      previousResult: gameState.previousResult,
+      currentDay: gameState.currentDay,
+      currentPhase: gameState.currentPhase,
+      phaseResults: gameState.phaseResults,
+      playerInfo: gameState.playerInfo,
+    };
+    io.emit('gameState-feed', returnObj);
     console.log('Wolves Win');
   }
   //3. Game Continues

@@ -22,7 +22,7 @@ import { io } from 'socket.io-client';
 const GamePage = () => {
   //Note: These states are not final in anyway.
   const [timer, setTimer] = useState(0);
-  const [previousResult, setPreviousResult] = useState('');
+  const [previousResult, setPreviousResult] = useState('Welcome to Day 0!');
   const [currentDay, setCurrentDay] = useState(0);
   const [currentPhase, setCurrentPhase] = useState('');
   // const [playerRoles, setPlayerRoles] = useState([]);

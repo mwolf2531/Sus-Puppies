@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
-const WolfChat = (props) => {
-  const { socket } = props;
-
+const WolfChat = ({
+  socket,
+  playerState,
+  playerId,
+  playerInfo,
+  playerRoles,
+}) => {
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -17,7 +21,8 @@ const WolfChat = (props) => {
 
   const handleMessageSubmit = (event) => {
     event.preventDefault();
-    socket.emit('wolf-chat-send', newMessage);
+    let messageObject = { username: playerState.username, message: newMessage };
+    socket.emit('wolf-chat-send', messageObject);
     setNewMessage('');
   };
 
@@ -25,7 +30,10 @@ const WolfChat = (props) => {
     <div>
       <h3>Wolf Chat</h3>
       {chat.map((msg, i) => (
-        <div key={i}>{msg}</div>
+        <div className="chatblock" key={i}>
+          <div className="username">{msg.username} </div>
+          <div className="message">{msg.message} </div>
+        </div>
       ))}
       <br />
       <div className="wolf-chat-message">
@@ -38,12 +46,12 @@ const WolfChat = (props) => {
               setNewMessage(e.target.value);
             }}
           />
-          <Button variant="warning" onClick={handleMessageSubmit}>Send</Button>{' '}
+          <Button variant="warning" onClick={handleMessageSubmit}>
+            Send
+          </Button>{' '}
         </InputGroup>
       </div>
     </div>
   );
-}
+};
 export default WolfChat;
-
-

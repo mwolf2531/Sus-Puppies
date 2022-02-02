@@ -17,10 +17,12 @@ const EndgamePlayerEntry = ({ player }) => {
       </span>
     )
   } else {
-    <span style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}>
-      {roleIcons[Math.floor(player.role / 2)]}
-      &nbsp;{player.username}
-    </span>
+    return (
+      <span style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>
+        {roleIcons[Math.floor(player.role / 2)]}
+        &nbsp;{player.username}
+      </span>
+    )
   }
 }
 

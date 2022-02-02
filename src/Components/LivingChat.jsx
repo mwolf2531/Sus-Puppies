@@ -28,7 +28,7 @@ const LivingChat = ({
   );
 
   const handleMessageSubmit = (event) => {
-    if (newMessage.length > 0 && (player.role === 0 || player.role === 2)) {
+    if (newMessage.length > 0 && player.role % 2 === 0) {
       event.preventDefault();
       let messageObject = {
         username: playerState.username,

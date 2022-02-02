@@ -24,7 +24,7 @@ const GhostChat = ({
   );
 
   const handleMessageSubmit = (event) => {
-    if (newMessage.length > 0 && (player.role === 1 || player.role === 3)) {
+    if (newMessage.length > 0 && player.role % 2 === 1) {
       event.preventDefault();
       let messageObject = {
         username: playerState.username,
@@ -39,7 +39,7 @@ const GhostChat = ({
     <Container>
       <h3>Ghost Chat</h3>
       <Chat>
-        {(player?.role === 1 || player?.role === 3) &&
+        {player?.role % 2 === 1 &&
           chat.map((msg, i) => {
             if (msg.username !== playerState.username) {
               return (

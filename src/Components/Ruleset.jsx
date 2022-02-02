@@ -5,6 +5,7 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
   // ruleset receiever
   // socket.on('ruleset-feed', object of gamesettings)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf'];
 
@@ -16,6 +17,8 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
 
 =======
 >>>>>>> 04fde4002d9a840155785e57e4f38302d2bb2264
+=======
+>>>>>>> c94d56b342287a2792a8e585df3febf69eb0ae04
   return (
     <div>
       <h3>Ruleset</h3>

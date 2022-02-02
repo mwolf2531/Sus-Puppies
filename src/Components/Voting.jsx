@@ -7,6 +7,7 @@ import Select from 'react-select';
 const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, socket, gameStatus }) => {
   //need to get playerId through props from GamePage
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [voteSelection, setVoteSelection] = useState(null);
 =======
   console.log('compPInfo', playerInfo);
@@ -17,6 +18,11 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
   const logChange = (e) => {
     setVoteSelection(e.value);
   }
+=======
+  console.log('compPInfo', playerInfo);
+  const [voteSelection, setVoteSelection] = useState('NULL');
+  const [isVoted, setIsVoted] = useState(false)
+>>>>>>> c94d56b342287a2792a8e585df3febf69eb0ae04
 
   const villagerOptions = playerInfo
     .filter(player => player.player_id !== playerState.player_id)
@@ -26,6 +32,7 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
     });
 
 
+<<<<<<< HEAD
   const wolfOptions = playerInfo
     .filter(player => player.player_id !== playerState.player_id)
     .filter(player => player.role % 2 === 0 && player.role !== 2)
@@ -40,6 +47,8 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
 
 =======
 >>>>>>> 04fde4002d9a840155785e57e4f38302d2bb2264
+=======
+>>>>>>> c94d56b342287a2792a8e585df3febf69eb0ae04
   const submitVote = (e) => {
     let voteTuple = [playerState.username, voteSelection];
     // On Click of Submit button, create and send tuple of vote values

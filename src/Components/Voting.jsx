@@ -99,7 +99,14 @@ const Voting = ({
       <h3>Everybody Votes!</h3>
       <Select className='dropdown' onChange={logChange} options={villagerOptions}/>
       <div className='game-button'>
-        <Button variant='warning' style={{ marginRight: '18px' }}>
+        <Button variant='warning'
+        style={{ marginRight: '18px' }}
+        onClick={() => {
+          setVoteSelection('NULL');
+          submitVote();
+        }}
+        disabled={isVoted}
+        >
           Skip Vote
         </Button>
         <Button variant='secondary' onClick={submitVote} disabled={isVoted}>

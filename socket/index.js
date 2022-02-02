@@ -16,6 +16,7 @@ const gameState = {
   playerInfo: [],
   gameStatus: 'setup',
   votes: [],
+  initWolves: 1,
   wolves: {
     number: 0,
     players: [],
@@ -150,7 +151,7 @@ io.on('connection', (socket) => {
       const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
-      gameState.wolves.number = numWolves;
+      gameState.initWolves = numWolves;
       gameState.expectedPlayers = numPlayers;
       gameState.isSeer = seer;
       gameState.isMedic = medic;
@@ -389,6 +390,7 @@ const phaseChange = () => {
     gameState.currentPhase = 'night';
     gameState.timer = 90;
     gameState.votes = [];
+    io.emit('gameState-feed', gameState);
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;

@@ -47,7 +47,7 @@ const Timer = ({ timer, currentPhase }) => {
             {timer}
           </span>
           <span style={{ display: "flex", justifyContent: "center" }}>
-            <img src={Moon} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
+            <img src={Sun} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
           </span>
         </>
       ) : (
@@ -56,7 +56,7 @@ const Timer = ({ timer, currentPhase }) => {
             {timer}
           </span>
           <span style={{ display: "flex", justifyContent: "center" }}>
-            <img src={Sun} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
+            <img src={Moon} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
           </span>
         </>
       )}

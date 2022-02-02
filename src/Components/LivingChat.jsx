@@ -23,6 +23,10 @@ const LivingChat = ({
     setChat([]);
   }, [currentPhase]);
 
+  const playerRole =
+  playerInfo
+    ?.find(player => player?.player_id === playerState?.player_id || null)
+
   const handleMessageSubmit = (event) => {
     if (newMessage.length > 0) {
       event.preventDefault();

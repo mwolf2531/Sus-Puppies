@@ -22,6 +22,7 @@ import s17 from '../../public/images/17.svg';
 import s18 from '../../public/images/18.svg';
 import s19 from '../../public/images/19.svg';
 import s20 from '../../public/images/20.svg';
+import Carousel from 'react-bootstrap/Carousel';
 
 
 const Login = ({ socket }) => {
@@ -76,14 +77,14 @@ const Login = ({ socket }) => {
         enforceFocus={true}
       >
         <Modal.Header closeButton={false}>
-          <Modal.Title style={{ position:"center"}}>Welcome to Sus Puppies!</Modal.Title>
+          <Modal.Title style={{ position: "center" }}>Welcome to Sus Puppies!</Modal.Title>
         </Modal.Header>
         <span style={{ alignSelf: "center" }} >
           <img src={werewolf} style={{ height: "30vh" }} />
         </span>
         <Modal.Body>{`${header}`}</Modal.Body>
         <Modal.Footer
-          style={{justifyContent:"center"}}
+          style={{ justifyContent: "center" }}
         >
           <div className="inputs">
             <label htmlFor="userInput">Username:&nbsp;</label>
@@ -107,41 +108,48 @@ const Login = ({ socket }) => {
             </div>
             <br />
             <div>
-              <input
-                type="radio"
-                value="s1"
-                name="picture"
-                checked={picture === "s1"}
-                onChange={(e) => onValueChange(e)}
-              />
-              <img src={s1} style={{ height: "5vh", paddingRight: "3px" }} />
-              {' '}
-              <input
-                type="radio"
-                value="s3"
-                name="picture"
-                checked={picture === "s3"}
-                onChange={(e) => onValueChange(e)}
-              />
-              <img src={s3} style={{ height: "5vh", paddingRight: "3px" }} />
-              {' '}
-              <input
-                type="radio"
-                value="s4"
-                name="picture"
-                checked={picture === "s4"}
-                onChange={(e) => onValueChange(e)}
-              />
-              <img src={s4} style={{ height: "5vh", paddingRight: "3px" }} />
-              {' '}
-              <input
-                type="radio"
-                value="s5"
-                name="picture"
-                checked={picture === "s5"}
-                onChange={(e) => onValueChange(e)}
-              />
-              <img src={s5} style={{ height: "5vh", paddingRight: "3px" }} />
+              <Carousel variant="dark">
+                <Carousel.Item>
+                  <input
+                    type="radio"
+                    value="s1"
+                    name="picture"
+                    checked={picture === "s1"}
+                    onChange={(e) => onValueChange(e)}
+                  />
+                  <img src={s1} style={{ height: "5vh", paddingRight: "3px" }} />
+                  {' '}
+                </Carousel.Item>
+                <Carousel.Item>
+                  <input
+                    type="radio"
+                    value="s3"
+                    name="picture"
+                    checked={picture === "s3"}
+                    onChange={(e) => onValueChange(e)}
+                  />
+                  <img src={s3} style={{ height: "5vh", paddingRight: "3px" }} />
+                  {' '}
+                </Carousel.Item>
+                {/* <input
+                    type="radio"
+                    value="s4"
+                    name="picture"
+                    checked={picture === "s4"}
+                    onChange={(e) => onValueChange(e)}
+                  />
+                  <img src={s4} style={{ height: "5vh", paddingRight: "3px" }} />
+                  {' '}
+                  <input
+                    type="radio"
+                    value="s5"
+                    name="picture"
+                    checked={picture === "s5"}
+                    onChange={(e) => onValueChange(e)}
+                  />
+                </Carousel.Item>
+                <img src={s5} style={{ height: "5vh", paddingRight: "3px" }} /> */}
+              </Carousel>
             </div>
           </div>
           <br />
@@ -156,7 +164,7 @@ const Login = ({ socket }) => {
               setHeader('Please enter a username and password')
             }
           }}
-          style={{ width:"60%", display:"block", alignSelf: 'center' }}
+          style={{ width: "60%", display: "block", alignSelf: 'center' }}
         >
           Login
         </Button>

@@ -68,14 +68,19 @@ const GamePage = () => {
     });
     socket?.on('timer-feed', (timeData) => {
       setTimer(timeData);
+
     });
     socket?.on('gameStatus-feed', (status) => {
       setGameStatus(status);
+
     });
     socket?.on('playerState-feed', (playerStateObject) => {
+      console.log('playerStateObject:', playerStateObject)
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
+
     });
+
     socket?.on(
       'gameState-feed',
       ({
@@ -99,12 +104,15 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
+
       }
     );
-
-    // socket?.on('gameStatus', (string) => {
-    //   // TODO: update gameStatus
-    // });
+    const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
+    if (playerState.role === 0) {
+      if(playerState.role != newPlayerState.role) {
+        setPlayerState(newPlayerState);
+      }
+    }
   }, [socket]);
 
   //TODO: create handleFunctions. Esp for GameEvents
@@ -125,7 +133,6 @@ const GamePage = () => {
     //TODO: needs to tell server when a new player has connected
     //assign player_id, take in user's name and user's chosen icon/image
   };
-
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
@@ -176,8 +183,10 @@ const GamePage = () => {
           <Col className="column whiteCard">
             <Ruleset
               wolves={wolves}
+              playerState={playerState}
               initialTimer={initialTimer}
               playerInfo={playerInfo}
+              playerState={playerState}
             />
           </Col>
           <Col className="column whiteCard no-margin">

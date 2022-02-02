@@ -78,6 +78,7 @@ class CountDown {
       }
       console.log('WOLVES', gameState.playerInfo);
       gameState.gameStatus = 'playing';
+      io.emit('gameState-feed', this.gameState);
     }
     if (this.isCounting) return;
     if (this.gameState.timer > 0) {
@@ -105,7 +106,7 @@ class CountDown {
 
 io.on('connection', (socket) => {
   const countdownTimer = new CountDown(gameState, (time) => {
-    socket.emit('timer-feed', time);
+    io.emit('timer-feed', time);
   });
   const socketID = socket.id;
   socket.on('login', ({ username, password }) => { //TODO: receive picture
@@ -134,19 +135,19 @@ io.on('connection', (socket) => {
             playerState.host = false;
           }
           gameState.playerInfo.push(playerState);
-          io.emit('login-success', body);
+          socket.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
-          //TODO - CODE RED PRIORITY - CHANGE TO SOLO EMIT
+          console.log('playerStateIOIO:', playerState);
           io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {
-          io.emit('login-failed', 'Incorrect password!');
+          socket.emit('login-failed', 'Incorrect password!');
         }
         //TODO: add a route for creating player state
       })
       .catch((e) => {
         console.log('Failed connection: ', e);
-        io.emit('login-failed', 'Failed to reach server!');
+        socket.emit('login-failed', 'Failed to reach server!');
       });
   });
 
@@ -155,11 +156,13 @@ io.on('connection', (socket) => {
     // change server game state based on host command
     if (messageOrObject === 'pause') {
       // send game status to all players (including host)
+      countdownTimer.stop();
       gameState.gameStatus = 'paused';
       io.emit('gameStatus-feed', 'paused');
     } else if (messageOrObject === 'resume') {
       gameState.gameStatus = 'playing';
       io.emit('gameStatus-feed', 'playing');
+      countdownTimer.start()
     } else if (typeof messageOrObject === 'object') {
       console.log(messageOrObject);
       const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
@@ -202,7 +205,7 @@ io.on('connection', (socket) => {
     if (gameState.currentPhase === 'day') {
       if (gameState.votes.length === numLiving || gameState.timer === 0) {
         console.log('initiating phase change!');
-        phaseChange();
+        phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
           previousResult: gameState.previousResult,
@@ -216,7 +219,7 @@ io.on('connection', (socket) => {
       }
     } else {
       if (gameState.votes.length === numWolves || gameState.timer === 0) {
-        phaseChange();
+        phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
           previousResult: gameState.previousResult,
@@ -271,7 +274,7 @@ instrument(io, { auth: false });
 // go to "admin.socket.io"  in browser
 // clear path option in browser and toggle websocket only option on
 
-const phaseChange = () => {
+const phaseChange = (countdownTimer) => {
   //Phase Change
   //0. Build Variables
   let numWolves = 0;
@@ -403,12 +406,14 @@ const phaseChange = () => {
   //3. Game Continues
   else if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
-    gameState.timer = 90;
     gameState.votes = [];
+    io.emit('gameState-feed', gameState);
+    countdownTimer.newCountDown();
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
-    gameState.timer = 90;
     gameState.votes = [];
+    io.emit('gameState-feed', gameState);
+    countdownTimer.newCountDown();
   }
 };

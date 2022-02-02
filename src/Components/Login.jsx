@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 
-const Login = ({socket}) => {
+const Login = ({ socket }) => {
 
   const [show, setShow] = useState(true);
   const [userName, setUserName] = useState('');
@@ -14,7 +14,7 @@ const Login = ({socket}) => {
 
   const handleChange = (e, stateSet) => {
     e.preventDefault();
-    const data  = e.target.value;
+    const data = e.target.value;
     stateSet(data);
   };
 
@@ -33,40 +33,47 @@ const Login = ({socket}) => {
   }, [socket]);
 
   const loginAttempt = () => {
-    socket.emit('login', {username: userName, password});
+    socket.emit('login', { username: userName, password });
     setUserName('');
     setPassword('');
   };
   return (
     <>
       <Modal
-      show={show}
-      onHide={handleClose}
-      enforceFocus={true}
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        enforceFocus={true}
       >
         <Modal.Header closeButton={false}>
           <Modal.Title>Welcome to Sus Puppies!</Modal.Title>
         </Modal.Header>
         <Modal.Body>{`${header}`}</Modal.Body>
         <Modal.Footer>
-          <label htmlFor="userInput">Login Name: </label>
-          <input
-            value={userName}
-            type="text"
-            id="userInput"
-            required={true}
-            onChange={(e) => handleChange(e, setUserName)}
-          />
-          <label htmlFor="passwordInput">Password: </label>
-          <input
-            value={password}
-            type="password"
-            id="passwordInput"
-            required={true}
-            onChange={(e) => handleChange(e, setPassword)}
+          <span className="inputs">
+            <label htmlFor="userInput">Username: </label>
+            <input
+              value={userName}
+              type="text"
+              id="userInput"
+              required={true}
+              onChange={(e) => handleChange(e, setUserName)}
+              className="inputs"
             />
+            <div>
+              <label htmlFor="passwordInput">Password:  </label>
+              <input
+                value={password}
+                type="password"
+                id="passwordInput"
+                required={true}
+                onChange={(e) => handleChange(e, setPassword)}
+              />
+            </div>
+          </span>
           <Button
-            variant="primary"
+            variant="warning"
             onClick={(e) => {
               if (userName && password) {
                 e.preventDefault();
@@ -75,7 +82,7 @@ const Login = ({socket}) => {
                 setHeader('Please enter a username and password')
               }
             }}
-            >
+          >
             Login
           </Button>
         </Modal.Footer>

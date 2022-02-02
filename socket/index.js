@@ -65,6 +65,20 @@ class CountDown {
    */
   start() {
     //TODO
+    if (gameState.gameStatus === 'setup') {
+      console.log('START', gameState.playerInfo);
+      let numWolves = gameState.wolves.number;
+      while (numWolves > 0) {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        console.log(rando);
+        if (gameState.playerInfo[rando].role === 0) {
+          gameState.playerInfo[rando].role = 2;
+          numWolves--;
+        }
+      }
+      console.log('WOLVES', gameState.playerInfo);
+      gameState.gameStatus = 'playing';
+    }
     if (this.isCounting) return;
     if (this.gameState.timer > 0) {
       this.countdown(false);
@@ -151,7 +165,7 @@ io.on('connection', (socket) => {
       const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
-      gameState.initWolves = numWolves;
+      gameState.wolves.number = numWolves;
       gameState.expectedPlayers = numPlayers;
       gameState.isSeer = seer;
       gameState.isMedic = medic;
@@ -372,7 +386,7 @@ const phaseChange = () => {
     };
     io.emit('gameState-feed', returnObj);
     console.log('Villagers win');
-  } else if (wolves >= numVillagers) {
+  } else if (numWolves >= numVillagers) {
     gameState.previousResult = 'Wolves Win!';
     let returnObj = {
       timer: gameState.timer,
@@ -390,7 +404,6 @@ const phaseChange = () => {
     gameState.currentPhase = 'night';
     gameState.timer = 90;
     gameState.votes = [];
-    io.emit('gameState-feed', gameState);
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;

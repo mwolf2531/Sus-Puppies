@@ -9,6 +9,8 @@ import moon from "../../public/images/moon.png";
 import arrow from "../../public/images/arrow.png";
 import Moon from "../../public/images/alt-moon.svg";
 import Sun from "../../public/images/alt-sun.svg";
+import Claw from "./Claw.jsx";
+import Expire from "./Expire.jsx"
 
 // const Sun = Styled.span`
 //   background-image: url(${sun});
@@ -38,19 +40,18 @@ const Timer = ({ timer, currentPhase }) => {
   //   tick();
   // }, [timeLeft])
 
+  let dizplay;
+
+    if (timer) {
+      dizplay = <Expire delay="2500"><Claw/></Expire>
+    }
+
   return (
+    <>
     <div id="column">
       <SectionHeader style={{ textAlign: "center" }}>Timer</SectionHeader>
-      {currentPhase === "day" ? (
-        <>
-          <span style={{ display: "flex", justifyContent: "center" }}>
-            {timer}
-          </span>
-          <span style={{ display: "flex", justifyContent: "center" }}>
-            <img src={Sun} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
-          </span>
-        </>
-      ) : (
+
+      {currentPhase === "night" ? (
         <>
           <span style={{ display: "flex", justifyContent: "center" }}>
             {timer}
@@ -59,8 +60,22 @@ const Timer = ({ timer, currentPhase }) => {
             <img src={Moon} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
           </span>
         </>
+      ) : (
+        <>
+          <span style={{ display: "flex", justifyContent: "center" }}>
+            {timer}
+          </span>
+          <span style={{ display: "flex", justifyContent: "center" }}>
+            <img src={Sun} style={{ height: "12vh", padding: "10px 0 10px 0" }} />
+          </span>
+        </>
       )}
     </div>
+    <div style={{display:"flex",justifyContent:"center"}}>
+      {/* {dizplay} */}
+    </div>
+
+    </>
   );
 };
 

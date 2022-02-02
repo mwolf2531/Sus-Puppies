@@ -64,9 +64,7 @@ class CountDown {
    * If you need a new countdown then call newCountDown()
    */
   start() {
-    //TODO
     if (gameState.gameStatus === 'setup') {
-      console.log('START', gameState.playerInfo);
       let numWolves = gameState.wolves.number;
       while (numWolves > 0) {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
@@ -76,7 +74,7 @@ class CountDown {
           numWolves--;
         }
       }
-      console.log('WOLVES', gameState.playerInfo);
+      //TODO: Copy above logic to assign Seer/Healer (4/6) roles
       gameState.gameStatus = 'playing';
       io.emit('gameState-feed', this.gameState);
     }
@@ -283,8 +281,7 @@ const phaseChange = (countdownTimer) => {
   for (let i = 0; i < gameState.playerInfo.length; i++) {
     if (gameState.playerInfo[i].role === 2) {
       numWolves++;
-    } else if (gameState.playerInfo[i].role === 0) {
-      //This If statement would include || seer || healer if added
+    } else if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
       numVillagers++;
     }
   }

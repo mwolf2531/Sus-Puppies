@@ -38,7 +38,6 @@ const CreateGameModal = ({ socket, playerState }) => {
 
   const [show, setShow] = useState(false);
   const [options, setOptions] = useState({
-    numPlayers: 1,
     numWolves: 1,
     timer: 1,
     seer: false,
@@ -72,10 +71,6 @@ const CreateGameModal = ({ socket, playerState }) => {
         </Modal.Header>
         <Modal.Body>Game Options</Modal.Body>
         <Modal.Footer className="inputs">
-          {formMaker('Number of players', 'number', 20, 1, true, (data) => {
-            const newOptions = Object.assign(options, { numPlayers: data });
-            setOptions(newOptions);
-          })}
           {formMaker('Number of wolves', 'number', 20, 1, true, (data) => {
             const newOptions = Object.assign(options, { numWolves: data });
             setOptions(newOptions);
@@ -84,6 +79,8 @@ const CreateGameModal = ({ socket, playerState }) => {
             const newOptions = Object.assign(options, { timer: data });
             setOptions(newOptions);
           })}
+          TODO - ADD FORM FOR ENABLING/DISABLING SEER
+          TODO - ADD FORM FOR ENABLING/DISABLING HEALER
           <Button
             variant="warning"
             onClick={(e) => {

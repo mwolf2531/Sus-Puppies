@@ -52,7 +52,7 @@ class CountDown {
       this.stop();
       this.gameState.timer = this.gameState.initTimer;
     }
-    if (this.gameState.timer > 1) {
+    if (this.gameState.timer > -Infinity) {
       this.isCounting = true;
       this.countDownReference = setTimeout(this.countdown, 1000);
     }
@@ -64,19 +64,16 @@ class CountDown {
    * If you need a new countdown then call newCountDown()
    */
   start() {
-    //TODO
     if (gameState.gameStatus === 'setup') {
-      console.log('START', gameState.playerInfo);
       let numWolves = gameState.wolves.number;
       while (numWolves > 0) {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
-        console.log(rando);
         if (gameState.playerInfo[rando].role === 0) {
           gameState.playerInfo[rando].role = 2;
           numWolves--;
         }
       }
-      console.log('WOLVES', gameState.playerInfo);
+      //TODO: Copy above logic to assign Seer/Healer (4/6) roles
       gameState.gameStatus = 'playing';
       io.emit('gameState-feed', this.gameState);
     }
@@ -100,7 +97,9 @@ class CountDown {
    * It will reset current countdown. This does not stop the countdown. Call stop() first before calling newCountDown().
    */
   newCountDown() {
-    this.countdown(true);
+    this.stop();
+    this.gameState.timer = this.gameState.initTimer;
+    this.start();
   }
 }
 
@@ -123,7 +122,6 @@ io.on('connection', (socket) => {
         picture,
       },
     };
-    console.log(options.data);
     axios(options)
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
@@ -138,7 +136,6 @@ io.on('connection', (socket) => {
           gameState.playerInfo.push(playerState);
           socket.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
-          console.log('playerStateIOIO:', playerState);
           io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {
@@ -165,7 +162,6 @@ io.on('connection', (socket) => {
       io.emit('gameStatus-feed', 'playing');
       countdownTimer.start()
     } else if (typeof messageOrObject === 'object') {
-      console.log(messageOrObject);
       const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
@@ -188,10 +184,8 @@ io.on('connection', (socket) => {
 
   // votes logic
   socket.on('vote-send', (voteTuple) => {
-    console.log('socket server recieved voteTuple: ', voteTuple);
     // Voting logic and changing server game state here
     gameState.votes.push(voteTuple);
-    console.log('vote submitted state', gameState);
     let numWolves = 0;
     let numVillagers = 0;
     for (let i = 0; i < gameState.playerInfo.length; i++) {
@@ -204,8 +198,7 @@ io.on('connection', (socket) => {
     }
     let numLiving = numWolves + numVillagers;
     if (gameState.currentPhase === 'day') {
-      if (gameState.votes.length === numLiving || gameState.timer === 0) {
-        console.log('initiating phase change!');
+      if (gameState.votes.length === numLiving) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -219,7 +212,7 @@ io.on('connection', (socket) => {
         io.emit('gameState-feed', returnObj);
       }
     } else {
-      if (gameState.votes.length === numWolves || gameState.timer === 0) {
+      if (gameState.votes.length === numWolves) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -237,19 +230,16 @@ io.on('connection', (socket) => {
 
   // living chat logic
   socket.on('living-chat-send', (message) => {
-    console.log('socket server recieved message from living:', message);
     io.emit('living-chat-feed', message);
   });
 
   // ghost chat logic
   socket.on('ghost-chat-send', (message) => {
-    console.log('socket server recieved message from ghost:', message);
     io.emit('ghost-chat-feed', message);
   });
 
   // wolf chat logic
   socket.on('wolf-chat-send', (message) => {
-    console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
   });
 
@@ -283,8 +273,7 @@ const phaseChange = (countdownTimer) => {
   for (let i = 0; i < gameState.playerInfo.length; i++) {
     if (gameState.playerInfo[i].role === 2) {
       numWolves++;
-    } else if (gameState.playerInfo[i].role === 0) {
-      //This If statement would include || seer || healer if added
+    } else if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
       numVillagers++;
     }
   }
@@ -324,7 +313,7 @@ const phaseChange = (countdownTimer) => {
             ]);
           } else {
             //Hang Other Victim
-            gameState.playerInfo[i].role = 1;
+            gameState.playerInfo[i].role += 1;
             numVillagers--;
             gameState.phaseResults.push([
               gameState.currentDay,
@@ -336,13 +325,26 @@ const phaseChange = (countdownTimer) => {
         }
       }
     } else {
+      victim = 'No one';
+      gameState.phaseResults.push([
+        gameState.currentDay,
+        gameState.currentPhase,
+        victim,
+      ]);
       gameState.previousResult = 'No one was killed yesterday.';
     }
   } else {
     //Wolf Vote Logic
     let votes = {};
+    let seerTarget = '';
+    let healerTarget = '';
     for (let i = 0; i < gameState.votes.length; i++) {
-      if (votes[gameState.votes[i][1]]) {
+      let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
+      if (player.role === 4) {
+        seerTarget = gameState.votes[i][1];
+      } else if (player.role === 6) {
+        healerTarget = gameState.votes[i][1];
+      } else if (votes[gameState.votes[i][1]]) {
         votes[gameState.votes[i][1]]++;
       } else {
         votes[gameState.votes[i][1]] = 1;
@@ -365,17 +367,27 @@ const phaseChange = (countdownTimer) => {
     if (maxVotes === -1 || victim === 'NULL') {
       //TODO: choose a living non-wolf at random to kill
     }
-    for (let i = 0; i < gameState.playerInfo.length; i++) {
-      if (gameState.playerInfo[i].username === victim) {
-        gameState.playerInfo[i].role = 1;
-        numVillagers--;
-        gameState.phaseResults.push([
-          gameState.currentDay,
-          gameState.currentPhase,
-          victim,
-        ]);
-        gameState.previousResult = victim + ' was eaten last night!';
+    if (victim !== healerTarget) {
+      for (let i = 0; i < gameState.playerInfo.length; i++) {
+        if (gameState.playerInfo[i].username === victim) {
+          gameState.playerInfo[i].role += 1;
+          numVillagers--;
+          gameState.phaseResults.push([
+            gameState.currentDay,
+            gameState.currentPhase,
+            victim,
+          ]);
+          gameState.previousResult = victim + ' was eaten last night!';
+        }
       }
+    } else {
+      victim = 'No one';
+      gameState.phaseResults.push([
+        gameState.currentDay,
+        gameState.currentPhase,
+        victim,
+      ]);
+      gameState.previousResult = victim + ' was eaten last night!';
     }
   }
   //2. Check if game has ended
@@ -391,6 +403,7 @@ const phaseChange = (countdownTimer) => {
       gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
+    countdownTimer.stop();
     console.log('Villagers win');
   } else if (numWolves >= numVillagers) {
     gameState.previousResult = 'Wolves Win!';
@@ -404,19 +417,20 @@ const phaseChange = (countdownTimer) => {
       gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
+    countdownTimer.stop();
     console.log('Wolves Win');
   }
   //3. Game Continues
   else if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
     gameState.votes = [];
+    gameState.timer = gameState.initTimer;
     io.emit('gameState-feed', gameState);
-    countdownTimer.newCountDown();
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
     gameState.votes = [];
+    gameState.timer = gameState.initTimer;
     io.emit('gameState-feed', gameState);
-    countdownTimer.newCountDown();
   }
 };

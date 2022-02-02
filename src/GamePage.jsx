@@ -68,15 +68,19 @@ const GamePage = () => {
     });
     socket?.on('timer-feed', (timeData) => {
       setTimer(timeData);
+
     });
     socket?.on('gameStatus-feed', (status) => {
       setGameStatus(status);
+
     });
     socket?.on('playerState-feed', (playerStateObject) => {
       console.log('playerStateObject:', playerStateObject)
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
+
     });
+
     socket?.on(
       'gameState-feed',
       ({
@@ -100,12 +104,13 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
+        if (!!playerState.player_id){
+          const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
+          setPlayerState(newPlayerState);
+        }
       }
     );
 
-    // socket?.on('gameStatus', (string) => {
-    //   // TODO: update gameStatus
-    // });
   }, [socket]);
 
   //TODO: create handleFunctions. Esp for GameEvents
@@ -126,7 +131,6 @@ const GamePage = () => {
     //TODO: needs to tell server when a new player has connected
     //assign player_id, take in user's name and user's chosen icon/image
   };
-
   //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
@@ -180,6 +184,7 @@ const GamePage = () => {
               playerState={playerState}
               initialTimer={initialTimer}
               playerInfo={playerInfo}
+              playerState={playerState}
             />
           </Col>
           <Col className="column whiteCard no-margin">

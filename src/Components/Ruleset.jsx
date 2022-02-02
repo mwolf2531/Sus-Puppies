@@ -14,6 +14,7 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
 
   return (
     <div>
+      <h2>Hello {playerState.username}!</h2>
       <h3>Ruleset</h3>
       <div>{playerInfo.length} Players</div>
       <div>{wolves} Werewolves</div>

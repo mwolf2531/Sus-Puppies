@@ -72,7 +72,11 @@ const Voting = ({
     }
   }, [currentPhase]);
 
-  if (currentPhase === 'night' && playerState.role === 2) {
+  const playerRole =
+    playerInfo
+      ?.find(player => player?.player_id === playerState?.player_id || null)
+
+  if (currentPhase === 'night' && playerRole === 2) {
     return (
       <>
         <h3>Wolves Vote!</h3>
@@ -84,7 +88,7 @@ const Voting = ({
         </div>
       </>
     );
-  } else if (playerState.role % 2 === 1) {
+  } else if (playerRole % 2 === 1) {
     return <div>You're dead. No voting allowed</div>;
   } else if (currentPhase === 'night' && playerState.role !== 2) {
     return <div>Sleep peacefully while the werewolves are about...</div>;

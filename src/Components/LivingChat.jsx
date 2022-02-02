@@ -73,6 +73,7 @@ const LivingChat = ({
 };
 
 const Container = styled.div`
+  max-height: 100%;
   border: 2px solid blue;
 `;
 

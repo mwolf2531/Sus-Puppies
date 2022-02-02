@@ -24,10 +24,15 @@ const LivingChat = ({
   }, [currentPhase]);
 
   const handleMessageSubmit = (event) => {
-    event.preventDefault();
-    let messageObject = { username: playerState.username, message: newMessage };
-    socket.emit('living-chat-send', messageObject);
-    setNewMessage('');
+    if (newMessage.length > 0) {
+      event.preventDefault();
+      let messageObject = {
+        username: playerState.username,
+        message: newMessage,
+      };
+      socket.emit('living-chat-send', messageObject);
+      setNewMessage('');
+    }
   };
 
   return (
@@ -73,17 +78,16 @@ const LivingChat = ({
 };
 
 const Container = styled.div`
-  max-height: 100%;
-  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Chat = styled.div`
   display: flex;
   flex-direction: column;
   color: #000000;
-  max-height: 100%;
+  max-height: 430px;
   overflow: auto;
-  border: 1px red solid;
 `;
 
 const ChatBox = styled.div`
@@ -92,7 +96,7 @@ const ChatBox = styled.div`
   background: #ffffff;
   border-radius: 5px;
   margin-right: auto;
-  max-width: 45%;
+  max-width: 60%;
   min-width: 25%;
 `;
 
@@ -104,7 +108,7 @@ const UserBox = styled.div`
   margin-left: auto;
   margin-top: 3px;
   margin-bottom: 3px;
-  max-width: 45%;
+  max-width: 60%;
   min-width: 25%;
   padding: 5px 20px;
   text-overflow: ellipsis;
@@ -114,7 +118,5 @@ const Username = styled.div`
   font-weight: bold;
   font-size: 13px;
 `;
-
-const Message = styled.div``;
 
 export default LivingChat;

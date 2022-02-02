@@ -23,12 +23,12 @@ const LivingChat = ({
     setChat([]);
   }, [currentPhase]);
 
-  const playerRole =
-  playerInfo
-    ?.find(player => player?.player_id === playerState?.player_id || null)
+  const player = playerInfo?.find(
+    (player) => player?.player_id === playerState?.player_id || null
+  );
 
   const handleMessageSubmit = (event) => {
-    if (newMessage.length > 0) {
+    if (newMessage.length > 0 && player.role % 2 === 0) {
       event.preventDefault();
       let messageObject = {
         username: playerState.username,
@@ -70,6 +70,11 @@ const LivingChat = ({
             value={newMessage}
             onChange={(e) => {
               setNewMessage(e.target.value);
+            }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                handleMessageSubmit(event);
+              }
             }}
           />
           <Button variant="warning" onClick={handleMessageSubmit}>

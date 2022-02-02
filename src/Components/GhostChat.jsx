@@ -19,12 +19,12 @@ const GhostChat = ({
     });
   }, [socket]);
 
-  const playerRole =
-  playerInfo
-    ?.find(player => player?.player_id === playerState?.player_id || null)
+  const player = playerInfo?.find(
+    (player) => player?.player_id === playerState?.player_id || null
+  );
 
   const handleMessageSubmit = (event) => {
-    if (newMessage.length > 0) {
+    if (newMessage.length > 0 && player.role % 2 === 1) {
       event.preventDefault();
       let messageObject = {
         username: playerState.username,
@@ -39,23 +39,24 @@ const GhostChat = ({
     <Container>
       <h3>Ghost Chat</h3>
       <Chat>
-        {chat.map((msg, i) => {
-          if (msg.username !== playerState.username) {
-            return (
-              <ChatBox key={i}>
-                <Username>{msg.username} </Username>
-                <Message>{msg.message} </Message>
-              </ChatBox>
-            );
-          } else {
-            return (
-              <UserBox key={i}>
-                <Username>{msg.username} </Username>
-                <Message>{msg.message} </Message>
-              </UserBox>
-            );
-          }
-        })}
+        {player?.role % 2 === 1 &&
+          chat.map((msg, i) => {
+            if (msg.username !== playerState.username) {
+              return (
+                <ChatBox key={i}>
+                  <Username>{msg.username} </Username>
+                  <Message>{msg.message} </Message>
+                </ChatBox>
+              );
+            } else {
+              return (
+                <UserBox key={i}>
+                  <Username>{msg.username} </Username>
+                  <Message>{msg.message} </Message>
+                </UserBox>
+              );
+            }
+          })}
       </Chat>
       <br />
       <div className="chat-message">
@@ -66,6 +67,11 @@ const GhostChat = ({
             value={newMessage}
             onChange={(e) => {
               setNewMessage(e.target.value);
+            }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                handleMessageSubmit(event);
+              }
             }}
           />
           <Button variant="warning" onClick={handleMessageSubmit}>

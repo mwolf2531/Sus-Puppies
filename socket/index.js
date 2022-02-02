@@ -324,7 +324,7 @@ const phaseChange = (countdownTimer) => {
             ]);
           } else {
             //Hang Other Victim
-            gameState.playerInfo[i].role = 1;
+            gameState.playerInfo[i].role += 1;
             numVillagers--;
             gameState.phaseResults.push([
               gameState.currentDay,
@@ -336,13 +336,24 @@ const phaseChange = (countdownTimer) => {
         }
       }
     } else {
+      victim = 'No one';
+      gameState.phaseResults.push([
+        gameState.currentDay,
+        gameState.currentPhase,
+        victim,
+      ]);
       gameState.previousResult = 'No one was killed yesterday.';
     }
   } else {
     //Wolf Vote Logic
     let votes = {};
     for (let i = 0; i < gameState.votes.length; i++) {
-      if (votes[gameState.votes[i][1]]) {
+      let player = playerInfo.find(player => player.username === votes[i][0]);
+      if (player.role === 4) {
+        let seerTarget = votes[i][1];
+      } else if (player.role === 6) {
+        let healerTarget = votes[i][1];
+      } else if (votes[gameState.votes[i][1]]) {
         votes[gameState.votes[i][1]]++;
       } else {
         votes[gameState.votes[i][1]] = 1;
@@ -365,17 +376,27 @@ const phaseChange = (countdownTimer) => {
     if (maxVotes === -1 || victim === 'NULL') {
       //TODO: choose a living non-wolf at random to kill
     }
-    for (let i = 0; i < gameState.playerInfo.length; i++) {
-      if (gameState.playerInfo[i].username === victim) {
-        gameState.playerInfo[i].role = 1;
-        numVillagers--;
-        gameState.phaseResults.push([
-          gameState.currentDay,
-          gameState.currentPhase,
-          victim,
-        ]);
-        gameState.previousResult = victim + ' was eaten last night!';
+    if (victim !== healerTarget) {
+      for (let i = 0; i < gameState.playerInfo.length; i++) {
+        if (gameState.playerInfo[i].username === victim) {
+          gameState.playerInfo[i].role += 1;
+          numVillagers--;
+          gameState.phaseResults.push([
+            gameState.currentDay,
+            gameState.currentPhase,
+            victim,
+          ]);
+          gameState.previousResult = victim + ' was eaten last night!';
+        }
       }
+    } else {
+      victim = 'No one';
+      gameState.phaseResults.push([
+        gameState.currentDay,
+        gameState.currentPhase,
+        victim,
+      ]);
+      gameState.previousResult = victim + ' was eaten last night!';
     }
   }
   //2. Check if game has ended
@@ -391,6 +412,7 @@ const phaseChange = (countdownTimer) => {
       gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
+    countdownTimer.stop();
     console.log('Villagers win');
   } else if (numWolves >= numVillagers) {
     gameState.previousResult = 'Wolves Win!';
@@ -404,6 +426,7 @@ const phaseChange = (countdownTimer) => {
       gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
+    countdownTimer.stop();
     console.log('Wolves Win');
   }
   //3. Game Continues

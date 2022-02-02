@@ -31,11 +31,13 @@ const EndgameModal = ({ playerInfo, phaseResults, gameStatus, previousResult }) 
         <Modal.Body>{previousResult}</Modal.Body>
         <Modal.Footer className="results">
           {playerInfo.map((player, idx) => {
-            return (
+            return (<>
               <EndgamePlayerEntry
                 player={player}
                 key={idx}
               />
+              <br></br>
+            </>
             )
           })}
           <Button

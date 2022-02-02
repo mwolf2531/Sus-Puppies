@@ -16,6 +16,9 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
   const handleClickResume = () => {
     socket?.emit('host-send', 'resume')
   }
+  const playerRole =
+  playerInfo
+    ?.find(player => player?.player_id === playerState?.player_id || null)
 
   return (
     <div className="game-button" >

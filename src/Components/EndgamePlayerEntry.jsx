@@ -11,17 +11,23 @@ const roleIcons = [
 const EndgamePlayerEntry = ({ player }) => {
   if (player.role % 2 === 0) {
     return (
-      <span>
+      <div>
         {roleIcons[Math.floor(player.role / 2)]}
         &nbsp;{player.username}
-      </span>
+      </div>
     )
   } else {
     return (
-      <span style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>
+      <div
+        style={{
+          textDecorationLine: 'line-through',
+          textDecorationStyle: 'solid',
+          color: 'red'
+        }}
+      >
         {roleIcons[Math.floor(player.role / 2)]}
         &nbsp;{player.username}
-      </span>
+      </div>
     )
   }
 }

@@ -44,6 +44,7 @@ const CreateGameModal = ({ socket, playerState }) => {
     seer: false,
     medic: false,
   });
+  const [picture, setPicture] = useState('s1');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

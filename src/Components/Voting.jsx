@@ -44,8 +44,8 @@ const Voting = ({
       .map((player, idx) => {
         return { value: player.username, label: player.username };
       });
-      setVillagerOptions(villagers);
-      setWolfOptions(wolves);
+    setVillagerOptions(villagers);
+    setWolfOptions(wolves);
     //TODO: add lifecycle method to watch for currentPhase change
   }, [gameStatus]);
   const submitVote = (e) => {
@@ -67,7 +67,7 @@ const Voting = ({
   }, [timer]);
 
   useEffect(() => {
-    if (isVoted){
+    if (isVoted) {
       setIsVoted(false);
     }
   }, [currentPhase]);
@@ -80,7 +80,7 @@ const Voting = ({
     return (
       <>
         <h3>Wolves Vote!</h3>
-        <Select className='dropdown'  onChange={logChange} options={wolfOptions}/>
+        <Select className='dropdown' onChange={logChange} options={wolfOptions} />
         <div className='game-button'>
           <Button variant='warning' onClick={submitVote}>
             Kill Villager
@@ -88,6 +88,30 @@ const Voting = ({
         </div>
       </>
     );
+  } else if (currentPhase === 'night' && player?.role === 4) {
+    return (
+      <>
+        <h3>Seer, choose who to investigate</h3>
+        <Select className='dropdown' onChange={logChange} options={villagerOptions} />
+        <div className='game-button'>
+          <Button variant='warning' onClick={submitVote}>
+            Discover Role
+          </Button>
+        </div>
+      </>
+    )
+  } else if (currentPhase === 'night' && player?.role === 6) {
+    return (
+      <>
+        <h3>Healer, choose who to heal</h3>
+        <Select className='dropdown' onChange={logChange} options={villagerOptions} />
+        <div className='game-button'>
+          <Button variant='warning' onClick={submitVote}>
+            Discover Role
+          </Button>
+        </div>
+      </>
+    )
   } else if (player?.role % 2 === 1) {
     return <div>You're dead. No voting allowed</div>;
   } else if (currentPhase === 'night' && player?.role !== 2) {
@@ -97,7 +121,7 @@ const Voting = ({
   return (
     <>
       <h3>Everybody Votes!</h3>
-      <Select className='dropdown' onChange={logChange} options={villagerOptions}/>
+      <Select className='dropdown' onChange={logChange} options={villagerOptions} />
       <div className='game-button'>
         <Button variant='warning' style={{ marginRight: '18px' }}>
           Skip Vote

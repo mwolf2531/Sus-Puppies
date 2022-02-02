@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
     socket.emit('timer-feed', time);
   });
   const socketID = socket.id;
-  socket.on('login', ({ username, password }) => {
+  socket.on('login', ({ username, password }) => { //TODO: receive picture
     console.log(`Login attempt: userName ${username} password: ${password}`);
     // TODO: login logic~
     const options = {
@@ -126,7 +126,7 @@ io.on('connection', (socket) => {
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
         if (data !== 'Error, Bad Username/Password. Check Password') {
-          const playerState = { username, player_id: socketID, role: 0 }; //
+          const playerState = { username, player_id: socketID, role: 0 }; //TODO: add picture to playerState
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;

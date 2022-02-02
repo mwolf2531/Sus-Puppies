@@ -29,6 +29,7 @@ const Login = ({ socket }) => {
   const [show, setShow] = useState(true);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [picture, setPicture] = useState('s1');
   const [header, setHeader] = useState('Please Log in :]');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -54,10 +55,17 @@ const Login = ({ socket }) => {
   }, [socket]);
 
   const loginAttempt = () => {
-    socket.emit('login', { username: userName, password });
+    socket.emit('login', { username: userName, password }); //TODO: emit picture
     setUserName('');
     setPassword('');
+    setPicture('s1');
   };
+
+  const onValueChange = (e) => {
+    console.log('picture selected: ', e.target.value);
+    setPicture(e.target.value);
+  }
+
   return (
     <>
       <Modal
@@ -70,13 +78,15 @@ const Login = ({ socket }) => {
         <Modal.Header closeButton={false}>
           <Modal.Title style={{ position:"center"}}>Welcome to Sus Puppies!</Modal.Title>
         </Modal.Header>
-        <span style={{ float:"left"}}>
-          <img src={werewolf} style={{ height: "20vh"}} />
+        <span style={{ alignSelf: "center" }} >
+          <img src={werewolf} style={{ height: "30vh" }} />
         </span>
         <Modal.Body>{`${header}`}</Modal.Body>
-        <Modal.Footer>
-          <span className="inputs">
-            <label htmlFor="userInput">Username: </label>
+        <Modal.Footer
+          style={{justifyContent:"center"}}
+        >
+          <div className="inputs">
+            <label htmlFor="userInput">Username:&nbsp;</label>
             <input
               value={userName}
               type="text"
@@ -86,7 +96,7 @@ const Login = ({ socket }) => {
               className="inputs"
             />
             <div>
-              <label htmlFor="passwordInput">Password:  </label>
+              <label htmlFor="passwordInput">Password:&nbsp;&nbsp;</label>
               <input
                 value={password}
                 type="password"
@@ -95,29 +105,62 @@ const Login = ({ socket }) => {
                 onChange={(e) => handleChange(e, setPassword)}
               />
             </div>
+            <br />
             <div>
-              <input type="radio" value="s1" name="picture" />
-              <img src={s1} style={{ height: "5vh"}} />
-              <input type="radio" value="s2" name="picture" />
-              <img src={s2} style={{ height: "5vh"}} />
-              <input type="radio" value="s3" name="picture" />
-              <img src={s3} style={{ height: "5vh"}} />
+              <input
+                type="radio"
+                value="s1"
+                name="picture"
+                checked={picture === "s1"}
+                onChange={(e) => onValueChange(e)}
+              />
+              <img src={s1} style={{ height: "5vh", paddingRight: "3px" }} />
+              {' '}
+              <input
+                type="radio"
+                value="s3"
+                name="picture"
+                checked={picture === "s3"}
+                onChange={(e) => onValueChange(e)}
+              />
+              <img src={s3} style={{ height: "5vh", paddingRight: "3px" }} />
+              {' '}
+              <input
+                type="radio"
+                value="s4"
+                name="picture"
+                checked={picture === "s4"}
+                onChange={(e) => onValueChange(e)}
+              />
+              <img src={s4} style={{ height: "5vh", paddingRight: "3px" }} />
+              {' '}
+              <input
+                type="radio"
+                value="s5"
+                name="picture"
+                checked={picture === "s5"}
+                onChange={(e) => onValueChange(e)}
+              />
+              <img src={s5} style={{ height: "5vh", paddingRight: "3px" }} />
             </div>
-          </span>
-          <Button
-            variant="warning"
-            onClick={(e) => {
-              if (userName && password) {
-                e.preventDefault();
-                loginAttempt()
-              } else {
-                setHeader('Please enter a username and password')
-              }
-            }}
-          >
-            Login
-          </Button>
+          </div>
+          <br />
         </Modal.Footer>
+        <Button
+          variant="warning"
+          onClick={(e) => {
+            if (userName && password) {
+              e.preventDefault();
+              loginAttempt()
+            } else {
+              setHeader('Please enter a username and password')
+            }
+          }}
+          style={{ width:"60%", display:"block", alignSelf: 'center' }}
+        >
+          Login
+        </Button>
+        <br />
       </Modal>
     </>
   );

@@ -27,7 +27,7 @@ const GamePage = () => {
   const [currentPhase, setCurrentPhase] = useState('');
   // const [playerRoles, setPlayerRoles] = useState([]);
   const [votes, setVotes] = useState([]);
-  const [gameStatus, setGameStatus] = useState('not started');
+  const [gameStatus, setGameStatus] = useState('setup');
   const [phaseResults, setPhaseResults] = useState([]);
   const [playerInfo, setPlayerInfo] = useState([]);
   // const [ghostChats, setGhostChats] = useState([]);
@@ -36,7 +36,7 @@ const GamePage = () => {
   const [host, setHost] = useState('');
   // const [playerId, setPlayerId] = useState('');
   const [playerState, setPlayerState] = useState({});
-  const [wolves, setWolves] = useState({});
+  const [wolves, setWolves] = useState(1);
   const [initialTimer, setInitialTimer] = useState(90);
 
   const [socket, setSocket] = useState(null);
@@ -69,6 +69,9 @@ const GamePage = () => {
     socket?.on('timer-feed', (timeData) => {
       setTimer(timeData);
     });
+    socket?.on('gameStatus-feed', (status) => {
+      setGameStatus(status);
+    });
     socket?.on('playerState-feed', (playerStateObject) => {
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
@@ -84,7 +87,7 @@ const GamePage = () => {
         playerInfo,
         gameStatus,
         votes,
-        wolves,
+        initWolves,
         initTimer,
       }) => {
         setTimer(timer);
@@ -94,8 +97,7 @@ const GamePage = () => {
         setPhaseResults(phaseResults);
         setPlayerInfo(playerInfo);
         setGameStatus(gameStatus);
-        setWolves(wolves);
-        console.log('initial timer: ', initTimer);
+        setWolves(initWolves);
         setInitialTimer(initTimer);
       }
     );
@@ -192,6 +194,7 @@ const GamePage = () => {
               currentPhase={currentPhase}
               playerState={playerState}
               // playerRoles={playerRoles}
+              gameStatus={gameStatus}
               socket={socket}
             />
           </Col>

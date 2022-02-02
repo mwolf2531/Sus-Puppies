@@ -345,7 +345,7 @@ const phaseChange = (countdownTimer) => {
     //Wolf Vote Logic
     let votes = {};
     for (let i = 0; i < gameState.votes.length; i++) {
-      let player = playerInfo.find(player => player.username === votes[i][0]);
+      let player = gameState.playerInfo.find(player => player.username === votes[i][0]);
       if (player.role === 4) {
         let seerTarget = votes[i][1];
       } else if (player.role === 6) {

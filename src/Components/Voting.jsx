@@ -10,7 +10,11 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
   console.log('compPInfo', playerInfo);
   const [voteSelection, setVoteSelection] = useState('NULL');
   const [isVoted, setIsVoted] = useState(false)
-
+  // const options = playerInfo
+  //   .filter((player) => player.player_id !== playerState.player_id)
+  //   .map((player, idx) => {
+  //     return { value: player.username, label: player.username }
+  //   });
 
   const logChange = (e) => {
     setVoteSelection(e.value);
@@ -37,12 +41,14 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
     //TODO: add lifecycle method to watch for currentPhase change
   }, [currentPhase]);
   const submitVote = (e) => {
-    let voteTuple = [playerState.username, voteSelection];
-    // On Click of Submit button, create and send tuple of vote values
-    // VOTE SENDER
-    console.log(voteTuple)
-    socket?.emit('vote-send', voteTuple);
-    setIsVoted(true);
+    if (!isVoted) {
+      let voteTuple = [playerState.username, voteSelection];
+      // On Click of Submit button, create and send tuple of vote values
+      // VOTE SENDER
+      console.log(voteTuple)
+      socket?.emit('vote-send', voteTuple);
+      setIsVoted(true);
+    }
   };
   useEffect(() => {
     if (timer === 0 && gameStatus !== 'setup') {
@@ -51,6 +57,10 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
     //TODO: add lifecycle method to watch for cuurentPhase change
     //setIsVoted -> false
   }, [currentPhase, timer]);
+
+  useEffect(() => {
+    setIsVoted(false);
+  }, [currentPhase]);
 
 
   let defaultView = (

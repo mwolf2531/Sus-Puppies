@@ -336,6 +336,7 @@ const phaseChange = () => {
     }
   } else {
     //Wolf Vote Logic
+    let votes = {};
     for (let i = 0; i < gameState.votes.length; i++) {
       if (votes[gameState.votes[i][1]]) {
         votes[gameState.votes[i][1]]++;

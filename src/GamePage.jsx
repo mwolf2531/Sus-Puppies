@@ -183,6 +183,7 @@ const GamePage = () => {
               playerInfo={playerInfo}
               gameStatus={gameStatus}
               socket={socket}
+              playerState={playerState}
             />
             <Voting
               timer={timer}

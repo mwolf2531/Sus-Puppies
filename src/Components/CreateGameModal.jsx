@@ -79,8 +79,8 @@ const CreateGameModal = ({ socket, playerState }) => {
             const newOptions = Object.assign(options, { timer: data });
             setOptions(newOptions);
           })}
-          TODO - ADD FORM FOR ENABLING/DISABLING SEER
-          TODO - ADD FORM FOR ENABLING/DISABLING HEALER
+          {/* TODO - ADD FORM FOR ENABLING/DISABLING SEER
+          TODO - ADD FORM FOR ENABLING/DISABLING HEALER */}
           <Button
             variant="warning"
             onClick={(e) => {

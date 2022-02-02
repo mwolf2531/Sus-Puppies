@@ -19,7 +19,7 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
       <div>{wolves} Werewolves</div>
       <div>{initialTimer} seconds per round</div>
       <br />
-      {/* <div><b>You are a {roleDefinitions[playerRole?.role || 0]}</b></div> */}
+      <div><b>You are a {roleDefinitions[playerRole?.role || 0]}</b></div>
     </div>
   );
 };

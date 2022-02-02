@@ -186,7 +186,7 @@ io.on('connection', (socket) => {
   });
 
   // votes logic
-  io.on('vote-send', (voteTuple) => {
+  socket.on('vote-send', (voteTuple) => {
     console.log('socket server recieved voteTuple: ', voteTuple);
     // Voting logic and changing server game state here
     gameState.votes.push(voteTuple);
@@ -205,7 +205,7 @@ io.on('connection', (socket) => {
     if (gameState.currentPhase === 'day') {
       if (gameState.votes.length === numLiving || gameState.timer === 0) {
         console.log('initiating phase change!');
-        phaseChange();
+        phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
           previousResult: gameState.previousResult,
@@ -219,7 +219,7 @@ io.on('connection', (socket) => {
       }
     } else {
       if (gameState.votes.length === numWolves || gameState.timer === 0) {
-        phaseChange();
+        phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
           previousResult: gameState.previousResult,
@@ -274,7 +274,7 @@ instrument(io, { auth: false });
 // go to "admin.socket.io"  in browser
 // clear path option in browser and toggle websocket only option on
 
-const phaseChange = () => {
+const phaseChange = (countdownTimer) => {
   //Phase Change
   //0. Build Variables
   let numWolves = 0;
@@ -408,12 +408,12 @@ const phaseChange = () => {
     gameState.currentPhase = 'night';
     gameState.votes = [];
     io.emit('gameState-feed', gameState);
-    countdownTimer.start()
+    countdownTimer.newCountDown();
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
     gameState.votes = [];
     io.emit('gameState-feed', gameState);
-    countdownTimer.start();
+    countdownTimer.newCountDown();
   }
 };

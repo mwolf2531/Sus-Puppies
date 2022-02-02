@@ -53,7 +53,7 @@ const Voting = ({
       let voteTuple = [playerState.username, voteSelection];
       // On Click of Submit button, create and send tuple of vote values
       // VOTE SENDER
-      console.log(voteTuple);
+      console.log(voteTuple); //WE KNOW WE MADE IT THIS FAR
       socket?.emit('vote-send', voteTuple);
       setIsVoted(true);
     }

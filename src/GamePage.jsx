@@ -104,13 +104,15 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
-        if (!!playerState.player_id){
-          const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
-          setPlayerState(newPlayerState);
-        }
+
       }
     );
-
+    const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
+    if (playerState.role === 0) {
+      if(playerState.role != newPlayerState.role) {
+        setPlayerState(newPlayerState);
+      }
+    }
   }, [socket]);
 
   //TODO: create handleFunctions. Esp for GameEvents

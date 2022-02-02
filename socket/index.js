@@ -388,6 +388,7 @@ const phaseChange = (countdownTimer) => {
       currentPhase: gameState.currentPhase,
       phaseResults: gameState.phaseResults,
       playerInfo: gameState.playerInfo,
+      gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
     console.log('Villagers win');
@@ -400,6 +401,7 @@ const phaseChange = (countdownTimer) => {
       currentPhase: gameState.currentPhase,
       phaseResults: gameState.phaseResults,
       playerInfo: gameState.playerInfo,
+      gameStatus: 'ended',
     };
     io.emit('gameState-feed', returnObj);
     console.log('Wolves Win');

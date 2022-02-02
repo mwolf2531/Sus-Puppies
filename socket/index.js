@@ -52,7 +52,7 @@ class CountDown {
       this.stop();
       this.gameState.timer = this.gameState.initTimer;
     }
-    if (this.gameState.timer > 1) {
+    if (this.gameState.timer > -Infinity) {
       this.isCounting = true;
       this.countDownReference = setTimeout(this.countdown, 1000);
     }
@@ -68,7 +68,6 @@ class CountDown {
       let numWolves = gameState.wolves.number;
       while (numWolves > 0) {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
-        console.log(rando);
         if (gameState.playerInfo[rando].role === 0) {
           gameState.playerInfo[rando].role = 2;
           numWolves--;
@@ -98,7 +97,9 @@ class CountDown {
    * It will reset current countdown. This does not stop the countdown. Call stop() first before calling newCountDown().
    */
   newCountDown() {
-    this.countdown(true);
+    this.stop();
+    this.gameState.timer = this.gameState.initTimer;
+    this.start();
   }
 }
 
@@ -121,7 +122,6 @@ io.on('connection', (socket) => {
         picture,
       },
     };
-    console.log(options.data);
     axios(options)
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
@@ -136,7 +136,6 @@ io.on('connection', (socket) => {
           gameState.playerInfo.push(playerState);
           socket.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
-          console.log('playerStateIOIO:', playerState);
           io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {
@@ -163,7 +162,6 @@ io.on('connection', (socket) => {
       io.emit('gameStatus-feed', 'playing');
       countdownTimer.start()
     } else if (typeof messageOrObject === 'object') {
-      console.log(messageOrObject);
       const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
@@ -186,10 +184,8 @@ io.on('connection', (socket) => {
 
   // votes logic
   socket.on('vote-send', (voteTuple) => {
-    console.log('socket server recieved voteTuple: ', voteTuple);
     // Voting logic and changing server game state here
     gameState.votes.push(voteTuple);
-    console.log('vote submitted state', gameState);
     let numWolves = 0;
     let numVillagers = 0;
     for (let i = 0; i < gameState.playerInfo.length; i++) {
@@ -202,8 +198,7 @@ io.on('connection', (socket) => {
     }
     let numLiving = numWolves + numVillagers;
     if (gameState.currentPhase === 'day') {
-      if (gameState.votes.length === numLiving || gameState.timer === 0) {
-        console.log('initiating phase change!');
+      if (gameState.votes.length === numLiving) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -217,7 +212,7 @@ io.on('connection', (socket) => {
         io.emit('gameState-feed', returnObj);
       }
     } else {
-      if (gameState.votes.length === numWolves || gameState.timer === 0) {
+      if (gameState.votes.length === numWolves) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -235,19 +230,16 @@ io.on('connection', (socket) => {
 
   // living chat logic
   socket.on('living-chat-send', (message) => {
-    console.log('socket server recieved message from living:', message);
     io.emit('living-chat-feed', message);
   });
 
   // ghost chat logic
   socket.on('ghost-chat-send', (message) => {
-    console.log('socket server recieved message from ghost:', message);
     io.emit('ghost-chat-feed', message);
   });
 
   // wolf chat logic
   socket.on('wolf-chat-send', (message) => {
-    console.log('socket server recieved message from wolf:', message);
     io.emit('wolf-chat-feed', message);
   });
 
@@ -432,13 +424,13 @@ const phaseChange = (countdownTimer) => {
   else if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
     gameState.votes = [];
+    gameState.timer = gameState.initTimer;
     io.emit('gameState-feed', gameState);
-    countdownTimer.newCountDown();
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
     gameState.votes = [];
+    gameState.timer = gameState.initTimer;
     io.emit('gameState-feed', gameState);
-    countdownTimer.newCountDown();
   }
 };

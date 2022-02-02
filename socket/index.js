@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
           gameState.playerInfo.push(playerState);
           io.emit('login-success', body);
           io.emit('playerInfo-feed', gameState.playerInfo);
-          //TODO - CODE RED PRIORITY - CHANGE TO SOLO EMIT
+          console.log('playerStateIOIO:', playerState);
           io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {

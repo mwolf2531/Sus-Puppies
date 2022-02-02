@@ -73,6 +73,7 @@ const GamePage = () => {
       setGameStatus(status);
     });
     socket?.on('playerState-feed', (playerStateObject) => {
+      console.log('playerStateObject:', playerStateObject)
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
     });
@@ -176,6 +177,7 @@ const GamePage = () => {
           <Col className="column whiteCard">
             <Ruleset
               wolves={wolves}
+              playerState={playerState}
               initialTimer={initialTimer}
               playerInfo={playerInfo}
             />

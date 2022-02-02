@@ -6,10 +6,11 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
   // socket.on('ruleset-feed', object of gamesettings)
 
   const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf'];
-
+  console.log('playerInfo:', playerInfo);
+  console.log('playerState:', playerState);
   const playerRole =
     playerInfo
-      .find(player => player.player_id === playerState.player_id)
+      .find(player => player.player_id === playerState?.player_id || null)
 
   return (
     <div>

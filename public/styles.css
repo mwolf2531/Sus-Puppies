@@ -16,6 +16,11 @@ h3 {
   padding-bottom: 5px;
 }
 
+.inputs {
+  margin: 5px;
+  justify-content: center;
+}
+
 #game{
   display: flex;
   flex-direction: column;

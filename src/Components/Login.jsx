@@ -55,7 +55,7 @@ const Login = ({ socket }) => {
   }, [socket]);
 
   const loginAttempt = () => {
-    socket.emit('login', { username: userName, password }); //TODO: emit picture
+    socket.emit('login', { username: userName, password, picture }); //TODO: emit picture
     setUserName('');
     setPassword('');
     setPicture('s1');

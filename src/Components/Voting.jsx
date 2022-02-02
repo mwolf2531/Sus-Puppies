@@ -6,19 +6,40 @@ import Select from 'react-select';
 
 const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, socket, gameStatus }) => {
   //need to get playerId through props from GamePage
+
   console.log('compPInfo', playerInfo);
   const [voteSelection, setVoteSelection] = useState('NULL');
   const [isVoted, setIsVoted] = useState(false)
-  const options = playerInfo
-    .filter((player) => player.player_id !== playerState.player_id)
-    .map((player, idx) => {
-      return { value: player.username, label: player.username }
-    });
+  // const options = playerInfo
+  //   .filter((player) => player.player_id !== playerState.player_id)
+  //   .map((player, idx) => {
+  //     return { value: player.username, label: player.username }
+  //   });
 
   const logChange = (e) => {
     setVoteSelection(e.value);
   }
 
+
+  const villagerOptions = playerInfo
+    .filter(player => player.player_id !== playerState.player_id)
+    .filter(player => player.role % 2 === 0)
+    .map((player, idx) => {
+      return { value: player.username, label: player.username }
+    });
+
+
+
+  const wolfOptions = playerInfo
+    .filter(player => player.player_id !== playerState.player_id)
+    .filter(player => player.role % 2 === 0 && player.role !== 2)
+    .map((player, idx) => {
+      return { value: player.username, label: player.username }
+    });
+
+  useEffect(() => {
+    //TODO: add lifecycle method to watch for currentPhase change
+  }, [currentPhase]);
   const submitVote = (e) => {
     if (!isVoted) {
       let voteTuple = [playerState.username, voteSelection];
@@ -42,12 +63,12 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
   }, [currentPhase]);
 
 
-  return (
+  let defaultView = (
     <>
       <h3>Voting</h3>
       <Select
         className="dropdown"
-        options={options}
+        villagerOptions={villagerOptions}
         onChange={logChange}
       />
       <div className="game-button">
@@ -58,7 +79,32 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
         disable button if submitted is true */}
       </div>
     </>
-  );
+  )
+  if (currentPhase === 'night' && playerState.role === 2) {
+    defaultView = (
+      <>
+        <h3>Voting</h3>
+        <Select
+          className="dropdown"
+          villagerOptions={wolfOptions}
+          onChange={logChange}
+        />
+        <div className="game-button">
+          <Button variant="warning" onClick={submitVote}>Kill Villager</Button>
+        </div>
+      </>
+    )
+  } else if (playerState.role % 2 === 1) {
+    defaultView = (
+      <div>You're dead. No voting allowed</div>
+    )
+  } else if (currentPhase === 'night' && playerState.role !== 2) {
+    defaultView = (
+      <div>Sleep peacefully while the werewolves are about...</div>
+    )
+  }
+
+  return defaultView;
 };
 
 export default Voting;

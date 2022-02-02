@@ -73,6 +73,11 @@ const WolfChat = ({
             onChange={(e) => {
               setNewMessage(e.target.value);
             }}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                handleMessageSubmit(event);
+              }
+            }}
           />
           <Button variant="warning" onClick={handleMessageSubmit}>
             Send

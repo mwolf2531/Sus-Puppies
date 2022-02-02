@@ -344,12 +344,14 @@ const phaseChange = (countdownTimer) => {
   } else {
     //Wolf Vote Logic
     let votes = {};
+    let seerTarget = '';
+    let healerTarget = '';
     for (let i = 0; i < gameState.votes.length; i++) {
-      let player = gameState.playerInfo.find(player => player.username === votes[i][0]);
+      let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
       if (player.role === 4) {
-        let seerTarget = votes[i][1];
+        seerTarget = gameState.votes[i][1];
       } else if (player.role === 6) {
-        let healerTarget = votes[i][1];
+        healerTarget = gameState.votes[i][1];
       } else if (votes[gameState.votes[i][1]]) {
         votes[gameState.votes[i][1]]++;
       } else {

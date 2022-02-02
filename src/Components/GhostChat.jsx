@@ -19,12 +19,12 @@ const GhostChat = ({
     });
   }, [socket]);
 
-  const playerRole =
-  playerInfo
-    ?.find(player => player?.player_id === playerState?.player_id || null)
+  const player = playerInfo?.find(
+    (player) => player?.player_id === playerState?.player_id || null
+  );
 
   const handleMessageSubmit = (event) => {
-    if (newMessage.length > 0) {
+    if (newMessage.length > 0 && (player.role === 1 || player.role === 3)) {
       event.preventDefault();
       let messageObject = {
         username: playerState.username,
@@ -39,23 +39,24 @@ const GhostChat = ({
     <Container>
       <h3>Ghost Chat</h3>
       <Chat>
-        {chat.map((msg, i) => {
-          if (msg.username !== playerState.username) {
-            return (
-              <ChatBox key={i}>
-                <Username>{msg.username} </Username>
-                <Message>{msg.message} </Message>
-              </ChatBox>
-            );
-          } else {
-            return (
-              <UserBox key={i}>
-                <Username>{msg.username} </Username>
-                <Message>{msg.message} </Message>
-              </UserBox>
-            );
-          }
-        })}
+        {(player?.role === 1 || player?.role === 3) &&
+          chat.map((msg, i) => {
+            if (msg.username !== playerState.username) {
+              return (
+                <ChatBox key={i}>
+                  <Username>{msg.username} </Username>
+                  <Message>{msg.message} </Message>
+                </ChatBox>
+              );
+            } else {
+              return (
+                <UserBox key={i}>
+                  <Username>{msg.username} </Username>
+                  <Message>{msg.message} </Message>
+                </UserBox>
+              );
+            }
+          })}
       </Chat>
       <br />
       <div className="chat-message">

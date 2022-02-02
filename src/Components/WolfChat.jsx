@@ -90,7 +90,6 @@ const Chat = styled.div`
   max-height: 180px;
   min-height: 180px;
   overflow: auto;
-  border: 2px solid red;
 `;
 
 const ChatBox = styled.div`

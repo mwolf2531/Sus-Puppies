@@ -94,10 +94,14 @@ const ChatBox = styled.div`
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 30px;
   margin-right: auto;
   max-width: 60%;
   min-width: 25%;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding: 5px 20px;
+  overflow-wrap: break-word;
 `;
 
 const UserBox = styled.div`
@@ -111,12 +115,14 @@ const UserBox = styled.div`
   max-width: 60%;
   min-width: 25%;
   padding: 5px 20px;
-  text-overflow: ellipsis;
+  overflow-wrap: break-word;
 `;
 
 const Username = styled.div`
   font-weight: bold;
   font-size: 13px;
 `;
+
+const Message = styled.div``;
 
 export default LivingChat;

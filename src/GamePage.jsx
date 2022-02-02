@@ -202,6 +202,7 @@ const GamePage = () => {
             <WolfChat
               // wolfChats={wolfChats}
               playerInfo={playerInfo}
+              currentPhase={currentPhase}
               // playerId={playerId}
               // playerRoles={playerRoles}
               playerState={playerState}

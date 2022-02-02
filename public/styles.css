@@ -149,6 +149,81 @@ h3 {
   justify-self: center;
 }
 
+/* ----------------------------Claw Animation--------------------------------- */
+
+
+.wolf-claws {
+  width: 700px;
+  height: 500;
+  position: relative;
+  z-index: 9;
+}
+
+.claw1 {
+  fill: transparent;
+  position: relative;
+  animation-name: claw-1;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+  position: absolute;
+  z-index: 9;
+}
+
+.claw2 {
+  fill: transparent;
+  position: relative;
+  animation-name: claw-2;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+}
+
+.claw3 {
+  fill: transparent;
+  position: relative;
+  animation-name: claw-3;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+}
+
+@keyframes claw-1 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    fill: rgb(180, 0, 0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes claw-2 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    fill: rgb(180, 0, 0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes claw-3 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    fill: rgb(180, 0, 0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .fade-in {
   transition: opacity 1s ease;
 }
@@ -157,3 +232,4 @@ h3 {
   opacity: 0;
   transition: opacity 1s ease;
 }
+

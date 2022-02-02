@@ -4,6 +4,7 @@ import Styled from 'styled-components';
 const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
   // ruleset receiever
   // socket.on('ruleset-feed', object of gamesettings)
+<<<<<<< HEAD
 
   const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf'];
 
@@ -13,11 +14,13 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
 
 
 
+=======
+>>>>>>> 04fde4002d9a840155785e57e4f38302d2bb2264
   return (
     <div>
       <h3>Ruleset</h3>
       <div>{playerInfo.length} Players</div>
-      <div>{wolves.number} Werewolves</div>
+      <div>{wolves} Werewolves</div>
       <div>{initialTimer} seconds per round</div>
       <br />
       <div><b>You are a {roleDefinitions[playerRole?.role || 0]}</b></div>

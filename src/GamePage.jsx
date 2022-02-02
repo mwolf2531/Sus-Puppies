@@ -16,6 +16,7 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Login from './Components/Login.jsx';
 import CreateGameModal from './Components/CreateGameModal.jsx';
+import EndgameModal from './Components/EndgameModal.jsx';
 
 import { io } from 'socket.io-client';
 
@@ -140,6 +141,12 @@ const GamePage = () => {
       <Container fluid className="set-height" id="game">
         <Login socket={socket} />
         <CreateGameModal socket={socket} playerState={playerState} />
+        <EndgameModal
+          playerInfo={playerInfo}
+          phaseResults={phaseResults}
+          gameStatus={gameStatus}
+          previousResult={previousResult}
+        />
         <Row id="header">
           <Col>
             <Header

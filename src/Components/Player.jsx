@@ -23,6 +23,29 @@ import s18 from '../../public/images/18.svg';
 import s19 from '../../public/images/19.svg';
 import s20 from '../../public/images/20.svg';
 
+const pictures = {
+  s1: s1,
+  s2: s2,
+  s3: s3,
+  s4: s4,
+  s5: s5,
+  s6: s6,
+  s7: s7,
+  s8: s8,
+  s9: s9,
+  s10: s10,
+  s11: s11,
+  s12: s12,
+  s13: s13,
+  s14: s14,
+  s15: s15,
+  s16: s16,
+  s17: s17,
+  s18: s18,
+  s19: s19,
+  s20: s20,
+}
+
 const Player = ({ player, currentPhase, number }) => {
   const icons = [
     <GiSquare size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
@@ -60,7 +83,7 @@ const Player = ({ player, currentPhase, number }) => {
       }
       <div>
         {/* TODO: need to render player icon according to its format */}
-        <img src={s1} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />
+        <img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />
       </div>
     </div>
   )

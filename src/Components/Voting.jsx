@@ -42,6 +42,9 @@ const Voting = ({ timer, playerInfo, currentPhase, playerRoles, playerState, soc
       <div className="game-button">
         <Button variant="warning" style={{ marginRight: "18px" }}>Skip Vote</Button>{' '}
         <Button variant="secondary" onClick={submitVote}>Submit</Button>{' '}
+        {/* submit button will have submitVote functionality
+        state to track submitted status
+        disable button if submitted is true */}
       </div>
     </>
   );

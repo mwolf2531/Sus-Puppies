@@ -25,7 +25,7 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState, gameStatus, ru
       ? <div>Your role has not been assigned yet...</div>
       : <div><b>You are a {roleDefinitions[player?.role || 0]}</b></div>
       }
-      {player.role === 4
+      {player?.role === 4
       ? <div>{seerMessage}</div>
       : null
       }

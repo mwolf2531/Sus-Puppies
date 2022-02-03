@@ -83,7 +83,7 @@ const Player = ({ player, currentPhase, number }) => {
       }
       <div>
         {/* TODO: need to render player icon according to its format */}
-        <img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />
+        <img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: "1em" }} />
       </div>
     </div>
   )

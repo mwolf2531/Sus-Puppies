@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import werewolf from '../../public/images/werewolf.svg';
 import s1 from '../../public/images/1.svg';
 import s2 from '../../public/images/2.svg';
@@ -25,6 +24,7 @@ import s20 from '../../public/images/20.svg';
 import Carousel from 'react-bootstrap/Carousel';
 
 
+
 const Login = ({ socket }) => {
 
   const [show, setShow] = useState(true);
@@ -40,6 +40,8 @@ const Login = ({ socket }) => {
     const data = e.target.value;
     stateSet(data);
   };
+
+  const pictures = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20]
 
   useEffect(() => {
     console.log('Sent to server: ', userName, password);
@@ -108,48 +110,26 @@ const Login = ({ socket }) => {
             </div>
             <br />
             <div>
-              <Carousel variant="dark">
-                <Carousel.Item>
-                  <input
-                    type="radio"
-                    value="s1"
-                    name="picture"
-                    checked={picture === "s1"}
-                    onChange={(e) => onValueChange(e)}
-                  />
-                  <img src={s1} style={{ height: "5vh", paddingRight: "3px" }} />
-                  {' '}
-                </Carousel.Item>
-                <Carousel.Item>
-                  <input
-                    type="radio"
-                    value="s3"
-                    name="picture"
-                    checked={picture === "s3"}
-                    onChange={(e) => onValueChange(e)}
-                  />
-                  <img src={s3} style={{ height: "5vh", paddingRight: "3px" }} />
-                  {' '}
-                </Carousel.Item>
-                {/* <input
-                    type="radio"
-                    value="s4"
-                    name="picture"
-                    checked={picture === "s4"}
-                    onChange={(e) => onValueChange(e)}
-                  />
-                  <img src={s4} style={{ height: "5vh", paddingRight: "3px" }} />
-                  {' '}
-                  <input
-                    type="radio"
-                    value="s5"
-                    name="picture"
-                    checked={picture === "s5"}
-                    onChange={(e) => onValueChange(e)}
-                  />
-                </Carousel.Item>
-                <img src={s5} style={{ height: "5vh", paddingRight: "3px" }} /> */}
-              </Carousel>
+              <br />
+              <div className="profile-pic">
+                <ButtonGroup>
+                  {pictures.map((profile, i) => (
+                    <ToggleButton
+                      key={i}
+                      id={`radio-${i}`}
+                      type="radio"
+                      variant={i % 2 ? 'outline-danger' : 'outline-danger'}
+                      name="picture"
+                      value={`s${i + 1}`}
+                      checked={picture === `s${i + 1}`}
+                      onChange={(e) => onValueChange(e)}
+                    >
+                      < img src={profile} style={{ height: "5vh", paddingRight: "3px" }} />
+                    </ToggleButton>
+                  ))}
+                </ButtonGroup>
+              </div>
+              <br />
             </div>
           </div>
           <br />

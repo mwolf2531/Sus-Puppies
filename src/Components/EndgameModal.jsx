@@ -49,6 +49,7 @@ const EndgameModal = ({ playerInfo, phaseResults, gameStatus, previousResult }) 
           className="results"
           style={{justifyContent:"space-evenly"}}
         >
+          {/* TODO: Does this code work if the player name is "No One" */}
           {playerInfo.map((player, idx) => {
             return (<div>
               <EndgamePlayerEntry

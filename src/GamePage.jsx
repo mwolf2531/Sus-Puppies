@@ -17,6 +17,7 @@ import Stack from 'react-bootstrap/Stack';
 import Login from './Components/Login.jsx';
 import CreateGameModal from './Components/CreateGameModal.jsx';
 import EndgameModal from './Components/EndgameModal.jsx';
+import PhaseChangeModal from './Components/PhaseChangeModal.jsx';
 
 import { io } from 'socket.io-client';
 
@@ -45,6 +46,7 @@ const GamePage = () => {
     seer: false,
     healer: false,
   })
+  const [seerMessage, setSeerMessage] = useState('');
 
   const [socket, setSocket] = useState(null);
 
@@ -101,6 +103,7 @@ const GamePage = () => {
         votes,
         initWolves,
         initTimer,
+        seerMessage,
       }) => {
         setPlayerInfo(playerInfo);
         setTimer(timer);
@@ -111,12 +114,12 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
-
+        setSeerMessage(seerMessage);
       }
     );
     const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
     if (playerState.role === 0) {
-      if(playerState.role != newPlayerState.role) {
+      if (playerState.role != newPlayerState.role) {
         setPlayerState(newPlayerState);
       }
     }
@@ -156,6 +159,12 @@ const GamePage = () => {
           phaseResults={phaseResults}
           gameStatus={gameStatus}
           previousResult={previousResult}
+        />
+        <PhaseChangeModal
+          playerState={playerState}
+          previousResult={previousResult}
+          currentPhase={currentPhase}
+          gameStatus={gameStatus}
         />
         <Row id="header">
           <Col>

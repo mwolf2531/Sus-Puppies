@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import { GlobalStyles, SectionHeader } from "../../public/sharedStyles.js";
-// const sun = './images/sun.png';
-// const moon = './images/moon.png';
-// const arrow = './images/arrow.png';
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
 import arrow from "../../public/images/arrow.png";
 import Moon from "../../public/images/alt-moon.svg";
 import Sun from "../../public/images/alt-sun.svg";
-import Claw from "./Claw.jsx";
-import Expire from "./Expire.jsx"
 
 // const Sun = Styled.span`
 //   background-image: url(${sun});
@@ -40,11 +35,6 @@ const Timer = ({ timer, currentPhase }) => {
   //   tick();
   // }, [timeLeft])
 
-  let dizplay;
-
-    if (timer) {
-      dizplay = <Expire delay="2500"><Claw/></Expire>
-    }
 
   return (
     <>
@@ -71,36 +61,8 @@ const Timer = ({ timer, currentPhase }) => {
         </>
       )}
     </div>
-    <div style={{display:"flex",justifyContent:"center"}}>
-      {/* {dizplay} */}
-    </div>
-
     </>
   );
 };
 
 export default Timer;
-
-{
-  /* <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
-<div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
-  {timer}
-</div>
-<img src={arrow} style={{height:"4vh"}} />
-</span>
-<span style={{float:"right", paddingTop: "40%"}}>
-<img src={Sun} style={{height:"10vh"}} />
-</span> */
-}
-
-{
-  /* <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
-<div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
-  {timer}
-</div>
-<img src={arrow} style={{height:"4vh"}} />
-</span>
-<span style={{float:"right", paddingTop: "40%"}}>
-<img src={Moon} style={{height:"10vh"}}/>
-</span> */
-}

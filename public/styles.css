@@ -16,9 +16,22 @@ h3 {
   padding-bottom: 5px;
 }
 
+.modal-content {
+  background-color: rgba(26, 15, 60, 1) !important;
+}
+
+.modal-body {
+  color: white;
+}
+
+.modal-footer {
+  margin-bottom: -25px;
+}
+
 .inputs {
   margin: 5px;
   justify-content: center;
+  color: white;
 }
 
 #game{

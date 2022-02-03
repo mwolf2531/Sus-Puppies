@@ -78,6 +78,7 @@ const Login = ({ socket }) => {
         backdrop="static"
         keyboard={false}
         enforceFocus={true}
+        style={{ backgroundColor: "rgba(26, 15, 60, 1) !important" }}
       >
         <Modal.Header closeButton={false} style={{ justifyContent: "space-around" }}>
           <Modal.Title>
@@ -100,7 +101,7 @@ const Login = ({ socket }) => {
               required={true}
               onChange={(e) => handleChange(e, setUserName)}
               className="inputs"
-              style={{ margin: "5px" }}
+              style={{ margin: "5px", color: "black" }}
             />
             <div>
               <label htmlFor="passwordInput">Password:&nbsp;&nbsp;</label>
@@ -110,7 +111,7 @@ const Login = ({ socket }) => {
                 id="passwordInput"
                 required={true}
                 onChange={(e) => handleChange(e, setPassword)}
-                style={{ margin: "5px" }}
+                style={{ margin: "5px", color: "black" }}
               />
             </div>
             <div>
@@ -128,7 +129,15 @@ const Login = ({ socket }) => {
                       checked={picture === `s${i + 1}`}
                       onChange={(e) => onValueChange(e)}
                     >
-                      < img src={profile} style={{ height: "5vh", paddingRight: "3px" }} />
+                      <img
+                        src={profile}
+                        style={{
+                          height: "5vh",
+                          paddingRight: "3px",
+                          backgroundColor: "white",
+                          borderRadius: "1em"
+                        }}
+                      />
                     </ToggleButton>
                   ))}
                 </ButtonGroup>

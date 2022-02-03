@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import { GlobalStyles, SectionHeader } from "../../public/sharedStyles.js";
-// const sun = './images/sun.png';
-// const moon = './images/moon.png';
-// const arrow = './images/arrow.png';
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
 import arrow from "../../public/images/arrow.png";
@@ -69,27 +66,3 @@ const Timer = ({ timer, currentPhase }) => {
 };
 
 export default Timer;
-
-{
-  /* <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
-<div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
-  {timer}
-</div>
-<img src={arrow} style={{height:"4vh"}} />
-</span>
-<span style={{float:"right", paddingTop: "40%"}}>
-<img src={Sun} style={{height:"10vh"}} />
-</span> */
-}
-
-{
-  /* <span style={{float:"left", justifyContent: "center", paddingTop: "40%"}}>
-<div style={{display:"flex", justifyContent: "center", fontSize:"3vh"}}>
-  {timer}
-</div>
-<img src={arrow} style={{height:"4vh"}} />
-</span>
-<span style={{float:"right", paddingTop: "40%"}}>
-<img src={Moon} style={{height:"10vh"}}/>
-</span> */
-}

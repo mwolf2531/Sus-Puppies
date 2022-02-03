@@ -76,7 +76,22 @@ class CountDown {
           numWolves--;
         }
       }
-      //TODO: Copy above logic to assign Seer/Healer (4/6) roles
+      if (isSeer) let needSeer = true;
+      while (needSeer) {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0) {
+          gameState.playerInfo[rando].role = 4;
+          needSeer = false;
+        }
+      }
+      if (isHealer) let needHealer = true;
+      while (needHealer) {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0) {
+          gameState.playerInfo[rando].role = 6;
+          needHealer = false;
+        }
+      }
       gameState.gameStatus = 'playing';
       io.emit('gameState-feed', this.gameState);
     }

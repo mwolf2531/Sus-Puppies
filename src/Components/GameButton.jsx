@@ -45,7 +45,7 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
             onClick={handleClickResume}
             style={{width:"100%", display:"block"}}
           > Resume Game </Button>
-        : gameStatus === 'paused'
+        : gameStatus === 'ended'
         ? <Button
             variant="warning"
             style={{width:"100%", display:"block"}}

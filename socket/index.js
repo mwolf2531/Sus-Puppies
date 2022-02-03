@@ -76,7 +76,8 @@ class CountDown {
           numWolves--;
         }
       }
-      if (isSeer) let needSeer = true;
+      let needSeer = false;
+      if (gameState.isSeer) needSeer = true;
       while (needSeer) {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
         if (gameState.playerInfo[rando].role === 0) {
@@ -84,7 +85,8 @@ class CountDown {
           needSeer = false;
         }
       }
-      if (isHealer) let needHealer = true;
+      let needHealer = false;
+      if (gameState.isHealer) needHealer = true;
       while (needHealer) {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
         if (gameState.playerInfo[rando].role === 0) {
@@ -180,13 +182,13 @@ io.on('connection', (socket) => {
       io.emit('gameStatus-feed', 'playing');
       countdownTimer.start()
     } else if (typeof messageOrObject === 'object') {
-      const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
+      const { numPlayers, numWolves, timer, seer, healer } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
       gameState.wolves.number = numWolves;
       gameState.expectedPlayers = numPlayers;
       gameState.isSeer = seer;
-      gameState.isMedic = medic;
+      gameState.isHealer = healer;
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
       countdownTimer.start();
@@ -287,6 +289,7 @@ instrument(io, { auth: false });
 const phaseChange = (countdownTimer) => {
   //Phase Change
   //0. Build Variables
+  console.log('PlayerInfo: ', gameState.playerInfo);
   let numWolves = 0;
   let numVillagers = 0;
   let numSpecialists = 0;

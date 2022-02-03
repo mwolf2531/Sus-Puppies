@@ -69,6 +69,18 @@ const CreateGameModal = ({ socket, playerState }) => {
     if (playerState.host === true) {
       handleShow();
     }
+    socket?.on('New Game Plus', () => {
+      setOptions({
+        numWolves: 1,
+        timer: 90,
+        seer: false,
+        healer: false,
+      });
+      setPicture('s1');
+      setSeerChecked(false);
+      setHealerChecked(false);
+      setShow(true);
+    })
   }, [socket, playerState]);
 
   return (

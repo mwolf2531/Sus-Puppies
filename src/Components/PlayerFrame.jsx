@@ -17,6 +17,7 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             currentPlayerKey++;
             return (
               <Player
+                playerInfo={playerInfo}
                 player={player}
                 key={currentPlayerKey}
                 index={currentPlayerKey}

@@ -10,10 +10,10 @@ const PhaseChangeModal = ({ socket, currentPhase, previousResult, phaseResults, 
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    if (gameStatus === 'playing') {
+    if (gameStatus === 'playing' && previousResult !== "Villagers Win!" && previousResult !== "Wolves Win!") {
       handleShow();
     }
-  }, [previousResult]);
+  }, [previousResult], [gameStatus]);
 
   return (
     <>

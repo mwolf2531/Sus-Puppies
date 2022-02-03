@@ -215,6 +215,7 @@ const GamePage = () => {
               playerState={playerState}
               gameStatus={gameStatus}
               rules={rules}
+              seerMessage={seerMessage}
             />
           </Col>
           <Col className="column whiteCard no-margin">

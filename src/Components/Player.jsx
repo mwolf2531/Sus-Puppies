@@ -46,7 +46,7 @@ const pictures = {
   s20: s20,
 }
 
-const Player = ({ player, currentPhase, number }) => {
+const Player = ({ player, currentPhase, number , playerInfo}) => {
   const icons = [
     <GiSquare size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
     <GiCheckMark size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
@@ -82,8 +82,11 @@ const Player = ({ player, currentPhase, number }) => {
         </span>)
       }
       <div>
-        {/* TODO: need to render player icon according to its format */}
-        <img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: "1em" }} />
+      {console.log(player)}
+      {player.role % 2 === 1
+        ? (<img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "red", borderRadius: '1em', opacity: 0.5 }} />)
+        : (<img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />)
+      }
       </div>
     </div>
   )

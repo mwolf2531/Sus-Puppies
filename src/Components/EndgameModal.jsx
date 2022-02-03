@@ -66,6 +66,7 @@ const EndgameModal = ({ playerInfo, phaseResults, gameStatus, previousResult }) 
               e.preventDefault();
               handleClose();
             }}
+            style={{marginBottom:"1.5rem"}}
           >
             Close
           </Button>

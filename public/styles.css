@@ -17,12 +17,13 @@ h3 {
   text-transform: uppercase;
 }
 
-.modal-content {
-  background-color: rgba(26, 15, 60, 1) !important;
+.modal {
+  color: white;
 }
 
-.modal-body {
-  color: white;
+.modal-content {
+  background-color: rgba(26, 15, 60, 1) !important;
+  border: 3px solid rgb(255 22 22) !important;
 }
 
 .modal-footer {

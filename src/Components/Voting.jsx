@@ -13,26 +13,35 @@ const Voting = ({
   socket,
   gameStatus,
 }) => {
-  //need to get playerId through props from GamePage
-  const [voteSelection, setVoteSelection] = useState('NULL');
+  const [voteSelection, setVoteSelection] = useState('select a player');
+  const [nightVoteSelection, setNightVoteSelection] = useState('select a player');
   const [isVoted, setIsVoted] = useState(false);
   const [villagerOptions, setVillagerOptions] = useState([]);
+  const [healerOptions, setHealerOptions] = useState([]);
   const [wolfOptions, setWolfOptions] = useState([]);
 
-  // const options = playerInfo
-  //   .filter((player) => player.player_id !== playerState.player_id)
-  //   .map((player, idx) => {
-  //     return { value: player.username, label: player.username }
-  //   });
-
   const logChange = (e) => {
-    setVoteSelection(e.value);
+    if (currentPhase === 'day'|| currentPhase === 'Day') {
+      console.log('daytime selection')
+      setVoteSelection(e.value);
+    } else if (currentPhase === 'night'|| currentPhase === 'Night') {
+      console.log('nighttime selection')
+      setNightVoteSelection(e.value);
+    }
   };
 
   useEffect(() => {
-
+    if (isVoted) {
+      setIsVoted(false);
+    }
     const villagers = playerInfo
       .filter((player) => player.player_id !== playerState.player_id)
+      .filter((player) => player.role % 2 === 0)
+      .map((player, idx) => {
+        return { value: player.username, label: player.username };
+      });
+
+    const villagersWithSelf = playerInfo
       .filter((player) => player.role % 2 === 0)
       .map((player, idx) => {
         return { value: player.username, label: player.username };
@@ -45,19 +54,41 @@ const Voting = ({
         return { value: player.username, label: player.username };
       });
     setVillagerOptions(villagers);
+    setHealerOptions(villagersWithSelf);
     setWolfOptions(wolves);
-    //TODO: add lifecycle method to watch for currentPhase change
-  }, [gameStatus]);
+    setVoteSelection('select a player');
+  }, [currentPhase, gameStatus]);
+
   const submitVote = (e) => {
-    if (!isVoted) {
+    if (!isVoted && currentPhase === 'day'|| currentPhase === 'Day') {
+      if (voteSelection === 'select a player') {
+        setVoteSelection('NULL');
+      }
       let voteTuple = [playerState.username, voteSelection];
       // On Click of Submit button, create and send tuple of vote values
       // VOTE SENDER
       console.log(voteTuple); //WE KNOW WE MADE IT THIS FAR
       socket?.emit('vote-send', voteTuple);
       setIsVoted(true);
+      setVillagerOptions([]);
+      setWolfOptions([]);
+      setVoteSelection('select a player');
+    } else if (!isVoted && currentPhase === 'night'|| currentPhase === 'Night') {
+      if (nightVoteSelection === 'select a player') {
+        setNightVoteSelection('NULL');
+      }
+      let voteTuple = [playerState.username, voteSelection];
+      // On Click of Submit button, create and send tuple of vote values
+      // VOTE SENDER
+      console.log(voteTuple); //WE KNOW WE MADE IT THIS FAR
+      socket?.emit('vote-send', voteTuple);
+      setIsVoted(true);
+      setVillagerOptions([]);
+      setWolfOptions([]);
+      setNightVoteSelection('select a player');
     }
   };
+
   useEffect(() => {
     if (timer === 0 && gameStatus !== 'setup' && !isVoted) {
       submitVote();
@@ -66,11 +97,11 @@ const Voting = ({
     //setIsVoted -> false
   }, [timer]);
 
-  useEffect(() => {
-    if (isVoted) {
-      setIsVoted(false);
-    }
-  }, [currentPhase]);
+  // useEffect(() => {
+  //   if (isVoted) {
+  //     setIsVoted(false);
+  //   }
+  // }, [currentPhase]);
 
   const player =
     playerInfo
@@ -80,7 +111,12 @@ const Voting = ({
     return (
       <>
         <h3>Wolves Vote!</h3>
-        <Select className='dropdown' onChange={logChange} options={wolfOptions} />
+        <Select
+          className='dropdown'
+          onChange={logChange}
+          options={wolfOptions}
+          placeholder={nightVoteSelection}
+        />
         <div className='game-button'>
           <Button variant='warning' onClick={submitVote}>
             Kill Villager
@@ -92,7 +128,12 @@ const Voting = ({
     return (
       <>
         <h3>Seer, choose who to investigate</h3>
-        <Select className='dropdown' onChange={logChange} options={villagerOptions} />
+        <Select
+          className='dropdown'
+          onChange={logChange}
+          options={villagerOptions}
+          placeholder={nightVoteSelection}
+        />
         <div className='game-button'>
           <Button variant='warning' onClick={submitVote}>
             Discover Role
@@ -104,10 +145,15 @@ const Voting = ({
     return (
       <>
         <h3>Healer, choose who to heal</h3>
-        <Select className='dropdown' onChange={logChange} options={villagerOptions} />
+        <Select
+          className='dropdown'
+          onChange={logChange}
+          options={healerOptions}
+          placeholder={nightVoteSelection}
+        />
         <div className='game-button'>
           <Button variant='warning' onClick={submitVote}>
-            Discover Role
+            Heal
           </Button>
         </div>
       </>
@@ -116,29 +162,33 @@ const Voting = ({
     return <div>You're dead. No voting allowed</div>;
   } else if (currentPhase === 'night' && player?.role !== 2) {
     return <div>Sleep peacefully while the werewolves are about...</div>;
-  }
-
-  return (
-    <>
-      <h3>Everybody Votes!</h3>
-      <Select className='dropdown' onChange={logChange} options={villagerOptions} />
-      <div className='game-button'>
-        <Button variant='secondary'
-        style={{ marginRight: '18px' }}
-        onClick={() => {
-          setVoteSelection('NULL');
-          submitVote();
-        }}
-        disabled={isVoted}
-        >
-          Skip Vote
-        </Button>
-        <Button variant='warning' onClick={submitVote} disabled={isVoted}>
-          Submit
-        </Button>
-      </div>
-    </>
-  );
+  } else {
+    return (
+      <>
+        <h3>Everybody Votes!</h3>
+        <Select
+          className='dropdown'
+          onChange={logChange}
+          options={villagerOptions}
+          placeholder={voteSelection}
+        />
+        <div className='game-button'>
+          <Button variant='secondary'
+          style={{ marginRight: '18px' }}
+          onClick={() => {
+            submitVote();
+          }}
+          disabled={isVoted}
+          >
+            Skip Vote
+          </Button>
+          <Button variant='warning' onClick={submitVote} disabled={isVoted}>
+            Submit
+          </Button>
+        </div>
+      </>
+    );
+  };
 };
 
 export default Voting;

@@ -43,6 +43,12 @@ const GamePage = () => {
   const [playerState, setPlayerState] = useState({});
   const [wolves, setWolves] = useState(1);
   const [initialTimer, setInitialTimer] = useState(90);
+  const [rules, setRules] = useState({
+    numWolves: 1,
+    timer: 90,
+    seer: false,
+    healer: false,
+  })
   const [seerMessage, setSeerMessage] = useState('');
 
   const [socket, setSocket] = useState(null);
@@ -99,12 +105,12 @@ const GamePage = () => {
         initTimer,
         seerMessage,
       }) => {
+        setPlayerInfo(playerInfo);
         setTimer(timer);
         setPreviousResult(previousResult);
         setCurrentDay(currentDay);
         setCurrentPhase(currentPhase);
         setPhaseResults(phaseResults);
-        setPlayerInfo(playerInfo);
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
@@ -148,7 +154,11 @@ const GamePage = () => {
     <>
       <Container fluid className="set-height" id="game">
         <Login socket={socket} />
-        <CreateGameModal socket={socket} playerState={playerState} />
+        <CreateGameModal
+          socket={socket}
+          playerState={playerState}
+          setRules={setRules}
+        />
         <EndgameModal
           playerInfo={playerInfo}
           phaseResults={phaseResults}
@@ -208,6 +218,9 @@ const GamePage = () => {
               initialTimer={initialTimer}
               playerInfo={playerInfo}
               playerState={playerState}
+              gameStatus={gameStatus}
+              rules={rules}
+              seerMessage={seerMessage}
             />
           </Col>
           <Col className="column whiteCard no-margin">

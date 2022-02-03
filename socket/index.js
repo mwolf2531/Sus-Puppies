@@ -374,7 +374,7 @@ const phaseChange = (countdownTimer) => {
       if (player.role === 4) {
         seerTarget = gameState.votes[i][1];
         let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
-        gameState.seerMessage = seerTarget + " is actually a " + seerPlayerTargetInfo.role;
+        gameState.seerMessage = seerTarget + " is actually a " + seerTargetPlayerInfo.role;
       } else if (player.role === 6) {
         healerTarget = gameState.votes[i][1];
       } else if (votes[gameState.votes[i][1]]) {

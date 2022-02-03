@@ -102,11 +102,11 @@ class CountDown {
     this.start();
   }
 }
+const countdownTimer = new CountDown(gameState, (time) => {
+  io.emit('timer-feed', time);
+});
 
 io.on('connection', (socket) => {
-  const countdownTimer = new CountDown(gameState, (time) => {
-    io.emit('timer-feed', time);
-  });
   const socketID = socket.id;
   socket.on('login', ({ username, password, picture }) => { //TODO: receive picture
     console.log(`Login attempt: userName ${username} password: ${password}`);
@@ -424,13 +424,15 @@ const phaseChange = (countdownTimer) => {
   else if (gameState.currentPhase === 'day') {
     gameState.currentPhase = 'night';
     gameState.votes = [];
-    gameState.timer = gameState.initTimer;
+    // gameState.timer = gameState.initTimer;
+    countdownTimer.newCountDown()
     io.emit('gameState-feed', gameState);
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
     gameState.votes = [];
-    gameState.timer = gameState.initTimer;
+    // gameState.timer = gameState.initTimer;
+    countdownTimer.newCountDown()
     io.emit('gameState-feed', gameState);
   }
 };

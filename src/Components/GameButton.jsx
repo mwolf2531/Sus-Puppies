@@ -16,6 +16,9 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
   const handleClickResume = () => {
     socket?.emit('host-send', 'resume')
   }
+  const handleClickNewGame = () => {
+    socket?.emit('host-send', 'setup');
+  }
   const playerRole =
   playerInfo
     ?.find(player => player?.player_id === playerState?.player_id || null);
@@ -51,6 +54,7 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
         ? <Button
             variant="warning"
             style={{width:"100%", display:"block"}}
+            onClick={handleClickNewGame}
           > Start New Game </Button>
         : <Button
             variant="warning"

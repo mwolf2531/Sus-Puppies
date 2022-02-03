@@ -26,6 +26,8 @@ const gameState = {
   host: {},
   seerMessage: ''
 };
+const initGameState = {};
+Object.assign(initGameState, gameState);
 /**
  * CountDown will decrement the timer property in the reference object and pass the result to the callback including 0.
  * This class has four methods. start, stop, countdown, and newCountDown
@@ -155,7 +157,7 @@ io.on('connection', (socket) => {
           }
           gameState.playerInfo.push(playerState);
           socket.emit('login-success', body);
-          io.emit('playerInfo-feed', gameState.playerInfo);
+          // io.emit('playerInfo-feed', gameState.playerInfo);
           io.to(socketID).emit('playerState-feed', playerState);
           io.emit('gameState-feed', gameState);
         } else {
@@ -196,6 +198,18 @@ io.on('connection', (socket) => {
     } else if (messageOrObject === 'setup') {
       //TODO: setup logic
       //this is when a new game is being created
+      const preservedProps = {
+        playerInfo: gameState.playerInfo,
+        gameStatus: 'setup',
+        host: gameState.host,
+      };
+      Object.assign(gameState, initGameState, preservedProps);
+      gameState.playerInfo.forEach((player) => {
+        player.role = 0;
+        io.to(player.player_id).emit('playerState-feed', player);
+      })
+      io.emit('gameState-feed', gameState);
+      io.to(gameState.host.player_id).emit('New Game Plus', true);
     }
 
     //rulesSet sender TODO:

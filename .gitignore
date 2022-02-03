@@ -2,3 +2,4 @@
 socket/node_modules
 package-lock.json
 public/bundle.js
+.DS_Store

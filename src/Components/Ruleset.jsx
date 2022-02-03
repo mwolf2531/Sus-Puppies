@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
+const Ruleset = ({ wolves, initialTimer, playerInfo, playerState, gameStatus, rules, seerMessage }) => {
   // ruleset receiever
   // socket.on('ruleset-feed', object of gamesettings)
 
@@ -16,10 +16,19 @@ const Ruleset = ({ wolves, initialTimer, playerInfo, playerState }) => {
       <h2>Hello {playerState?.username}!</h2>
       <h3>Ruleset</h3>
       <div>{playerInfo?.length} Players</div>
-      <div>{wolves} Werewolves</div>
-      <div>{initialTimer} seconds per round</div>
+      <div>{rules.numWolves} Werewolves</div>
+      <div>{rules.timer} seconds per round</div>
+      <div>Seer {rules.seer ? 'ON' : 'OFF'}</div>
+      <div>Healer {rules.healer ? 'ON' : 'OFF'}</div>
       <br />
-      <div><b>You are a {roleDefinitions[player?.role || 0]}</b></div>
+      {gameStatus === 'setup'
+      ? <div>Your role has not been assigned yet...</div>
+      : <div><b>You are a {roleDefinitions[player?.role || 0]}</b></div>
+      }
+      {player.role === 4
+      ? <div>{seerMessage}</div>
+      : null
+      }
     </div>
   );
 };

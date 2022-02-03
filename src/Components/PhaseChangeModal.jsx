@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Claw from "./Claw.jsx";
-import Expire from "./Expire.jsx";
+import React, { useState, useEffect } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Claw from './Claw.jsx';
+import Expire from './Expire.jsx';
+
+import useSound from 'use-sound';
+import wolfSound from '../../public/sounds/wolfSound.mp3';
+import noDeathSound from '../../public/sounds/mixkit-magic-festive-melody-2986.wav';
+import wolfHowl from '../../public/sounds/werewolf-howl.mp3';
 
 const PhaseChangeModal = ({
   socket,
@@ -16,14 +21,25 @@ const PhaseChangeModal = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [playWolfEat] = useSound(wolfSound);
+  const [playNoDeath] = useSound(noDeathSound, { volume: 0.25 });
+  const [wolvesWin] = useSound(wolfHowl, { volue: 0.5 });
+
   useEffect(
     () => {
       if (
-        gameStatus === "playing" &&
-        previousResult !== "Villagers Win!" &&
-        previousResult !== "Wolves Win!"
+        gameStatus === 'playing' &&
+        previousResult !== 'Villagers Win!' &&
+        previousResult !== 'Wolves Win!'
       ) {
+        if (previousResult.indexOf('eaten') !== -1) {
+          playWolfEat();
+        } else if (previousResult === 'No one was killed yesterday.') {
+          playNoDeath();
+        }
         handleShow();
+      } else if (previousResult === 'Wolves Win!') {
+        wolvesWin();
       }
     },
     [previousResult],
@@ -33,7 +49,7 @@ const PhaseChangeModal = ({
   let dizplay;
   if (currentPhase === 'day') {
     dizplay = (
-      <Expire  delay="2500">
+      <Expire delay="2500">
         <Claw />
       </Expire>
     );
@@ -50,9 +66,10 @@ const PhaseChangeModal = ({
       >
         <Modal.Header closeButton={false}></Modal.Header>
         <Modal.Body>
-        {previousResult}&nbsp;
-        <div style={{ display: "flex", justifyContent: "center" }}>{dizplay}</div>
-
+          {previousResult}&nbsp;
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {dizplay}
+          </div>
         </Modal.Body>
         <Modal.Footer className="inputs">
           <Button

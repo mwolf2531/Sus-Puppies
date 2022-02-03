@@ -18,8 +18,17 @@ module.exports = {
             name: '[name].[ext]',
             publicPath: 'images',
             outputPath: 'images',
-          }
-        }
+          },
+        },
+      },
+      {
+        test: /\.(mp3|wav)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          publicPath: 'sounds',
+          outputPath: 'sounds',
+        },
       },
     ],
   },
@@ -30,5 +39,5 @@ module.exports = {
     path: path.resolve(__dirname, './public'),
     filename: 'bundle.js',
   },
-  mode: process.env.NODE_ENV || "development",
+  mode: process.env.NODE_ENV || 'development',
 };

@@ -19,6 +19,9 @@ import CreateGameModal from './Components/CreateGameModal.jsx';
 import EndgameModal from './Components/EndgameModal.jsx';
 import PhaseChangeModal from './Components/PhaseChangeModal.jsx';
 
+import useSound from 'use-sound';
+import wolfSound from '../public/sounds/wolfSound.mp3';
+
 import { io } from 'socket.io-client';
 
 const GamePage = () => {
@@ -77,17 +80,14 @@ const GamePage = () => {
     });
     socket?.on('timer-feed', (timeData) => {
       setTimer(timeData);
-
     });
     socket?.on('gameStatus-feed', (status) => {
       setGameStatus(status);
-
     });
     socket?.on('playerState-feed', (playerStateObject) => {
-      console.log('playerStateObject:', playerStateObject)
+      console.log('playerStateObject:', playerStateObject);
       setPlayerState(playerStateObject);
       // setPlayerId(playerStateObject.player_id);
-
     });
 
     socket?.on(
@@ -114,10 +114,15 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
+<<<<<<< HEAD
+=======
         setSeerMessage(seerMessage);
+>>>>>>> main
       }
     );
-    const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
+    const newPlayerState = playerInfo.find(
+      (player) => player.player_id === playerState.player_id
+    );
     if (playerState.role === 0) {
       if (playerState.role != newPlayerState.role) {
         setPlayerState(newPlayerState);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import werewolf from '../../public/images/werewolf.svg';
+import werewolfTitle from '../../public/images/werewolf-title.svg';
 import s1 from '../../public/images/1.svg';
 import s2 from '../../public/images/2.svg';
 import s3 from '../../public/images/3.svg';
@@ -78,11 +79,13 @@ const Login = ({ socket }) => {
         keyboard={false}
         enforceFocus={true}
       >
-        <Modal.Header closeButton={false}>
-          <Modal.Title style={{ position: "center" }}>Welcome to Sus Puppies!</Modal.Title>
+        <Modal.Header closeButton={false} style={{ justifyContent: "space-around" }}>
+          <Modal.Title>
+            <img src={werewolfTitle} style={{ height:"35vh", marginTop:"-175px", marginBottom:"-175px" }} />
+          </Modal.Title>
         </Modal.Header>
         <span style={{ alignSelf: "center" }} >
-          <img src={werewolf} style={{ height: "30vh" }} />
+          <img src={werewolf} style={{ height: "30vh", marginTop:"-35px", marginBottom:"-10px" }} />
         </span>
         <Modal.Body>{`${header}`}</Modal.Body>
         <Modal.Footer
@@ -97,6 +100,7 @@ const Login = ({ socket }) => {
               required={true}
               onChange={(e) => handleChange(e, setUserName)}
               className="inputs"
+              style={{ margin: "5px" }}
             />
             <div>
               <label htmlFor="passwordInput">Password:&nbsp;&nbsp;</label>
@@ -106,9 +110,9 @@ const Login = ({ socket }) => {
                 id="passwordInput"
                 required={true}
                 onChange={(e) => handleChange(e, setPassword)}
+                style={{ margin: "5px" }}
               />
             </div>
-            <br />
             <div>
               <br />
               <div className="profile-pic">

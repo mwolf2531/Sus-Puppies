@@ -79,6 +79,7 @@ const CreateGameModal = ({ socket, playerState }) => {
         backdrop="static"
         keyboard={false}
         enforceFocus={true}
+        style={{ backgroundColor: "rgba(26, 15, 60, 1) !important" }}
       >
         <Modal.Header closeButton={false} style={{ justifyContent: "space-around" }}>
           <Modal.Title>

@@ -9,7 +9,7 @@ const io = require('socket.io')(8900, {
 const gameState = {
   timer: 90,
   initTimer: 90,
-  previousResult: 'Welcome to SusPuppies',
+  previousResult: 'Welcome to Werewolf',
   currentDay: 0,
   currentPhase: 'day',
   phaseResults: [],

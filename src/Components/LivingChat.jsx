@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
+import useSound from 'use-sound';
+import wolfSound from '../../public/sounds/wolfSound.mp3';
+
 const LivingChat = ({
   socket,
   playerInfo,
@@ -11,6 +14,7 @@ const LivingChat = ({
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);
+  const [playOn] = useSound(wolfSound);
 
   useEffect(() => {
     console.log(chat);
@@ -30,6 +34,7 @@ const LivingChat = ({
   const handleMessageSubmit = (event) => {
     if (newMessage.length > 0 && player.role % 2 === 0) {
       event.preventDefault();
+      playOn();
       let messageObject = {
         username: playerState.username,
         message: newMessage,

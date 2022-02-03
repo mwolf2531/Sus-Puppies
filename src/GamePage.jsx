@@ -114,10 +114,7 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
-<<<<<<< HEAD
-=======
         setSeerMessage(seerMessage);
->>>>>>> main
       }
     );
     const newPlayerState = playerInfo.find(

@@ -404,8 +404,6 @@ const phaseChange = (countdownTimer) => {
       playerInfo: gameState.playerInfo,
       gameStatus: 'ended',
     };
-
-    //isWORKING????
     Object.assign(gameState, returnObj);
     io.emit('gameState-feed', gameState);
     countdownTimer.stop();

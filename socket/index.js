@@ -204,6 +204,10 @@ io.on('connection', (socket) => {
         host: gameState.host,
       };
       Object.assign(gameState, initGameState, preservedProps);
+      gameState.playerInfo.forEach((player) => {
+        player.role = 0;
+        io.to(player.player_id).emit('playerState-feed', player);
+      })
       io.emit('gameState-feed', gameState);
       io.to(gameState.host.player_id).emit('New Game Plus', true);
     }

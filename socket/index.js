@@ -208,10 +208,15 @@ io.on('connection', (socket) => {
     gameState.votes.push(voteTuple);
     let numWolves = 0;
     let numVillagers = 0;
+    let numSpecialists = 0;
     for (let i = 0; i < gameState.playerInfo.length; i++) {
       if (gameState.playerInfo[i].role === 2) {
         numWolves++;
-      } else if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+      }
+      if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+        numSpecialists++;
+      }
+      if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
         numVillagers++;
       }
     }
@@ -232,7 +237,7 @@ io.on('connection', (socket) => {
 
       }
     } else {
-      if (gameState.votes.length === numWolves) {
+      if (gameState.votes.length === numWolves + numSpecialists) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -296,7 +301,8 @@ const phaseChange = (countdownTimer) => {
   for (let i = 0; i < gameState.playerInfo.length; i++) {
     if (gameState.playerInfo[i].role === 2) {
       numWolves++;
-    } else if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+    }
+    if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
       numSpecialists++;
     }
     if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
@@ -392,35 +398,34 @@ const phaseChange = (countdownTimer) => {
         }
       }
     }
-    if (gameState.votes.length === numWolves + numSpecialists) {
-      if (maxVotes === -1 || victim === 'NULL') {
-        //TODO: choose a living non-wolf at random to kill
-      }
-      if (victim !== healerTarget) {
-        for (let i = 0; i < gameState.playerInfo.length; i++) {
-          if (gameState.playerInfo[i].username === victim) {
-            if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i] === 6) {
-              numSpecialists--;
-            }
-            gameState.playerInfo[i].role += 1;
-            numVillagers--;
-            gameState.phaseResults.push([
-              gameState.currentDay,
-              gameState.currentPhase,
-              victim,
-            ]);
-            gameState.previousResult = victim + ' was eaten last night!';
+    if (maxVotes === -1 || victim === 'NULL') {
+      //TODO: choose a living non-wolf at random to kill
+    }
+    if (victim !== healerTarget) {
+      for (let i = 0; i < gameState.playerInfo.length; i++) {
+        if (gameState.playerInfo[i].username === victim) {
+          if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i] === 6) {
+            numSpecialists--;
           }
+          gameState.playerInfo[i].role += 1;
+          numVillagers--;
+          gameState.phaseResults.push([
+            gameState.currentDay,
+            gameState.currentPhase,
+            victim,
+          ]);
+          gameState.previousResult = victim + ' was eaten last night!';
         }
-      } else {
-        victim = 'No one';
-        gameState.phaseResults.push([
-          gameState.currentDay,
-          gameState.currentPhase,
-          victim,
-        ]);
-        gameState.previousResult = victim + ' was eaten last night!';
       }
+    } else {
+      victim = 'No one';
+      gameState.phaseResults.push([
+        gameState.currentDay,
+        gameState.currentPhase,
+        victim,
+      ]);
+      gameState.previousResult = victim + ' was eaten last night!';
+
     }
   }
   //2. Check if game has ended

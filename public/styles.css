@@ -149,6 +149,14 @@ h3 {
   justify-self: center;
 }
 
+.profile-pic {
+  width: 400px;
+}
+
+.btn-group {
+  flex-wrap: wrap;
+}
+
 /* ----------------------------Claw Animation--------------------------------- */
 
 

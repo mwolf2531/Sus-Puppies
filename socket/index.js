@@ -172,7 +172,7 @@ io.on('connection', (socket) => {
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
       countdownTimer.start();
-      io.emit('gameStatus-feed', 'start');
+      io.emit('gameStatus-feed', 'playing');
     } else if (messageOrObject === 'setup') {
       //TODO: setup logic
         //this is when a new game is being created
@@ -208,8 +208,9 @@ io.on('connection', (socket) => {
           phaseResults: gameState.phaseResults,
           playerInfo: gameState.playerInfo,
         };
+        Object.assign(gameState, returnObj);
+        io.emit('gameState-feed', gameState);
 
-        io.emit('gameState-feed', returnObj);
       }
     } else {
       if (gameState.votes.length === numWolves) {
@@ -223,7 +224,8 @@ io.on('connection', (socket) => {
           playerInfo: gameState.playerInfo,
         };
 
-        io.emit('gameState-feed', returnObj);
+        Object.assign(gameState, returnObj);
+        io.emit('gameState-feed', gameState);
       }
     }
   });
@@ -402,7 +404,10 @@ const phaseChange = (countdownTimer) => {
       playerInfo: gameState.playerInfo,
       gameStatus: 'ended',
     };
-    io.emit('gameState-feed', returnObj);
+
+    //isWORKING????
+    Object.assign(gameState, returnObj);
+    io.emit('gameState-feed', gameState);
     countdownTimer.stop();
     console.log('Villagers win');
   } else if (numWolves >= numVillagers) {
@@ -416,7 +421,8 @@ const phaseChange = (countdownTimer) => {
       playerInfo: gameState.playerInfo,
       gameStatus: 'ended',
     };
-    io.emit('gameState-feed', returnObj);
+    Object.assign(gameState, returnObj);
+    io.emit('gameState-feed', gameState);
     countdownTimer.stop();
     console.log('Wolves Win');
   }

@@ -18,7 +18,10 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
   }
   const playerRole =
   playerInfo
-    ?.find(player => player?.player_id === playerState?.player_id || null)
+    ?.find(player => player?.player_id === playerState?.player_id || null);
+
+  const {host} = playerState;
+  console.log('Current value of host: ', host, `Game status is: ${gameStatus}`);
   return (
     <div className="game-button" >
       {gameStatus === 'setup' && host

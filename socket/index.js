@@ -399,6 +399,12 @@ const phaseChange = (countdownTimer) => {
     }
     if (maxVotes === -1 || victim === 'NULL') {
       //TODO: choose a living non-wolf at random to kill
+      while (victim === '' || victim === 'NULL') {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0 || gameState.playerInfo[rando].role === 4 || gameState.playerInfo[rando].role === 6) {
+          victim = gameState.playerInfo[rando].username;
+        }
+      }
     }
     if (victim !== healerTarget) {
       for (let i = 0; i < gameState.playerInfo.length; i++) {

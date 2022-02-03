@@ -40,6 +40,7 @@ const GamePage = () => {
   const [playerState, setPlayerState] = useState({});
   const [wolves, setWolves] = useState(1);
   const [initialTimer, setInitialTimer] = useState(90);
+  const [seerMessage, setSeerMessage] = useState('');
 
   const [socket, setSocket] = useState(null);
 
@@ -96,6 +97,7 @@ const GamePage = () => {
         votes,
         initWolves,
         initTimer,
+        seerMessage,
       }) => {
         setTimer(timer);
         setPreviousResult(previousResult);
@@ -106,7 +108,7 @@ const GamePage = () => {
         setGameStatus(gameStatus);
         setWolves(initWolves);
         setInitialTimer(initTimer);
-
+        setSeerMessage(seerMessage);
       }
     );
     const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);

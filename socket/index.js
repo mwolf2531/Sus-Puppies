@@ -17,11 +17,14 @@ const gameState = {
   gameStatus: 'setup',
   votes: [],
   initWolves: 1,
+  isSeer: false,
+  isHealer: false,
   wolves: {
     number: 0,
     players: [],
   },
   host: {},
+  seerMessage: ''
 };
 /**
  * CountDown will decrement the timer property in the reference object and pass the result to the callback including 0.
@@ -73,7 +76,24 @@ class CountDown {
           numWolves--;
         }
       }
-      //TODO: Copy above logic to assign Seer/Healer (4/6) roles
+      let needSeer = false;
+      if (gameState.isSeer) needSeer = true;
+      while (needSeer) {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0) {
+          gameState.playerInfo[rando].role = 4;
+          needSeer = false;
+        }
+      }
+      let needHealer = false;
+      if (gameState.isHealer) needHealer = true;
+      while (needHealer) {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0) {
+          gameState.playerInfo[rando].role = 6;
+          needHealer = false;
+        }
+      }
       gameState.gameStatus = 'playing';
       io.emit('gameState-feed', this.gameState);
     }
@@ -162,20 +182,20 @@ io.on('connection', (socket) => {
       io.emit('gameStatus-feed', 'playing');
       countdownTimer.start()
     } else if (typeof messageOrObject === 'object') {
-      const { numPlayers, numWolves, timer, seer, medic } = messageOrObject;
+      const { numPlayers, numWolves, timer, seer, healer } = messageOrObject;
       gameState.timer = timer;
       gameState.initTimer = timer;
       gameState.wolves.number = numWolves;
       gameState.expectedPlayers = numPlayers;
       gameState.isSeer = seer;
-      gameState.isMedic = medic;
+      gameState.isHealer = healer;
       io.emit('gameState-feed', gameState);
     } else if (messageOrObject === 'start') {
       countdownTimer.start();
       io.emit('gameStatus-feed', 'playing');
     } else if (messageOrObject === 'setup') {
       //TODO: setup logic
-        //this is when a new game is being created
+      //this is when a new game is being created
     }
 
     //rulesSet sender TODO:
@@ -188,11 +208,15 @@ io.on('connection', (socket) => {
     gameState.votes.push(voteTuple);
     let numWolves = 0;
     let numVillagers = 0;
+    let numSpecialists = 0;
     for (let i = 0; i < gameState.playerInfo.length; i++) {
       if (gameState.playerInfo[i].role === 2) {
         numWolves++;
-      } else if (gameState.playerInfo[i].role === 0) {
-        //This If statement would include || seer || healer if added
+      }
+      if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+        numSpecialists++;
+      }
+      if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
         numVillagers++;
       }
     }
@@ -213,7 +237,7 @@ io.on('connection', (socket) => {
 
       }
     } else {
-      if (gameState.votes.length === numWolves) {
+      if (gameState.votes.length === numWolves + numSpecialists) {
         phaseChange(countdownTimer);
         let returnObj = {
           timer: gameState.timer,
@@ -272,10 +296,15 @@ const phaseChange = (countdownTimer) => {
   //0. Build Variables
   let numWolves = 0;
   let numVillagers = 0;
+  let numSpecialists = 0;
   for (let i = 0; i < gameState.playerInfo.length; i++) {
     if (gameState.playerInfo[i].role === 2) {
       numWolves++;
-    } else if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+    }
+    if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+      numSpecialists++;
+    }
+    if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
       numVillagers++;
     }
   }
@@ -344,6 +373,8 @@ const phaseChange = (countdownTimer) => {
       let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
       if (player.role === 4) {
         seerTarget = gameState.votes[i][1];
+        let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
+        gameState.seerMessage = seerTarget + " is actually a " + seerTargetPlayerInfo.role;
       } else if (player.role === 6) {
         healerTarget = gameState.votes[i][1];
       } else if (votes[gameState.votes[i][1]]) {
@@ -368,10 +399,19 @@ const phaseChange = (countdownTimer) => {
     }
     if (maxVotes === -1 || victim === 'NULL') {
       //TODO: choose a living non-wolf at random to kill
+      while (victim === '' || victim === 'NULL') {
+        let rando = Math.floor(Math.random() * gameState.playerInfo.length);
+        if (gameState.playerInfo[rando].role === 0 || gameState.playerInfo[rando].role === 4 || gameState.playerInfo[rando].role === 6) {
+          victim = gameState.playerInfo[rando].username;
+        }
+      }
     }
     if (victim !== healerTarget) {
       for (let i = 0; i < gameState.playerInfo.length; i++) {
         if (gameState.playerInfo[i].username === victim) {
+          if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i] === 6) {
+            numSpecialists--;
+          }
           gameState.playerInfo[i].role += 1;
           numVillagers--;
           gameState.phaseResults.push([
@@ -390,6 +430,7 @@ const phaseChange = (countdownTimer) => {
         victim,
       ]);
       gameState.previousResult = victim + ' was eaten last night!';
+
     }
   }
   //2. Check if game has ended
@@ -418,6 +459,7 @@ const phaseChange = (countdownTimer) => {
       phaseResults: gameState.phaseResults,
       playerInfo: gameState.playerInfo,
       gameStatus: 'ended',
+      seerMessage: gameState.seerMessage
     };
     Object.assign(gameState, returnObj);
     io.emit('gameState-feed', gameState);

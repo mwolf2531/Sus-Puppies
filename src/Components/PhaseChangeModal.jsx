@@ -47,8 +47,7 @@ const PhaseChangeModal = ({
   );
 
   let dizplay;
-  let val = true;
-  if (val) {
+  if (currentPhase === 'day') {
     dizplay = (
       <Expire delay="2500">
         <Claw />

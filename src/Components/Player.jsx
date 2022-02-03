@@ -82,7 +82,6 @@ const Player = ({ player, currentPhase, number , playerInfo}) => {
         </span>)
       }
       <div>
-      {console.log(player)}
       {player.role % 2 === 1
         ? (<img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "red", borderRadius: '1em', opacity: 0.5 }} />)
         : (<img src={pictures[player.picture]} style={{ height: "7vh", backgroundColor: "white", borderRadius: '1em' }} />)

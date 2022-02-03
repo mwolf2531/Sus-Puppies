@@ -17,6 +17,7 @@ import Stack from 'react-bootstrap/Stack';
 import Login from './Components/Login.jsx';
 import CreateGameModal from './Components/CreateGameModal.jsx';
 import EndgameModal from './Components/EndgameModal.jsx';
+import PhaseChangeModal from './Components/PhaseChangeModal.jsx';
 
 import useSound from 'use-sound';
 import wolfSound from '../public/sounds/wolfSound.mp3';
@@ -147,6 +148,12 @@ const GamePage = () => {
           phaseResults={phaseResults}
           gameStatus={gameStatus}
           previousResult={previousResult}
+        />
+        <PhaseChangeModal
+          playerState={playerState}
+          previousResult={previousResult}
+          currentPhase={currentPhase}
+          gameStatus={gameStatus}
         />
         <Row id="header">
           <Col>

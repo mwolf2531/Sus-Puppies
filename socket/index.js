@@ -294,7 +294,6 @@ instrument(io, { auth: false });
 const phaseChange = (countdownTimer) => {
   //Phase Change
   //0. Build Variables
-  console.log('PlayerInfo: ', gameState.playerInfo);
   let numWolves = 0;
   let numVillagers = 0;
   let numSpecialists = 0;
@@ -374,8 +373,8 @@ const phaseChange = (countdownTimer) => {
       let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
       if (player.role === 4) {
         seerTarget = gameState.votes[i][1];
-        let seerPlayer = gameState.playerInfo.find(player => player.username === seerTarget);
-        gameState.seerMessage = seerTarget + " is actually a " + seerPlayer.role;
+        let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
+        gameState.seerMessage = seerTarget + " is actually a " + seerPlayerTargetInfo.role;
       } else if (player.role === 6) {
         healerTarget = gameState.votes[i][1];
       } else if (votes[gameState.votes[i][1]]) {

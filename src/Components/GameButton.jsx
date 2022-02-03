@@ -18,28 +18,30 @@ const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) =
   }
   const playerRole =
   playerInfo
-    ?.find(player => player?.player_id === playerState?.player_id || null)
+    ?.find(player => player?.player_id === playerState?.player_id || null);
 
+  const {host} = playerState;
+  console.log('Current value of host: ', host, `Game status is: ${gameStatus}`);
   return (
     <div className="game-button" >
-      {gameStatus === 'setup' && playerState.host
+      {gameStatus === 'setup' && host
         ? <Button
             variant="warning"
             onClick={handleClickStart}
             style={{width:"100%", display:"block"}}
           > Start Game </Button>
-        : gameStatus === 'setup'
+        : gameStatus === 'setup' && !host
         ? <Button
             variant="warning"
             style={{width:"100%", display:"block"}}
           > Waiting for host to start the game </Button>
-        : gameStatus === 'playing'
+        : gameStatus === 'playing' && host
         ? <Button
             variant="warning"
             onClick={handleClickPause}
             style={{width:"100%", display:"block"}}
           > Pause Game </Button>
-        : gameStatus === 'paused'
+        : gameStatus === 'paused' && host
         ? <Button
             variant="warning"
             onClick={handleClickResume}

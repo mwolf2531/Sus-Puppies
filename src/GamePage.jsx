@@ -17,6 +17,7 @@ import Stack from 'react-bootstrap/Stack';
 import Login from './Components/Login.jsx';
 import CreateGameModal from './Components/CreateGameModal.jsx';
 import EndgameModal from './Components/EndgameModal.jsx';
+import PhaseChangeModal from './Components/PhaseChangeModal.jsx';
 
 import { io } from 'socket.io-client';
 
@@ -110,7 +111,7 @@ const GamePage = () => {
     );
     const newPlayerState = playerInfo.find((player) => player.player_id === playerState.player_id);
     if (playerState.role === 0) {
-      if(playerState.role != newPlayerState.role) {
+      if (playerState.role != newPlayerState.role) {
         setPlayerState(newPlayerState);
       }
     }
@@ -146,6 +147,12 @@ const GamePage = () => {
           phaseResults={phaseResults}
           gameStatus={gameStatus}
           previousResult={previousResult}
+        />
+        <PhaseChangeModal
+          playerState={playerState}
+          previousResult={previousResult}
+          currentPhase={currentPhase}
+          gameStatus={gameStatus}
         />
         <Row id="header">
           <Col>

@@ -88,8 +88,13 @@ const PhaseChangeModal = ({
           playWolfEat();
           let name = previousResult.split(' ')[0];
           setPlayer(playerInfo.find(player => player.username === name));
-        } else if (previousResult === 'No one was killed yesterday.') {
+        } else if (
+          previousResult === 'No one was eaten last night!' ||
+          previousResult === 'No one was killed yesterday.'
+        ) {
           playNoDeath();
+        } else {
+          playWolfEat();
         }
         handleShow();
       } else if (previousResult === 'Wolves Win!') {

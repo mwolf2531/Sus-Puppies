@@ -387,8 +387,11 @@ const phaseChange = (countdownTimer) => {
       let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
       if (player.role === 4) {
         seerTarget = gameState.votes[i][1];
-        let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
-        gameState.seerMessage = seerTarget + " is actually a " + seerTargetPlayerInfo.role;
+        if (seerTarget !== 'NULL' || seerTarget !== 'select a player') {
+          let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
+          const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf', 'Seer', 'Dead Seer', 'Healer', 'Dead Healer'];
+          gameState.seerMessage = seerTarget + " is actually a " + roleDefinitions[seerTargetPlayerInfo.role];
+        }
       } else if (player.role === 6) {
         healerTarget = gameState.votes[i][1];
       } else if (votes[gameState.votes[i][1]]) {

@@ -42,13 +42,13 @@ const GamePage = () => {
     timer: 90,
     seer: false,
     healer: false,
-  })
+  });
   const [seerMessage, setSeerMessage] = useState('');
 
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    setSocket(io('ws://localhost:8900'));
+    setSocket(io('ws://localhost:3000'));
   }, []);
 
   //TODO: Add Lifecycle methods as needed.
@@ -101,7 +101,7 @@ const GamePage = () => {
           timer: initTimer,
           seer: isSeer,
           healer: isHealer,
-        })
+        });
       }
     );
     const newPlayerState = playerInfo.find(
@@ -138,10 +138,7 @@ const GamePage = () => {
     <>
       <Container fluid className="set-height" id="game">
         <Login socket={socket} />
-        <CreateGameModal
-          socket={socket}
-          playerState={playerState}
-        />
+        <CreateGameModal socket={socket} playerState={playerState} />
         <EndgameModal
           playerInfo={playerInfo}
           phaseResults={phaseResults}

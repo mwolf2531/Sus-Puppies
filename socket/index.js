@@ -1,10 +1,15 @@
 const axios = require('axios');
-const { instrument } = require('@socket.io/admin-ui');
-const io = require('socket.io')(8900, {
-  cors: {
-    origin: ['http://localhost:3000', 'https://admin.socket.io'],
-  },
-});
+
+// const io = require('socket.io')(3000, {
+//   cors: {
+//     origin: '*',
+//   },
+// });
+const { server } = require('../server/index.js');
+
+const { Server } = require('socket.io');
+const io = new Server(server);
+console.log('this connected this is io', io);
 
 const gameState = {
   timer: 90,
@@ -24,7 +29,7 @@ const gameState = {
     players: [],
   },
   host: {},
-  seerMessage: ''
+  seerMessage: '',
 };
 const initGameState = {};
 Object.assign(initGameState, gameState);
@@ -130,7 +135,8 @@ const countdownTimer = new CountDown(gameState, (time) => {
 
 io.on('connection', (socket) => {
   const socketID = socket.id;
-  socket.on('login', ({ username, password, picture }) => { //TODO: receive picture
+  socket.on('login', ({ username, password, picture }) => {
+    //TODO: receive picture
     console.log(`Login attempt: userName ${username} password: ${password}`);
     // TODO: login logic~
     const options = {
@@ -148,7 +154,12 @@ io.on('connection', (socket) => {
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
         if (data !== 'Error, Bad Username/Password. Check Password') {
-          const playerState = { username, player_id: socketID, role: 0, picture }; //TODO: add picture to playerState
+          const playerState = {
+            username,
+            player_id: socketID,
+            role: 0,
+            picture,
+          }; //TODO: add picture to playerState
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;
@@ -182,7 +193,7 @@ io.on('connection', (socket) => {
     } else if (messageOrObject === 'resume') {
       gameState.gameStatus = 'playing';
       io.emit('gameStatus-feed', 'playing');
-      countdownTimer.start()
+      countdownTimer.start();
     } else if (typeof messageOrObject === 'object') {
       const { numPlayers, numWolves, timer, seer, healer } = messageOrObject;
       gameState.timer = timer;
@@ -207,7 +218,7 @@ io.on('connection', (socket) => {
       gameState.playerInfo.forEach((player) => {
         player.role = 0;
         io.to(player.player_id).emit('playerState-feed', player);
-      })
+      });
       io.emit('gameState-feed', gameState);
       io.to(gameState.host.player_id).emit('New Game Plus', true);
     }
@@ -227,10 +238,17 @@ io.on('connection', (socket) => {
       if (gameState.playerInfo[i].role === 2) {
         numWolves++;
       }
-      if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+      if (
+        gameState.playerInfo[i].role === 4 ||
+        gameState.playerInfo[i].role === 6
+      ) {
         numSpecialists++;
       }
-      if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+      if (
+        gameState.playerInfo[i].role === 0 ||
+        gameState.playerInfo[i].role === 4 ||
+        gameState.playerInfo[i].role === 6
+      ) {
         numVillagers++;
       }
     }
@@ -248,7 +266,6 @@ io.on('connection', (socket) => {
         };
         Object.assign(gameState, returnObj);
         io.emit('gameState-feed', gameState);
-
       }
     } else {
       if (gameState.votes.length === numWolves + numSpecialists) {
@@ -299,7 +316,7 @@ io.on('connection', (socket) => {
   });
 });
 
-instrument(io, { auth: false });
+// instrument(io, { auth: false });
 // how to use socket.io admin ui. ::::
 // start up servers in terminal
 // go to "admin.socket.io"  in browser
@@ -315,10 +332,17 @@ const phaseChange = (countdownTimer) => {
     if (gameState.playerInfo[i].role === 2) {
       numWolves++;
     }
-    if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+    if (
+      gameState.playerInfo[i].role === 4 ||
+      gameState.playerInfo[i].role === 6
+    ) {
       numSpecialists++;
     }
-    if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+    if (
+      gameState.playerInfo[i].role === 0 ||
+      gameState.playerInfo[i].role === 4 ||
+      gameState.playerInfo[i].role === 6
+    ) {
       numVillagers++;
     }
   }
@@ -384,13 +408,29 @@ const phaseChange = (countdownTimer) => {
     let seerTarget = '';
     let healerTarget = '';
     for (let i = 0; i < gameState.votes.length; i++) {
-      let player = gameState.playerInfo.find(player => player.username === gameState.votes[i][0]);
+      let player = gameState.playerInfo.find(
+        (player) => player.username === gameState.votes[i][0]
+      );
       if (player.role === 4) {
         seerTarget = gameState.votes[i][1];
         if (seerTarget !== 'NULL' || seerTarget !== 'select a player') {
-          let seerTargetPlayerInfo = gameState.playerInfo.find(player => player.username === seerTarget);
-          const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf', 'Seer', 'Dead Seer', 'Healer', 'Dead Healer'];
-          gameState.seerMessage = seerTarget + " is actually a " + roleDefinitions[seerTargetPlayerInfo.role];
+          let seerTargetPlayerInfo = gameState.playerInfo.find(
+            (player) => player.username === seerTarget
+          );
+          const roleDefinitions = [
+            'Villager',
+            'Dead Villager',
+            'Werewolf',
+            'Dead Werewolf',
+            'Seer',
+            'Dead Seer',
+            'Healer',
+            'Dead Healer',
+          ];
+          gameState.seerMessage =
+            seerTarget +
+            ' is actually a ' +
+            roleDefinitions[seerTargetPlayerInfo.role];
         }
       } else if (player.role === 6) {
         healerTarget = gameState.votes[i][1];
@@ -418,7 +458,11 @@ const phaseChange = (countdownTimer) => {
       //TODO: choose a living non-wolf at random to kill
       while (victim === '' || victim === 'NULL') {
         let rando = Math.floor(Math.random() * gameState.playerInfo.length);
-        if (gameState.playerInfo[rando].role === 0 || gameState.playerInfo[rando].role === 4 || gameState.playerInfo[rando].role === 6) {
+        if (
+          gameState.playerInfo[rando].role === 0 ||
+          gameState.playerInfo[rando].role === 4 ||
+          gameState.playerInfo[rando].role === 6
+        ) {
           victim = gameState.playerInfo[rando].username;
         }
       }
@@ -426,7 +470,10 @@ const phaseChange = (countdownTimer) => {
     if (victim !== healerTarget) {
       for (let i = 0; i < gameState.playerInfo.length; i++) {
         if (gameState.playerInfo[i].username === victim) {
-          if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i] === 6) {
+          if (
+            gameState.playerInfo[i].role === 4 ||
+            gameState.playerInfo[i] === 6
+          ) {
             numSpecialists--;
           }
           gameState.playerInfo[i].role += 1;
@@ -447,7 +494,6 @@ const phaseChange = (countdownTimer) => {
         victim,
       ]);
       gameState.previousResult = victim + ' was eaten last night!';
-
     }
   }
   //2. Check if game has ended
@@ -476,7 +522,7 @@ const phaseChange = (countdownTimer) => {
       phaseResults: gameState.phaseResults,
       playerInfo: gameState.playerInfo,
       gameStatus: 'ended',
-      seerMessage: gameState.seerMessage
+      seerMessage: gameState.seerMessage,
     };
     Object.assign(gameState, returnObj);
     io.emit('gameState-feed', gameState);
@@ -488,14 +534,14 @@ const phaseChange = (countdownTimer) => {
     gameState.currentPhase = 'night';
     gameState.votes = [];
     // gameState.timer = gameState.initTimer;
-    countdownTimer.newCountDown()
+    countdownTimer.newCountDown();
     io.emit('gameState-feed', gameState);
   } else {
     gameState.currentPhase = 'day';
     gameState.currentDay++;
     gameState.votes = [];
     // gameState.timer = gameState.initTimer;
-    countdownTimer.newCountDown()
+    countdownTimer.newCountDown();
     io.emit('gameState-feed', gameState);
   }
 };

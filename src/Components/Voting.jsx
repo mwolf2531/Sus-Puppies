@@ -57,6 +57,7 @@ const Voting = ({
     setHealerOptions(villagersWithSelf);
     setWolfOptions(wolves);
     setVoteSelection('select a player');
+    setNightVoteSelection('select a player');
   }, [currentPhase, gameStatus]);
 
   const submitVote = (e) => {

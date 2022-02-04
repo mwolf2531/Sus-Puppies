@@ -153,6 +153,7 @@ const GamePage = () => {
           previousResult={previousResult}
           currentPhase={currentPhase}
           gameStatus={gameStatus}
+          playerInfo={playerInfo}
         />
         <Row id="header">
           <Col>

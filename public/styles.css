@@ -9,6 +9,10 @@ body {
   background: rgba(26, 15, 60, 1) !important;
 }
 
+span {
+  font-family: 'Quintessential', cursive;
+}
+
 h2 {
   font-family: 'Quintessential', cursive;
 }

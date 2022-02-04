@@ -48,7 +48,7 @@ const GamePage = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    setSocket(io('ws://localhost:8900'));
+    setSocket(io('http://172.31.95.57:8900'), {reconnectionDelayMax: 10000});
   }, []);
 
   //TODO: Add Lifecycle methods as needed.

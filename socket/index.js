@@ -2,7 +2,7 @@ const axios = require('axios');
 const { instrument } = require('@socket.io/admin-ui');
 const io = require('socket.io')(8900, {
   cors: {
-    origin: ['http://localhost:3000', 'https://admin.socket.io'],
+    origin: ['*', 'https://admin.socket.io'],
   },
 });
 

@@ -154,14 +154,21 @@ io.on('connection', (socket) => {
         const isLoggedIn = usernameLogger.has(username);
         let isDisconnect = false;
         if (data !== 'Error, Bad Username/Password. Check Password' && !isLoggedIn) {
-          const playerState = { username, player_id: socketID, role: 0, picture }; //TODO: add picture to playerState
+          let playerState = { username, player_id: socketID, role: 0, picture }; //TODO: add picture to playerState
           for (const key in connectionIdLogger) {
             if (connectionIdLogger[key].username === username) {
               connectionIdLogger[key].player_id = socketID
               isDisconnect = true;
+              playerState = connectionIdLogger[key];
             }
           }
           if (isDisconnect) {
+            if(gameState.playerInfo.length === 0) {
+              gameState.playerInfo.push(playerState);
+              playerState.host = true;
+              gameState.host = playerState;
+            }
+            usernameLogger.add(username);
             io.to(socketID).emit('playerState-feed', playerState);
             io.emit('gameState-feed', gameState);
             socket.emit('login-success', body);
@@ -169,7 +176,7 @@ io.on('connection', (socket) => {
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;
-          } else {
+          } else if(gameState.playerInfo.length > 1) {
             playerState.host = false;
           }
           if (!isDisconnect) {
@@ -245,53 +252,56 @@ io.on('connection', (socket) => {
   // votes logic
   socket.on('vote-send', (voteTuple) => {
     // Voting logic and changing server game state here
-    gameState.votes.push(voteTuple);
-    let numWolves = 0;
-    let numVillagers = 0;
-    let numSpecialists = 0;
-    for (let i = 0; i < gameState.playerInfo.length; i++) {
-      if (gameState.playerInfo[i].role === 2) {
-        numWolves++;
-      }
-      if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
-        numSpecialists++;
-      }
-      if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
-        numVillagers++;
-      }
-    }
-    let numLiving = numWolves + numVillagers;
-    if (gameState.currentPhase === 'day') {
-      if (gameState.votes.length === numLiving) {
-        phaseChange(countdownTimer);
-        let returnObj = {
-          timer: gameState.timer,
-          previousResult: gameState.previousResult,
-          currentDay: gameState.currentDay,
-          currentPhase: gameState.currentPhase,
-          phaseResults: gameState.phaseResults,
-          playerInfo: gameState.playerInfo,
-        };
-        Object.assign(gameState, returnObj);
-        io.emit('gameState-feed', gameState);
 
-      }
-    } else {
-      if (gameState.votes.length === numWolves + numSpecialists) {
-        phaseChange(countdownTimer);
-        let returnObj = {
-          timer: gameState.timer,
-          previousResult: gameState.previousResult,
-          currentDay: gameState.currentDay,
-          currentPhase: gameState.currentPhase,
-          phaseResults: gameState.phaseResults,
-          playerInfo: gameState.playerInfo,
-        };
 
-        Object.assign(gameState, returnObj);
-        io.emit('gameState-feed', gameState);
+      gameState.votes.push(voteTuple);
+      let numWolves = 0;
+      let numVillagers = 0;
+      let numSpecialists = 0;
+      for (let i = 0; i < gameState.playerInfo.length; i++) {
+        if (gameState.playerInfo[i].role === 2) {
+          numWolves++;
+        }
+        if (gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+          numSpecialists++;
+        }
+        if (gameState.playerInfo[i].role === 0 || gameState.playerInfo[i].role === 4 || gameState.playerInfo[i].role === 6) {
+          numVillagers++;
+        }
       }
-    }
+      let numLiving = numWolves + numVillagers;
+      if (gameState.currentPhase === 'day') {
+        if (gameState.votes.length === numLiving) {
+          phaseChange(countdownTimer);
+          let returnObj = {
+            timer: gameState.timer,
+            previousResult: gameState.previousResult,
+            currentDay: gameState.currentDay,
+            currentPhase: gameState.currentPhase,
+            phaseResults: gameState.phaseResults,
+            playerInfo: gameState.playerInfo,
+          };
+          Object.assign(gameState, returnObj);
+          io.emit('gameState-feed', gameState);
+        }
+      } else {
+        if (gameState.votes.length === numWolves + numSpecialists) {
+          phaseChange(countdownTimer);
+          let returnObj = {
+            timer: gameState.timer,
+            previousResult: gameState.previousResult,
+            currentDay: gameState.currentDay,
+            currentPhase: gameState.currentPhase,
+            phaseResults: gameState.phaseResults,
+            playerInfo: gameState.playerInfo,
+          };
+
+          Object.assign(gameState, returnObj);
+          io.emit('gameState-feed', gameState);
+        }
+      }
+
+
   });
 
   // living chat logic
@@ -327,10 +337,15 @@ io.on('connection', (socket) => {
       usernameLogger.delete(disconnectedProfile?.username);
       if (gameState.gameStatus === 'ended') {
         const index = gameState.playerInfo.indexOf(disconnectedProfile);
-        gameState.playerInfo.splice(index, 1);
+        if (index > -1) {
+          gameState.playerInfo.splice(index, 1);
+          delete connectionIdLogger[socket.id];
+        }
       }
-      if (gameState.playerInfo.length === 0) {
+      if (usernameLogger.size === 0) {
+        countdownTimer.stop();
         Object.assign(gameState, initGameState);
+        Object.assign(connectionIdLogger, {});
       }
   });
 });

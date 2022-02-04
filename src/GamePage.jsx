@@ -82,6 +82,9 @@ const GamePage = () => {
         initWolves,
         initTimer,
         seerMessage,
+        wolves,
+        isSeer,
+        isHealer,
       }) => {
         setPlayerInfo(playerInfo);
         setTimer(timer);
@@ -93,6 +96,12 @@ const GamePage = () => {
         setWolves(initWolves);
         setInitialTimer(initTimer);
         setSeerMessage(seerMessage);
+        setRules({
+          numWolves: wolves.number,
+          timer: initTimer,
+          seer: isSeer,
+          healer: isHealer,
+        })
       }
     );
     const newPlayerState = playerInfo.find(
@@ -132,7 +141,6 @@ const GamePage = () => {
         <CreateGameModal
           socket={socket}
           playerState={playerState}
-          setRules={setRules}
         />
         <EndgameModal
           playerInfo={playerInfo}

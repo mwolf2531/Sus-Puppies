@@ -49,7 +49,7 @@ const EndgameModal = ({ playerInfo, phaseResults, gameStatus, previousResult }) 
           </div>
           <div style={{paddingLeft:"100px"}}>
             {roleIcons[3]} = Seer
-            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer
           className="results"

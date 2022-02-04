@@ -50,7 +50,7 @@ const pictures = {
   s18: s18,
   s19: s19,
   s20: s20,
-}
+};
 
 const PhaseChangeModal = ({
   socket,
@@ -72,7 +72,7 @@ const PhaseChangeModal = ({
     username: null,
     player_id: null,
     role: null,
-  })
+  });
 
   useEffect(
     () => {
@@ -83,11 +83,11 @@ const PhaseChangeModal = ({
       ) {
         if (previousResult.indexOf('killed') !== -1) {
           let name = previousResult.split(' ')[0];
-          setPlayer(playerInfo.find(player => player.username === name));
+          setPlayer(playerInfo.find((player) => player?.username === name));
         } else if (previousResult.indexOf('eaten') !== -1) {
           playWolfEat();
           let name = previousResult.split(' ')[0];
-          setPlayer(playerInfo.find(player => player.username === name));
+          setPlayer(playerInfo.find((player) => player?.username === name));
         } else if (
           previousResult === 'No one was eaten last night!' ||
           previousResult === 'No one was killed yesterday.'
@@ -124,20 +124,26 @@ const PhaseChangeModal = ({
         enforceFocus={true}
       >
         <Modal.Header closeButton={false}></Modal.Header>
-        <Modal.Body
-          style={{height:"50vh"}}
-        >
+        <Modal.Body style={{ height: '50vh' }}>
           {previousResult}&nbsp;
-          {player.username !== null
-          ? (<img src={pictures[player.picture]}
+          {player.username !== null ? (
+            <img
+              src={pictures[player.picture]}
+              style={{
+                height: '30vh',
+                backgroundColor: 'white',
+                borderRadius: '1em',
+                margin: '15%',
+              }}
+            />
+          ) : null}
+          <div
             style={{
-              height: "30vh",
-              backgroundColor: "white",
-              borderRadius: '1em',
-              margin: "15%",
-            }} />)
-          : null}
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop:"-37vh" }}>
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '-37vh',
+            }}
+          >
             {dizplay}
           </div>
         </Modal.Body>

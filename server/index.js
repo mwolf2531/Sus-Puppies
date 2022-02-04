@@ -6,6 +6,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
+const axios = require('axios');
 const User = require('../db');
 
 app.use(express.json());

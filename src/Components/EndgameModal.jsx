@@ -44,6 +44,12 @@ const EndgameModal = ({ playerInfo, phaseResults, gameStatus, previousResult }) 
           <div style={{paddingLeft:"100px"}}>
             {roleIcons[1]} = Werewolf
           </div>
+          <div style={{paddingLeft:"100px"}}>
+            {roleIcons[2]} = Healer
+          </div>
+          <div style={{paddingLeft:"100px"}}>
+            {roleIcons[3]} = Seer
+            </div>
         </Modal.Body>
         <Modal.Footer
           className="results"

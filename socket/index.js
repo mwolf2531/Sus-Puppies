@@ -28,6 +28,9 @@ const gameState = {
 };
 const initGameState = {};
 Object.assign(initGameState, gameState);
+const usernameLogger = new Set();
+const connectionIdLogger = {};
+const voteTracker = new Set();
 /**
  * CountDown will decrement the timer property in the reference object and pass the result to the callback including 0.
  * This class has four methods. start, stop, countdown, and newCountDown
@@ -147,19 +150,41 @@ io.on('connection', (socket) => {
     axios(options)
       .then(({ body, status, data }) => {
         console.log(`status: ${status} ${data}`);
-        if (data !== 'Error, Bad Username/Password. Check Password') {
+        console.log('Data structure-----',gameState.playerInfo)
+        const isLoggedIn = usernameLogger.has(username);
+        let isDisconnect = false;
+        if (data !== 'Error, Bad Username/Password. Check Password' && !isLoggedIn) {
           const playerState = { username, player_id: socketID, role: 0, picture }; //TODO: add picture to playerState
+          for (const key in connectionIdLogger) {
+            if (connectionIdLogger[key].username === username) {
+              connectionIdLogger[key].player_id = socketID
+              isDisconnect = true;
+            }
+          }
+          if (isDisconnect) {
+            io.to(socketID).emit('playerState-feed', playerState);
+            io.emit('gameState-feed', gameState);
+            socket.emit('login-success', body);
+          }
           if (gameState.playerInfo.length === 0) {
             playerState.host = true;
             gameState.host = playerState;
           } else {
             playerState.host = false;
           }
-          gameState.playerInfo.push(playerState);
-          socket.emit('login-success', body);
-          // io.emit('playerInfo-feed', gameState.playerInfo);
-          io.to(socketID).emit('playerState-feed', playerState);
-          io.emit('gameState-feed', gameState);
+          if (!isDisconnect) {
+            console.log('Should reallly not be here lol');
+            gameState.playerInfo.push(playerState);
+            usernameLogger.add(username);
+            connectionIdLogger[socket.id] = (playerState);
+            socket.emit('login-success', body);
+            // io.emit('playerInfo-feed', gameState.playerInfo);
+            usernameLogger.add(username);
+            io.to(socketID).emit('playerState-feed', playerState);
+            io.emit('gameState-feed', gameState);
+          }
+        } else if (isLoggedIn) {
+          socket.emit('login-failed', 'User already logged in!');
         } else {
           socket.emit('login-failed', 'Incorrect password!');
         }
@@ -293,10 +318,20 @@ io.on('connection', (socket) => {
           gameState.playerInfo.shift();
           console.log(
             `Host disconnected, ${gameState.playerInfo[0].username} is the new host`
-          );
+            );
+          }
         }
       }
-    }
+      let disconnectedProfile = connectionIdLogger[socket.id];
+      console.log('Is ref good??', disconnectedProfile, '-----');
+      usernameLogger.delete(disconnectedProfile?.username);
+      if (gameState.gameStatus === 'ended') {
+        const index = gameState.playerInfo.indexOf(disconnectedProfile);
+        gameState.playerInfo.splice(index, 1);
+      }
+      if (gameState.playerInfo.length === 0) {
+        Object.assign(gameState, initGameState);
+      }
   });
 });
 

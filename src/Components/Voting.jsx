@@ -57,7 +57,6 @@ const Voting = ({
     setHealerOptions(villagersWithSelf);
     setWolfOptions(wolves);
     setVoteSelection('select a player');
-    setNightVoteSelection('select a player');
   }, [currentPhase, gameStatus]);
 
   const submitVote = (e) => {
@@ -78,7 +77,7 @@ const Voting = ({
       if (nightVoteSelection === 'select a player') {
         setNightVoteSelection('NULL');
       }
-      let voteTuple = [playerState.username, nightVoteSelection];
+      let voteTuple = [playerState.username, voteSelection];
       // On Click of Submit button, create and send tuple of vote values
       // VOTE SENDER
       console.log(voteTuple); //WE KNOW WE MADE IT THIS FAR

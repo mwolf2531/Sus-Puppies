@@ -126,9 +126,9 @@ const PhaseChangeModal = ({
         <Modal.Header closeButton={false}></Modal.Header>
         <Modal.Body style={{ height: '50vh' }}>
           {previousResult}&nbsp;
-          {player.username !== null ? (
+          {player?.username !== null ? (
             <img
-              src={pictures[player.picture]}
+              src={pictures[player?.picture]}
               style={{
                 height: '30vh',
                 backgroundColor: 'white',

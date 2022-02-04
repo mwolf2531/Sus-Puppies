@@ -192,6 +192,7 @@ io.on('connection', (socket) => {
       gameState.isSeer = seer;
       gameState.isHealer = healer;
       io.emit('gameState-feed', gameState);
+
     } else if (messageOrObject === 'start') {
       countdownTimer.start();
       io.emit('gameStatus-feed', 'playing');

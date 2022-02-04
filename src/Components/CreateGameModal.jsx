@@ -34,7 +34,7 @@ const formMaker = (nameOfForm, type, numMax, numMin, isRequired, cb) => {
 }
 
 
-const CreateGameModal = ({ socket, playerState, setRules }) => {
+const CreateGameModal = ({ socket, playerState }) => {
 
   const [show, setShow] = useState(false);
   const [options, setOptions] = useState({
@@ -148,7 +148,6 @@ const CreateGameModal = ({ socket, playerState, setRules }) => {
             onClick={(e) => {
               e.preventDefault();
               socket?.emit('host-send', options);
-              setRules(options);
               handleClose();
             }}
           >

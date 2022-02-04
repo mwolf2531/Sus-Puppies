@@ -9,12 +9,17 @@ body {
   background: rgba(26, 15, 60, 1) !important;
 }
 
+h2 {
+  font-family: 'Quintessential', cursive;
+}
+
 h3 {
   border-bottom: 1px solid white;
   width: 100%;
   display: block;
   padding-bottom: 5px;
   text-transform: uppercase;
+  font-family: 'Quintessential', cursive;
 }
 
 .modal {

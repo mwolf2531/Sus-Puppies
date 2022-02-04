@@ -88,9 +88,3 @@ const PhaseChangeModal = ({
 };
 
 export default PhaseChangeModal;
-
-{
-  /* <div style={{display:"flex",justifyContent:"center"}}>
-{dizplay}
-</div> */
-}

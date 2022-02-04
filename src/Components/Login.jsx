@@ -32,7 +32,7 @@ const Login = ({ socket }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [picture, setPicture] = useState('s1');
-  const [header, setHeader] = useState('Please Log in :]');
+  const [header, setHeader] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -48,18 +48,16 @@ const Login = ({ socket }) => {
     console.log('Sent to server: ', userName, password);
     socket?.on('login-failed', (responseString) => {
       console.log('failed login attempt');
-      //TODO: implement login failed logic.
       setHeader(responseString);
     });
     socket?.on('login-success', () => {
       console.log('Good login');
       setShow(false);
-      //TODO: add some playerstate??????
     });
   }, [socket]);
 
   const loginAttempt = () => {
-    socket.emit('login', { username: userName, password, picture }); //TODO: emit picture
+    socket.emit('login', { username: userName, password, picture });
     setUserName('');
     setPassword('');
     setPicture('s1');
@@ -82,11 +80,11 @@ const Login = ({ socket }) => {
       >
         <Modal.Header closeButton={false} style={{ justifyContent: "space-around" }}>
           <Modal.Title>
-            <img src={werewolfTitle} style={{ height:"35vh", marginTop:"-175px", marginBottom:"-175px" }} />
+            <img src={werewolfTitle} style={{ height: "35vh", marginTop: "-175px", marginBottom: "-175px" }} />
           </Modal.Title>
         </Modal.Header>
         <span style={{ alignSelf: "center" }} >
-          <img src={werewolf} style={{ height: "30vh", marginTop:"-35px", marginBottom:"-10px" }} />
+          <img src={werewolf} style={{ height: "30vh", marginTop: "-35px", marginBottom: "-10px" }} />
         </span>
         <Modal.Body>{`${header}`}</Modal.Body>
         <Modal.Footer

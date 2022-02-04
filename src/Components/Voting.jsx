@@ -21,10 +21,10 @@ const Voting = ({
   const [wolfOptions, setWolfOptions] = useState([]);
 
   const logChange = (e) => {
-    if (currentPhase === 'day'|| currentPhase === 'Day') {
+    if (currentPhase === 'day' || currentPhase === 'Day') {
       console.log('daytime selection')
       setVoteSelection(e.value);
-    } else if (currentPhase === 'night'|| currentPhase === 'Night') {
+    } else if (currentPhase === 'night' || currentPhase === 'Night') {
       console.log('nighttime selection')
       setNightVoteSelection(e.value);
     }
@@ -60,7 +60,7 @@ const Voting = ({
   }, [currentPhase, gameStatus]);
 
   const submitVote = (e) => {
-    if (!isVoted && currentPhase === 'day'|| currentPhase === 'Day') {
+    if (!isVoted && currentPhase === 'day' || currentPhase === 'Day') {
       if (voteSelection === 'select a player') {
         setVoteSelection('NULL');
       }
@@ -73,7 +73,7 @@ const Voting = ({
       setVillagerOptions([]);
       setWolfOptions([]);
       setVoteSelection('select a player');
-    } else if (!isVoted && currentPhase === 'night'|| currentPhase === 'Night') {
+    } else if (!isVoted && currentPhase === 'night' || currentPhase === 'Night') {
       if (nightVoteSelection === 'select a player') {
         setNightVoteSelection('NULL');
       }
@@ -174,11 +174,11 @@ const Voting = ({
         />
         <div className='game-button'>
           <Button variant='secondary'
-          style={{ marginRight: '18px' }}
-          onClick={() => {
-            submitVote();
-          }}
-          disabled={isVoted}
+            style={{ marginRight: '18px' }}
+            onClick={() => {
+              submitVote();
+            }}
+            disabled={isVoted}
           >
             Skip Vote
           </Button>

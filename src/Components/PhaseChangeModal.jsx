@@ -32,10 +32,13 @@ const PhaseChangeModal = ({
         previousResult !== 'Villagers Win!' &&
         previousResult !== 'Wolves Win!'
       ) {
-        if (previousResult.indexOf('eaten') !== -1) {
-          playWolfEat();
-        } else if (previousResult === 'No one was killed yesterday.') {
+        if (
+          previousResult === 'No one was eaten last night!' ||
+          previousResult === 'No one was killed yesterday.'
+        ) {
           playNoDeath();
+        } else {
+          playWolfEat();
         }
         handleShow();
       } else if (previousResult === 'Wolves Win!') {

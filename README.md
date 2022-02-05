@@ -32,6 +32,8 @@ Multiplayer online version of classic accusation game Werewolf!
 
 # Demo
 
+![Imgur](https://i.imgur.com/nl6Zukw.gif)
+
 ## Features
 
 - Sync'd multiplayer experience

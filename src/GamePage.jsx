@@ -48,8 +48,8 @@ const GamePage = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // change to public URL for deployement
-    setSocket(io('http://3.83.40.231:3000'));
+    // change to public URL for deployement => example: 'http://3.83.40.231:3000'
+    setSocket(io());
   }, []);
 
   //TODO: Add Lifecycle methods as needed.

@@ -34,6 +34,14 @@ Sus Puppies is an online multiplayer game based on the classic social deduction 
 
 ![Imgur](https://i.imgur.com/nl6Zukw.gif)
 
+![Imgur](https://i.imgur.com/nl6Zukw.gif)
+
+![Imgur](https://i.imgur.com/KGePMvz.gif)
+
+![Imgur](https://i.imgur.com/PO6elJl.gif)
+
+![Imgur](https://i.imgur.com/L77x5xT.gif)
+
 ## Features
 
 - Sync'd multiplayer experience

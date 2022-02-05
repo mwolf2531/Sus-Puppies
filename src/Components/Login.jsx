@@ -42,6 +42,10 @@ const Login = ({ socket }) => {
     stateSet(data);
   };
 
+  const onChange = (event, { newValue }) => {
+    setInputValue(newValue.replace(/\s/g, ''));
+  };
+
   const pictures = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20]
 
   useEffect(() => {
@@ -97,7 +101,11 @@ const Login = ({ socket }) => {
               type="text"
               id="userInput"
               required={true}
-              onChange={(e) => handleChange(e, setUserName)}
+              onChange={(e) => {
+                if (e.target.value.search(/[^a-zA-Z0-9]/g) === -1 && userName.length <= 15) {
+                  handleChange(e, setUserName)
+                }
+              }}
               className="inputs"
               style={{ margin: "5px", color: "black" }}
             />

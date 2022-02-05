@@ -4,15 +4,6 @@
 
 Multiplayer online version of classic accusation game Werewolf!
 
-# Table of Contents
-
-1. [Tech Stack](#Tech-Stack)
-2. [Repo Installation](#Repo-Installation)
-3. [Demo](#Demo)
-4. [Future Feature Updates](#Future-Feature-Updates)
-5. [Technical Challanges](#Technical-Challenges)
-6. [Contributors](#Contributors)
-
 # Tech Stack
 
 - React.js: Version 17.0.2

@@ -49,7 +49,7 @@ const GamePage = () => {
 
   useEffect(() => {
     // change to public URL for deployement
-    setSocket(io('http://3.83.40.231:3000'));
+    setSocket(io('http://54.234.136.151:3000/'));
   }, []);
 
   //TODO: Add Lifecycle methods as needed.

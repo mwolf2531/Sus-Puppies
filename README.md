@@ -6,9 +6,12 @@ Multiplayer online version of classic accusation game Werewolf!
 
 # Table of Contents
 
-1. Tech Stack
-2. Repo install
-3. etc....
+1. [Tech Stack](#Tech-Stack)
+2. [Repo Installation](#Repo-Installation)
+3. [Demo](#Demo)
+4. [Future Feature Updates](#Future-Feature-Updates)
+5. [Technical Challanges](#Technical-Challenges)
+6. [Contributors](#Contributors)
 
 # Tech Stack
 
@@ -23,7 +26,7 @@ Multiplayer online version of classic accusation game Werewolf!
 - Webpack: Version 5.67.0
 - Babel: Version 17.16.12
 
-# Repo installation set
+# Repo Installation
 
 ## Local setup
 
@@ -50,7 +53,7 @@ Multiplayer online version of classic accusation game Werewolf!
 - Login authentication
 - Fully functional warewolf game set (include roles/timer/voting)
 
-# Future Feature updates
+# Future Feature Updates
 
 - Video capabilities
 - Additional villager roles implemented

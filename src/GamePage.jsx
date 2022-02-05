@@ -48,7 +48,11 @@ const GamePage = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+<<<<<<< HEAD
     // change to public URL for deployement => example: 'http://3.83.40.231:3000'
+=======
+    // change to public URL for deployement
+>>>>>>> main
     setSocket(io());
   }, []);
 

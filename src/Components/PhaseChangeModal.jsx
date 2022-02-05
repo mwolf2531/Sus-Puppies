@@ -53,10 +53,8 @@ const pictures = {
 };
 
 const PhaseChangeModal = ({
-  socket,
   currentPhase,
   previousResult,
-  phaseResults,
   gameStatus,
   playerInfo,
 }) => {

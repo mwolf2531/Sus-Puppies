@@ -5,9 +5,7 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 const GhostChat = ({
   socket,
   playerInfo,
-  playerId,
   playerState,
-  playerRoles,
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState([]);

@@ -4,28 +4,20 @@
 
 Multiplayer online version of classic accusation game Werewolf!
 
-# Table of Contents
-
-1. Tech Stack
-2. Repo install
-3. etc....
-
 # Tech Stack
 
-`TODO: Add versions to tech stack below`
+- React.js: Version 17.0.2
+- Node.js with Express: Version 4.17.2
+- MongoDB with mongoose: Version 4.3.1
+- Socket.io: Version 4.4.1
+- Axios: Version 0.25.0
+- Bootstrap: Version 2.1.1
+- Styled Components: Version 5.3.3
+- use-Sound: Version 4.0.1
+- Webpack: Version 5.67.0
+- Babel: Version 17.16.12
 
-- React.js
-- Node.js with Express
-- MongoDB with mongoose
-- Socket.io
-- Axios
-- Bootstrap
-- Styled Components
-- use-Sound
-- Webpack
-- Babel
-
-# Repo installation set
+# Repo Installation
 
 ## Local setup
 
@@ -52,10 +44,11 @@ Multiplayer online version of classic accusation game Werewolf!
 - Login authentication
 - Fully functional warewolf game set (include roles/timer/voting)
 
-# Feature updates
+# Future Feature Updates
 
 - Video capabilities
-- More roles
+- Additional villager roles implemented
+- Leaderboard
 
 # Technical Challenges
 
@@ -63,9 +56,9 @@ Multiplayer online version of classic accusation game Werewolf!
 
 # Contributors
 
-- Alex
-- Megan
-- Himmat
-- Ryder
-- Javier
-- Daniel
+- [Alex Kenney](https://www.linkedin.com/in/dareitus/)
+- [Megan Wolf](https://www.linkedin.com/in/megan-n-wolf/)
+- [Himmat Singh Khalsa](https://www.linkedin.com/in/himmatkhalsa/)
+- [Ryder Wendt](https://www.linkedin.com/in/ryder-wendt/)
+- [Javier Tamez](https://www.linkedin.com/in/javier-tamez/)
+- [Daniel Gonzalez](https://www.linkedin.com/in/daniel-gonzalezmoreno/)

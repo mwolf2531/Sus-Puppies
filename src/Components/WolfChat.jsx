@@ -4,10 +4,8 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 
 const WolfChat = ({
   socket,
-  playerState,
-  playerId,
   playerInfo,
-  playerRoles,
+  playerState,
   currentPhase,
 }) => {
   const [newMessage, setNewMessage] = useState('');

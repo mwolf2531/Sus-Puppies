@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styled from 'styled-components';
 
-const Ruleset = ({ wolves, initialTimer, playerInfo, playerState, gameStatus, rules, seerMessage }) => {
+const Ruleset = ({ playerInfo, playerState, gameStatus, rules, seerMessage }) => {
 
 
   const roleDefinitions = ['Villager', 'Dead Villager', 'Werewolf', 'Dead Werewolf', 'Seer', 'Dead Seer', 'Healer', 'Dead Healer'];

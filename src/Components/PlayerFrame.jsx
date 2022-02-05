@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
-const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
+const PlayerFrame = ({ playerInfo, currentPhase, timer }) => {
 
   let currentPlayerKey = 1;
 
@@ -17,11 +17,10 @@ const PlayerFrame = ({ voting, playerInfo, currentPhase, timer }) => {
             currentPlayerKey++;
             return (
               <Player
-                playerInfo={playerInfo}
                 player={player}
-                key={currentPlayerKey}
-                index={currentPlayerKey}
                 currentPhase={currentPhase}
+                playerInfo={playerInfo}
+                key={currentPlayerKey}
               />
             )
           })

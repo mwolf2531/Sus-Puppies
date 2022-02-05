@@ -6,9 +6,8 @@ import Select from 'react-select';
 
 const Voting = ({
   timer,
-  playerInfo,
   currentPhase,
-  playerRoles,
+  playerInfo,
   playerState,
   socket,
   gameStatus,
@@ -22,10 +21,8 @@ const Voting = ({
 
   const logChange = (e) => {
     if (currentPhase === 'day' || currentPhase === 'Day') {
-      console.log('daytime selection')
       setVoteSelection(e.value);
     } else if (currentPhase === 'night' || currentPhase === 'Night') {
-      console.log('nighttime selection')
       setNightVoteSelection(e.value);
     }
   };
@@ -80,8 +77,6 @@ const Voting = ({
       }
       let voteTuple = [playerState.username, nightVoteSelection];
       // On Click of Submit button, create and send tuple of vote values
-      // VOTE SENDER
-      console.log(voteTuple); //WE KNOW WE MADE IT THIS FAR
       socket?.emit('vote-send', voteTuple);
       setIsVoted(true);
       setVillagerOptions([]);
@@ -97,12 +92,6 @@ const Voting = ({
     //TODO: add lifecycle method to watch for cuurentPhase change
     //setIsVoted -> false
   }, [timer]);
-
-  // useEffect(() => {
-  //   if (isVoted) {
-  //     setIsVoted(false);
-  //   }
-  // }, [currentPhase]);
 
   const player =
     playerInfo

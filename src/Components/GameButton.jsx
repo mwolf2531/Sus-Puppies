@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Button } from 'react-bootstrap';
 
-const GameButton = ({ playerId, playerInfo, playerState, gameStatus, socket }) => {
-
-  useEffect(() => {
-    //TODO: create lifecycle method to watch for gameStatus change
-  }, [gameStatus]);
+const GameButton = ({ playerInfo, playerState, gameStatus, socket }) => {
 
   const handleClickStart = () => {
     socket?.emit('host-send', 'start')

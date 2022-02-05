@@ -115,25 +115,6 @@ const GamePage = () => {
     }
   }, [socket]);
 
-  //TODO: create handleFunctions. Esp for GameEvents
-
-  const handlePhaseChange = () => {
-    //TODO: needs to update currentDay and currentPhase on server when timer runs out
-  };
-  //QUESTION: are individual player votes sent individually to the server?
-  // or are they updated in GamePage to be sent up all together?
-  const handleVoting = () => {
-    //TODO: needs to send voting object to the server to get phaseResults
-  };
-  const handleEndOfGame = () => {
-    //endgame conditions might automatically be determined from the server
-    //TODO: needs to send playerRoles (and voting?) to server to determine if game ends
-  };
-  const handlePlayerJoiningGame = () => {
-    //TODO: needs to tell server when a new player has connected
-    //assign player_id, take in user's name and user's chosen icon/image
-  };
-  //Note: Divs are being used as place holders to avoid errors for missing components
   return (
     //TODO: Fill in components properly with handlers.
     <>
@@ -147,33 +128,31 @@ const GamePage = () => {
           previousResult={previousResult}
         />
         <PhaseChangeModal
-          playerState={playerState}
-          previousResult={previousResult}
           currentPhase={currentPhase}
+          previousResult={previousResult}
           gameStatus={gameStatus}
           playerInfo={playerInfo}
         />
         <Row id="header">
           <Col>
             <Header
-              previousResult={previousResult}
-              currentDay={currentDay}
               currentPhase={currentPhase}
+              currentDay={currentDay}
+              previousResult={previousResult}
             />
           </Col>
         </Row>
         <Row id="chat-row">
           <Col xs={3} className="column whiteCard">
             <LivingChat
-              currentPhase={currentPhase}
+              socket={socket}
               playerInfo={playerInfo}
               playerState={playerState}
-              socket={socket}
+              currentPhase={currentPhase}
             />
           </Col>
           <Col className="column">
             <PlayerFrame
-              votes={votes}
               playerInfo={playerInfo}
               currentPhase={currentPhase}
               timer={timer}
@@ -181,18 +160,15 @@ const GamePage = () => {
           </Col>
           <Col xs={3} className="column whiteCard">
             <GhostChat
+              socket={socket}
               playerInfo={playerInfo}
               playerState={playerState}
-              socket={socket}
             />
           </Col>
         </Row>
         <Row id="bottom-row">
           <Col className="column whiteCard">
             <Ruleset
-              wolves={wolves}
-              playerState={playerState}
-              initialTimer={initialTimer}
               playerInfo={playerInfo}
               playerState={playerState}
               gameStatus={gameStatus}
@@ -203,25 +179,25 @@ const GamePage = () => {
           <Col className="column whiteCard no-margin">
             <GameButton
               playerInfo={playerInfo}
+              playerState={playerState}
               gameStatus={gameStatus}
               socket={socket}
-              playerState={playerState}
             />
             <Voting
               timer={timer}
-              playerInfo={playerInfo}
               currentPhase={currentPhase}
+              playerInfo={playerInfo}
               playerState={playerState}
-              gameStatus={gameStatus}
               socket={socket}
+              gameStatus={gameStatus}
             />
           </Col>
           <Col className="column whiteCard">
             <WolfChat
-              playerInfo={playerInfo}
-              currentPhase={currentPhase}
-              playerState={playerState}
               socket={socket}
+              playerInfo={playerInfo}
+              playerState={playerState}
+              currentPhase={currentPhase}
             />
           </Col>
         </Row>

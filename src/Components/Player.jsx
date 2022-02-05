@@ -46,7 +46,7 @@ const pictures = {
   s20: s20,
 }
 
-const Player = ({ player, currentPhase, number , playerInfo}) => {
+const Player = ({ player, currentPhase, playerInfo}) => {
   const icons = [
     <GiSquare size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,
     <GiCheckMark size={25} style={{ marginLeft: "-25px", zIndex: "-1", paddingBottom: "5px" }} />,

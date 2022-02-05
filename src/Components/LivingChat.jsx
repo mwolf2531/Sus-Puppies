@@ -5,7 +5,6 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 const LivingChat = ({
   socket,
   playerInfo,
-  playerId,
   playerState,
   currentPhase,
 }) => {

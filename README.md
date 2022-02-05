@@ -52,8 +52,15 @@ Multiplayer online version of classic accusation game Werewolf!
 
 # Technical Challenges
 
-- One to two per person or three for group
-
+- Firebase vs Socket.io
+  - Maintaining real time connections
+- Synchronizing state across multiple users
+  - Having a selective state
+- Authentication for unique profiles
+- Adapting source material into a web app design
+- System design decisions
+- Connecting front end to back end
+- Event management
 # Contributors
 
 - [Alex Kenney](https://www.linkedin.com/in/dareitus/)
